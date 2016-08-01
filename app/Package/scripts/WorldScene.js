@@ -4,7 +4,7 @@
 
 
 
-function WorldScene(){
+function WorldScene(engine){
   // Now create a basic Babylon Scene object
   var worldScene = new BABYLON.Scene(engine);
   // Change the scene background color to green.
