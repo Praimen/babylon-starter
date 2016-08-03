@@ -4,8 +4,8 @@
 
 function PlayerActor(sceneTarget){
 
-  var playerActor = BABYLON.Mesh.CreateSphere("sphere1", 8, 1, sceneTarget);
-  playerActor.position = new BABYLON.Vector3(0, 0, 0);
+  this.playerActor = BABYLON.Mesh.CreateSphere("sphere1", 8, 1, sceneTarget);
+  this.playerActor.position = new BABYLON.Vector3(0, 0, 0);
 
   this.strength = 10;
   this.dexterity = 10;
@@ -14,34 +14,22 @@ function PlayerActor(sceneTarget){
   this.aptitude = 10;
   this.constitution = 10;
 
- /* this.getStat = function(statKey) {
-   var stats = {
-      str:  function(){ return this.strength},
-      dex:  function(){ return this.dexterity},
-      int:  function(){ return this.intelligence},
-      chsm: function(){ return this.charisma},
-      apt:  function(){ return this.aptitude},
-      con:  function(){ return this.constitution}
-   };
-
-   return stats[statKey]();
-
-
-  };*/
-
-  return playerActor;
+  return this;
 }
 
-PlayerActor.prototype.getStat = function() {
+PlayerActor.prototype.getStat = function(statKey) {
   var stats = {
-    str:  function(){ return this.strength},
-    dex:  function(){ return this.dexterity},
-    int:  function(){ return this.intelligence},
-    chsm: function(){ return this.charisma},
-    apt:  function(){ return this.aptitude},
-    con:  function(){ return this.constitution}
+    str:  this.strength,
+    dex:  this.dexterity,
+    int:  this.intelligence,
+    apt:  this.aptitude,
+    con:   this.constitution
   };
 
-  return stats;
+  return stats[statKey];
 
+};
+
+PlayerActor.prototype.player = function() {
+  return this.playerActor;
 };
