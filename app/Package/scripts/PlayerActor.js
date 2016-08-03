@@ -22,6 +22,7 @@ PlayerActor.prototype.getStat = function(statKey) {
     str:  this.strength,
     dex:  this.dexterity,
     int:  this.intelligence,
+    char: this.charisma,
     apt:  this.aptitude,
     con:   this.constitution
   };
