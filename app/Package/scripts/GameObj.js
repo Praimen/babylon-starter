@@ -11,11 +11,12 @@ function GameObj(){
   engine = new BABYLON.Engine(canvas, true);
   scene = new WorldScene(engine);
   camera = new ArcCamera(canvas, scene);
-
+  player = new PlayerActor(scene);
 
 
 
   var getPlayer = function(){
+    console.log('here is the player' + player);
     return player;
   };
 
