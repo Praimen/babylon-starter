@@ -2,9 +2,10 @@
  * Created by B16552 on 7/24/2016.
  */
 
+
 function PlayerActor(sceneTarget){
 
-  this.playerActor = BABYLON.Mesh.CreateSphere("sphere1", 8, 1, sceneTarget);
+  this.playerActor = BABYLON.Mesh.CreateSphere("basePlayerEntity", 8, 1, sceneTarget);
   this.playerActor.position = new BABYLON.Vector3(0, 0, 0);
 
   this.strength = 10;
@@ -13,6 +14,13 @@ function PlayerActor(sceneTarget){
   this.charisma = 10;
   this.aptitude = 10;
   this.constitution = 10;
+
+  this.age = 0;
+  this.race = 'blah';
+  this.class = 'new class';
+  this.inventory = [];
+  this.skills = [];
+  this.animations = [];
 
   return this;
 }
@@ -24,7 +32,7 @@ PlayerActor.prototype.getStat = function(statKey) {
     int:  this.intelligence,
     char: this.charisma,
     apt:  this.aptitude,
-    con:   this.constitution
+    con:  this.constitution
   };
 
   return stats[statKey];
@@ -33,4 +41,12 @@ PlayerActor.prototype.getStat = function(statKey) {
 
 PlayerActor.prototype.player = function() {
   return this.playerActor;
+};
+
+
+PlayerActor.prototype.setClass = function(className) {
+
+  this.class = new PlayerClass(className);
+  console.log(this.class);
+  console.log(this.class.getClassStats());
 };
