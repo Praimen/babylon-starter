@@ -3,7 +3,7 @@ var gameObj;
 
 var gameUtil = new GameUtils();
 
-var scriptArr = ['GameObj.js','PlayerActor.js','ArcCamera.js','WorldScene.js','PlayerClass.js','MageClass.js','WarriorClass.js','RogueClass.js','PaladinClass.js'];
+var scriptArr = ['GameObj.js','PlayerActor.js','ArcCamera.js','WorldScene.js','PlayerClass.js'];
 var scriptPath = '/Package/scripts';
 
 gameUtil.setBaseScriptPath(scriptPath);
@@ -22,7 +22,7 @@ gameUtil.scriptLoader(null,null).then(function(pmsg){
 function createScene( ) {
   gameObj = new GameObj();
 
-  gameObj.player.setClass('rogue');
+  gameObj.player.setClass("mage");
 
   var scene = gameObj.scene;
 

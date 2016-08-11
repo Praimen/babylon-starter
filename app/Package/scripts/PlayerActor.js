@@ -47,6 +47,6 @@ PlayerActor.prototype.player = function() {
 PlayerActor.prototype.setClass = function(className) {
 
   this.class = new PlayerClass(className);
-  console.log(this.class);
-  console.log(this.class.getClassStats());
+  console.log("is there anything in this class ",this.class);
+  console.log("why isn't this working anymore ", this.class.getClassStats());
 };
