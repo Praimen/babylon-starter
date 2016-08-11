@@ -6,6 +6,8 @@
 
 
 function PlayerClass(className){
+  var promise = Q;
+
 
 
 
@@ -13,7 +15,7 @@ function PlayerClass(className){
     console.log('hey you gonna pick a class or what', classTypeName);
     var classObj = {
 
-      mage:  System.import('MageClass.js').then(function(resolve){return resolve;},function(rejected){}),
+      mage:  System.import('MageClass.js'),
       warrior: SystemJS.import('WarriorClass.js'),
       paladin: SystemJS.import('PaladinClass.js'),
       rogue: SystemJS.import('RogueClass.js')
@@ -24,9 +26,9 @@ function PlayerClass(className){
 
   };
 
-var playerClassType = getPlayerClassType(className);
+//var playerClassType = getPlayerClassType(className);
 
- return playerClassType;
+ return getPlayerClassType(className);
 
 
 

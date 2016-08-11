@@ -18,6 +18,8 @@ function PlayerActor(sceneTarget){
   this.age = 0;
   this.race = 'blah';
   this.class = 'new class';
+
+
   this.inventory = [];
   this.skills = [];
   this.animations = [];
@@ -45,8 +47,18 @@ PlayerActor.prototype.player = function() {
 
 
 PlayerActor.prototype.setClass = function(className) {
+  var class2;
+  var self = this;
+  class2 = PlayerClass(className);
+  class2.then(function(result) { self.resolveClassPromise(result) } );
 
-  this.class = new PlayerClass(className);
-  console.log("is there anything in this class ",this.class);
-  console.log("why isn't this working anymore ", this.class.getClassStats());
+  self.resolveClassPromise = function(promiseResult){
+    self.class =  new promiseResult();
+    console.log("is there anything in this class ",self.class);
+    console.log("why isn't this working anymore ", this.class.getClassStats())
+  };
+
+    /*.then(    console.log("why isn't this working anymore ", this.class.getClassStats())  );*/
+
+
 };
