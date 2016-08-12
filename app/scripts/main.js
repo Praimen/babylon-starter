@@ -1,9 +1,9 @@
 
-var gameObj;
+var gameInstance,playerAccount;
 
 var gameUtil = new GameUtils();
 
-var scriptArr = ['GameObj.js','PlayerActor.js','ArcCamera.js','WorldScene.js','PlayerClass.js'];
+var scriptArr = ['GameInstance.js','PlayerActor.js','ArcCamera.js','WorldScene.js','PlayerClass.js'];
 var scriptPath = '/Package/scripts';
 
 gameUtil.setBaseScriptPath(scriptPath);
@@ -20,34 +20,41 @@ gameUtil.scriptLoader(null,null).then(function(pmsg){
 // -------------------------------------------------------------
 // Here begins a function that we will 'call' just after it's built
 function createScene( ) {
-  gameObj = new GameObj();
+  gameInstance = new GameInstance();
 
-  gameObj.player.setClass("rogue");
+  var scene = gameInstance.scene;
 
-  var scene = gameObj.scene;
+
 
   var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
   light.intensity = .5;
 
   var ground = BABYLON.Mesh.CreateGround("ground1", 12, 12, 2, scene);
 
-  startEngine(gameObj);
+  gameInstance.makePlayer('mage',{x:0,y:0,z:1});
+  gameInstance.makePlayer('warrior',{x:0,y:1,z:1});
+  gameInstance.makePlayer('rogue',{x:1,y:1,z:1});
+  gameInstance.makePlayer('paladin',{x:1,y:0,z:1});
+
+
+  startEngine(gameInstance);
 }
 
 
-function startEngine(gameObj){
+function startEngine(gameInstance){
+  windowCanvasResizeEvent(gameInstance)
   // Register a render loop to repeatedly render the scene
-  gameObj.engine.runRenderLoop(function () {
+  gameInstance.engine.runRenderLoop(function () {
     //player.position.x +=.005;
     //scene.activeCamera.alpha += .01;
-    gameObj.scene.render();
+    gameInstance.scene.render();
   });
 
 }
 
-function windowCanvasResizeEvent(gameObj){
+function windowCanvasResizeEvent(gameInstance){
   window.addEventListener("resize", function () {
-    gameObj.engine.resize();
+    gameInstance.engine.resize();
   });
 }
 // Watch for browser/canvas resize events

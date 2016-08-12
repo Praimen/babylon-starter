@@ -2,9 +2,6 @@
  * Created by B16552 on 8/10/2016.
  */
 
-
-
-
 function PlayerClass(className){
 
   var classObj = {
@@ -18,8 +15,7 @@ function PlayerClass(className){
 
 
   var getPlayerClassType = function(classTypeName){
-    console.log('hey you gonna pick a class or what', classTypeName);
-    console.log('so are you saying that the class obj is nothing ',classObj[classTypeName]);
+
     return classObj[classTypeName];
 
   };

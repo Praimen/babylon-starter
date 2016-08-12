@@ -2,11 +2,9 @@
  * Created by B16552 on 7/24/2016.
  */
 
+function PlayerActor(){
 
-function PlayerActor(sceneTarget){
 
-  this.playerActor = BABYLON.Mesh.CreateSphere("basePlayerEntity", 8, 1, sceneTarget);
-  this.playerActor.position = new BABYLON.Vector3(0, 0, 0);
 
   this.strength = 10;
   this.dexterity = 10;
@@ -26,6 +24,13 @@ function PlayerActor(sceneTarget){
 
   return this;
 }
+
+
+PlayerActor.prototype.addToScene = function(playerName, sceneTarget,posObj) {
+  var pos = posObj;
+  this.playerActor = BABYLON.Mesh.CreateSphere(playerName, 8, 1, sceneTarget);
+  this.playerActor.position = new BABYLON.Vector3(pos.x, pos.y, pos.z);
+};
 
 PlayerActor.prototype.getStat = function(statKey) {
   var stats = {
