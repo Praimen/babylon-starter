@@ -47,18 +47,15 @@ PlayerActor.prototype.player = function() {
 
 
 PlayerActor.prototype.setClass = function(className) {
-  var class2;
+  var classPromise;
   var self = this;
-  class2 = new PlayerClass(className);
-  class2.then(function(result) { self.resolveClassPromise(result) } );
+  classPromise = new PlayerClass(className);
+  classPromise.then(function(result) { self.resolveClassPromise(result) } );
 
-  self.resolveClassPromise = function(promiseResult){
-    self.class =  new promiseResult();
-    console.log("is there anything in this class ",self.class);
-    console.log("why isn't this working anymore ", this.class.getClassStats())
-  };
+};
 
-    /*.then(    console.log("why isn't this working anymore ", this.class.getClassStats())  );*/
-
-
+PlayerActor.prototype.resolveClassPromise = function(promiseResult){
+  this.class =  new promiseResult();
+  console.log("is there anything in this class ",this.class);
+  console.log("why isn't this working anymore ", this.class.getClassStats())
 };

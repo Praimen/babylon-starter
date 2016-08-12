@@ -22,7 +22,7 @@ gameUtil.scriptLoader(null,null).then(function(pmsg){
 function createScene( ) {
   gameObj = new GameObj();
 
-  gameObj.player.setClass("mage");
+  gameObj.player.setClass("rogue");
 
   var scene = gameObj.scene;
 
