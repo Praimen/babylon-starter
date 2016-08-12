@@ -49,7 +49,7 @@ PlayerActor.prototype.player = function() {
 PlayerActor.prototype.setClass = function(className) {
   var class2;
   var self = this;
-  class2 = PlayerClass(className);
+  class2 = new PlayerClass(className);
   class2.then(function(result) { self.resolveClassPromise(result) } );
 
   self.resolveClassPromise = function(promiseResult){
