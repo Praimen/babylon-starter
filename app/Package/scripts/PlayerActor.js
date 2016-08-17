@@ -8,14 +8,14 @@ function PlayerActor(){
 
   this.strength = 10;
   this.dexterity = 10;
-  this.intelligence = 0;
+  this.intelligence = 10;
   this.charisma = 10;
   this.aptitude = 10;
   this.constitution = 10;
 
   this.age = 0;
   this.race = 'blah';
-  this.class = 'new class';
+  this.class = '';
 
 
   this.inventory = [];
@@ -42,8 +42,15 @@ PlayerActor.prototype.getStat = function(statKey) {
     con:  (this.constitution * 1)  + (this.class.stats.con * 1)
   };
 
-  return stats[statKey];
+  return stats[statKey] || stats;
 
+};
+
+PlayerActor.prototype.getStats = function() {
+  var stats = this.getStat();
+  for(var key in  stats  ) {
+    console.log(this.class.classStats+" "+key+": "+stats[key]);
+  }
 };
 
 PlayerActor.prototype.player = function() {
