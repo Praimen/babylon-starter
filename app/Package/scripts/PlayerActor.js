@@ -34,12 +34,12 @@ PlayerActor.prototype.addToScene = function(playerName, sceneTarget,posObj) {
 
 PlayerActor.prototype.getStat = function(statKey) {
   var stats = {
-    str:  this.strength,
-    dex:  this.dexterity,
-    int:  this.intelligence,
-    char: this.charisma,
-    apt:  this.aptitude,
-    con:  this.constitution
+    str:  (this.strength * 1)  + (this.class.stats.str * 1),
+    dex:  (this.dexterity  * 1)  + (this.class.stats.dex * 1),
+    int:  (this.intelligence * 1)  + (this.class.stats.int * 1),
+    char: (this.charisma * 1)  + (this.class.stats.char * 1),
+    apt:  (this.aptitude * 1)  + (this.class.stats.apt * 1),
+    con:  (this.constitution * 1)  + (this.class.stats.con * 1)
   };
 
   return stats[statKey];

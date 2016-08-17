@@ -4,8 +4,14 @@
 function PaladinClass(){
 
   this.classStats = "i am a Paladin with these stats";
-
-
+  this.stats = {
+    str:  2,
+    dex:  -2,
+    int:  -1,
+    char: 3,
+    apt:  1,
+    con:  2
+  };
 
 }
 

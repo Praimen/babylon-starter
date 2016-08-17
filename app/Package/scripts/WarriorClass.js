@@ -4,7 +4,14 @@
 function WarriorClass(){
 
   this.classStats = "i am a Warrior with these stats";
-
+  this.stats = {
+    str:  4,
+    dex:  1,
+    int:  -1,
+    char: -1,
+    apt:  -1,
+    con:  3
+  };
 
 
 }

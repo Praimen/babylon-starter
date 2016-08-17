@@ -31,7 +31,9 @@ function GameInstance(){
     playerAccountPlayer.setClass(playerID);
     playerAccountPlayer.player();
 
-    addPlayerToScene(playerID,posObj)
+    addPlayerToScene(playerID,posObj);
+
+    return playerAccountPlayer;
 
   };
 

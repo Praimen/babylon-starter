@@ -1,5 +1,5 @@
 
-var gameInstance,playerAccount;
+var gameInstance,playerAccount = {};
 
 var gameUtil = new GameUtils();
 
@@ -10,10 +10,13 @@ gameUtil.setBaseScriptPath(scriptPath);
 gameUtil.setScriptArr(scriptArr);
 
 gameUtil.scriptLoader(null,null).then(function(pmsg){
+
   console.log('finished loading the script1s: ',pmsg);
 
 }).done(function(pmsg){
+
   createScene();
+
 });
 
 
@@ -31,10 +34,10 @@ function createScene( ) {
 
   var ground = BABYLON.Mesh.CreateGround("ground1", 12, 12, 2, scene);
 
-  gameInstance.makePlayer('mage',{x:0,y:0,z:1});
-  gameInstance.makePlayer('warrior',{x:0,y:1,z:1});
-  gameInstance.makePlayer('rogue',{x:1,y:1,z:1});
-  gameInstance.makePlayer('paladin',{x:1,y:0,z:1});
+  playerAccount.mage = gameInstance.makePlayer('mage',{x:0,y:0,z:1});
+  playerAccount.warrior = gameInstance.makePlayer('warrior',{x:0,y:1,z:1});
+  playerAccount.rogue = gameInstance.makePlayer('rogue',{x:1,y:1,z:1});
+  playerAccount.paladin = gameInstance.makePlayer('paladin',{x:1,y:0,z:1});
 
 
   startEngine(gameInstance);

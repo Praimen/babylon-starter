@@ -4,7 +4,14 @@
 function RogueClass(){
 
   this.classStats = "i am a Rogue with these stats";
-
+  this.stats = {
+    str:  0,
+    dex:  5,
+    int:  -2,
+    char: 3,
+    apt:  0,
+    con:  -1
+  };
 
 
 }
