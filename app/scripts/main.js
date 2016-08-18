@@ -1,7 +1,7 @@
 
-var gameInstance,playerAccount = {character:{ ID:"mage",location:{x:0,y:0,z:1}},characterList:{},};
+var gameInstance,playerAccount = {character:{ ID:"mage",age: 25,location:{x:0,y:0,z:1}},characterList:{}};
 /*the player account should have objects ready to finish fleshing out the playerActor
-* it should also send an ID to the DB and return a character object 
+* it should also send an ID to the DB and return a character object
 * */
 var gameUtil = new GameUtils();
 

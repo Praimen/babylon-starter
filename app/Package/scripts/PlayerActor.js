@@ -13,14 +13,15 @@ function PlayerActor(){
   this.aptitude = 10;
   this.constitution = 10;
 
-  this.age = 0;
-  this.race = 'blah';
+  this.age = 'playerAccount.character.age';
+  this.animations = [];
   this.class = '';
-
+  this.character = 'playerAccount.character';
 
   this.inventory = [];/*this should call the account to see what has been saved to his inventory*/
   this.skills = [];/*this should call the account to see what skill IDs the account has available*/
-  this.animations = [];
+
+  this.race = 'playerAccount.character.race';
 
   return this;
 }

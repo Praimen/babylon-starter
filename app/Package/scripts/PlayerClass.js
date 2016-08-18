@@ -6,10 +6,10 @@ function PlayerClass(className){
 
   var classObj = {
 
-    mage:  System.import('MageClass.js'),
-    warrior: SystemJS.import('WarriorClass.js'),
-    paladin: SystemJS.import('PaladinClass.js'),
-    rogue: SystemJS.import('RogueClass.js')
+    mage:  System.import('ArcheTypes/MageClass.js'),
+    warrior: SystemJS.import('ArcheTypes/WarriorClass.js'),
+    paladin: SystemJS.import('ArcheTypes/PaladinClass.js'),
+    rogue: SystemJS.import('ArcheTypes/RogueClass.js')
 
   };
 
@@ -20,7 +20,6 @@ function PlayerClass(className){
 
   };
 
-//var playerClassType = getPlayerClassType(className);
 
  return getPlayerClassType(className);
 
