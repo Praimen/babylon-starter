@@ -3,12 +3,16 @@
  */
 
 
-function Inventory(){
+function Items(playerAccountItems){
 
+  var playerInv = playerAccountItems.inv;
+  var playerEq = playerAccountItems.equip;
 
   /*TODO: this function will facilitate the connection to the inventory tables on the DB
-  * just send an array of IDs and the inventory object will be returned
+  *
   *
   *
   * */
+
+
 }

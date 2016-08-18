@@ -2,7 +2,7 @@
  * Created by B16552 on 8/10/2016.
  */
 function PaladinClass(){
-
+  /*skills 400-499*/
   this.classStats = "i am a Paladin with these stats";
   this.stats = {
     str:  2,
@@ -12,6 +12,7 @@ function PaladinClass(){
     apt:  1,
     con:  2
   };
+
 
 }
 

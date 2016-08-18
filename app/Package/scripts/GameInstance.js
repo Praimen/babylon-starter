@@ -6,7 +6,7 @@ function GameInstance(){
   var playerAccountPlayer = {};
 
   var scene,camera,canvas,engine;
-
+  var playerCharactersArr = [];
 
   canvas = document.querySelector("#renderCanvas");
   engine = new BABYLON.Engine(canvas, true);
@@ -18,7 +18,7 @@ function GameInstance(){
 
   };
 
-  var makeAccountPlayer = function(playerID,posObj){
+  var makeAccountPlayer = function(playerAccount){
     playerAccountPlayer = new PlayerActor();
     /*get player info from DB account and setup player*/
     /*
@@ -28,20 +28,24 @@ function GameInstance(){
     * verified by the database
     *
     * */
-    playerAccountPlayer.setClass(playerID);
-    playerAccountPlayer.player();
+    playerAccountPlayer.setClass(playerAccount.character.ID);
 
-    addPlayerToScene(playerID,posObj);
+
+    addPlayerToScene(playerAccount.character);
 
     return playerAccountPlayer;
 
   };
 
-  function addPlayerToScene(playerID,posObj){
+  function addPlayerToScene(character){
 
-    playerAccountPlayer.addToScene(playerID,scene,posObj);
+    playerAccountPlayer.addToScene(character.ID,scene,character.location);
 
   }
+
+  var setPlayerToInstance = function(playerCharacterObj ){
+    playerCharactersArr.push(playerCharacterObj)
+  };
 
   var getPlayer = function(){
     return playerAccountPlayer;
@@ -67,6 +71,7 @@ function GameInstance(){
 
   return {
     makePlayer: makeAccountPlayer,
+    setPlayerToInstance: setPlayerToInstance,
     player: getPlayer(),
     canvas: getCanvas(),
     engine: getEngine(),

@@ -1,6 +1,8 @@
 
-var gameInstance,playerAccount = {};
-
+var gameInstance,playerAccount = {character:{ ID:"mage",location:{x:0,y:0,z:1}},characterList:{},};
+/*the player account should have objects ready to finish fleshing out the playerActor
+* it should also send an ID to the DB and return a character object 
+* */
 var gameUtil = new GameUtils();
 
 var scriptArr = ['GameInstance.js','PlayerActor.js','ArcCamera.js','WorldScene.js','PlayerClass.js'];
@@ -34,11 +36,9 @@ function createScene( ) {
 
   var ground = BABYLON.Mesh.CreateGround("ground1", 12, 12, 2, scene);
 
-  playerAccount.mage = gameInstance.makePlayer('mage',{x:0,y:0,z:1});
-  playerAccount.warrior = gameInstance.makePlayer('warrior',{x:0,y:1,z:1});
-  playerAccount.rogue = gameInstance.makePlayer('rogue',{x:1,y:1,z:1});
-  playerAccount.paladin = gameInstance.makePlayer('paladin',{x:1,y:0,z:1});
+  playerAccount.currentChar = gameInstance.makePlayer(playerAccount);
 
+  gameInstance.setPlayerToInstance(playerAccount.currentChar);
 
   startEngine(gameInstance);
 }

@@ -2,7 +2,7 @@
  * Created by B16552 on 8/10/2016.
  */
 function RogueClass(){
-
+  /*skills 300-399*/
   this.classStats = "i am a Rogue with these stats";
   this.stats = {
     str:  0,
@@ -12,6 +12,7 @@ function RogueClass(){
     apt:  0,
     con:  -1
   };
+
 
 
 }

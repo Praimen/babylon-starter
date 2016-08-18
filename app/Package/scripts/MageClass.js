@@ -3,7 +3,7 @@
  */
 
  function MageClass(){
-
+/*skills 100-199*/
   this.classStats = "i am a Mage with these stats";
   console.log('hey mage');
   this.stats = {

@@ -3,7 +3,7 @@
  */
 
 function PlayerActor(){
-
+/*The player actor should graft things from the playerAccount and other entities like Items, Skills,Archetypes*/
 
 
   this.strength = 10;
@@ -18,8 +18,8 @@ function PlayerActor(){
   this.class = '';
 
 
-  this.inventory = [];
-  this.skills = [];
+  this.inventory = [];/*this should call the account to see what has been saved to his inventory*/
+  this.skills = [];/*this should call the account to see what skill IDs the account has available*/
   this.animations = [];
 
   return this;
