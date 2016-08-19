@@ -75,7 +75,7 @@ PlayerActor.prototype.resolveClassPromise = function(promiseResult){
   /*the archetype */
   this.class =  new promiseResult();
   this.class.getClassStats();
-  this.setStats();
+
   console.log("is there anything in this class ",this.class);
 
 
@@ -84,9 +84,9 @@ PlayerActor.prototype.resolveClassPromise = function(promiseResult){
 
 PlayerActor.prototype.setRace = function(playerAccount) {
   var racePromise;
-  var archetype = playerAccount.character.archetype;
+  var race = playerAccount.character.race;
   var self = this;
-  racePromise = new PlayerClass(archetype);
+  racePromise = new PlayerRace(race);
   racePromise.then(function(result) { self.resolveRacePromise(result) } );
 
 };

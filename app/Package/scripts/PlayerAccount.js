@@ -9,7 +9,7 @@ function PlayerAccount(){
   this.accountStatus = "Current";
 
   this.characterIDArr = ['12345mage',"12345warrior","12345rogue","12345paladin"];
-  this.character = { characterID:"3bhgytu8",archetype:"mage",age: 25,location:{x:0,y:0,z:1}};
+  this.character = { characterID:"3bhgytu8",archetype:"mage",race:'human',age: 25,location:{x:0,y:0,z:1}};
 
   return this;
 }

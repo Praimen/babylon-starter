@@ -5,7 +5,7 @@ var gameInstance,player;
 * */
 var gameUtil = new GameUtils();
 
-var scriptArr = ['PlayerAccount.js','GameInstance.js','PlayerActor.js','ArcCamera.js','WorldScene.js','PlayerClass.js'];
+var scriptArr = ['PlayerAccount.js','ArcCamera.js','WorldScene.js','GameInstance.js','PlayerActor.js','PlayerRace.js','PlayerClass.js'];
 var scriptPath = '/Package/scripts';
 
 gameUtil.setBaseScriptPath(scriptPath);
@@ -50,7 +50,7 @@ function createScene( ) {
 
 
 function startEngine(gameInstance){
-  windowCanvasResizeEvent(gameInstance)
+  windowCanvasResizeEvent(gameInstance);
   // Register a render loop to repeatedly render the scene
   gameInstance.engine.runRenderLoop(function () {
     //player.position.x +=.005;

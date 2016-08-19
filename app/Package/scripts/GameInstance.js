@@ -34,6 +34,8 @@ function GameInstance(){
     *
     * */
     playerActorPlayer.setClass(playerAccount);
+    playerActorPlayer.setRace(playerAccount);
+
 
 
 

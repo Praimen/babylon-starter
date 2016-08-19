@@ -2,7 +2,7 @@
  * Created by B16552 on 8/10/2016.
  */
 
-function Race(className){
+function PlayerRace(raceName){
 
   var raceObj = {
 
@@ -14,18 +14,18 @@ function Race(className){
 
   };
 
-  var getRaceType = function(classTypeName){
+  var getRaceType = function(raceTypeName){
 
-    return raceObj[classTypeName];
+    return raceObj[raceTypeName];
 
   };
 
 
-  return getRaceType(className);
+  return getRaceType(raceName);
 
 }
 
-Race.prototype.getRaceStats = function(){
+PlayerRace.prototype.getRaceStats = function(){
 
   return this.raceStats;
 
