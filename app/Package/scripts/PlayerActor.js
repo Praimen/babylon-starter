@@ -5,7 +5,7 @@
 function PlayerActor(){
 /*The player actor should graft things from the playerAccount and other entities like Items, Skills,Archetypes*/
 
-  this.baseLineStats = 10;
+  this.baseStatNum = 10;
   this.stats ={};
 
   this.age = 'playerAccount.character.age';
@@ -28,14 +28,15 @@ function PlayerActor(){
 
 PlayerActor.prototype.setStats = function() {
   /*if no arg passed then get them all*/
-
+  var baseStatNum = this.baseStatNum;
+  var archeTypeStat = this.class.stats;
   this.stats = {
-    str:  (this.baseLineStats * 1)  + (this.class.stats.str * 1),
-    dex:  (this.baseLineStats * 1)  + (this.class.stats.dex * 1),
-    int:  (this.baseLineStats * 1)  + (this.class.stats.int * 1),
-    char: (this.baseLineStats * 1)  + (this.class.stats.char * 1),
-    apt:  (this.baseLineStats * 1)  + (this.class.stats.apt * 1),
-    con:  (this.baseLineStats * 1)  + (this.class.stats.con * 1)
+    str:  baseStatNum  + (archeTypeStat.str * 1),
+    dex:  baseStatNum  + (archeTypeStat.dex * 1),
+    int:  baseStatNum  + (archeTypeStat.int * 1),
+    char: baseStatNum  + (archeTypeStat.char * 1),
+    apt:  baseStatNum  + (archeTypeStat.apt * 1),
+    con:  baseStatNum  + (archeTypeStat.con * 1)
   };
 
 };
@@ -70,6 +71,7 @@ PlayerActor.prototype.setClass = function(playerAccount) {
 };
 
 PlayerActor.prototype.resolveClassPromise = function(promiseResult){
+  /*the archetype */
   this.class =  new promiseResult();
   this.class.getClassStats();
   this.setStats();
