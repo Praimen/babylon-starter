@@ -30,6 +30,7 @@ PlayerActor.prototype.setStats = function() {
   /*if no arg passed then get them all*/
   var baseStatNum = this.baseStatNum;
   var archeTypeStat = this.class.stats;
+  /*TODO: set up a loop for this*/
   this.stats = {
     str:  baseStatNum  + (archeTypeStat.str * 1),
     dex:  baseStatNum  + (archeTypeStat.dex * 1),
@@ -76,6 +77,26 @@ PlayerActor.prototype.resolveClassPromise = function(promiseResult){
   this.class.getClassStats();
   this.setStats();
   console.log("is there anything in this class ",this.class);
+
+
+};
+
+
+PlayerActor.prototype.setRace = function(playerAccount) {
+  var racePromise;
+  var archetype = playerAccount.character.archetype;
+  var self = this;
+  racePromise = new PlayerClass(archetype);
+  racePromise.then(function(result) { self.resolveRacePromise(result) } );
+
+};
+
+PlayerActor.prototype.resolveRacePromise = function(promiseResult){
+  /*the archetype */
+  this.race =  new promiseResult();
+  this.race.getRaceStats();
+  this.setStats();
+  console.log("is there anything in this class ",this.race);
 
 
 };
