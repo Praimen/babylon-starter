@@ -7,4 +7,5 @@ bower_components
 .yo-rc.json
 examples/
 test/
-.bowerrc
+bowerrc
+*.bowerrc
