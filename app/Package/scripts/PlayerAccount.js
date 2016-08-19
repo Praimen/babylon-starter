@@ -9,21 +9,23 @@ function PlayerAccount(){
   this.accountStatus = "Current";
 
   this.characterIDArr = ['mage',"warrior","rogue","paladin"];
-  this.charactersObj = {};
+  this.character = { characterID:"3bhgytu8",archetype:"mage",age: 25,location:{x:0,y:0,z:1}};
 
+  return this;
 }
 
+/*
 
 
 PlayerAccount.prototype.getAccountCharacters = function(playerIDArr) {
 
-  /*playerIDArr should be the player IDs from the account*/
+  /!*playerIDArr should be the player IDs from the account*!/
   var gameDatabase = new GameDB();
   gameDatabase.connect();
   for (var i = 0; i < this.characterIDArr.length; i++) {
     var obj = characterIDArr[i];
 
-    /*pass each ID vs database retrieve it and build and object array*/
+    /!*pass each ID vs database retrieve it and build and object array*!/
     var dbresult = gameDatabase.fetch(characterIDArr[i]);
     this.charactersObj[characterIDArr[i]] = dbresult;
   }
@@ -33,9 +35,11 @@ PlayerAccount.prototype.getAccountCharacters = function(playerIDArr) {
 
 PlayerAccount.prototype.selectAccountCharacter = function(playerID){
 
-  /*Call the game object to instantiate character in the game*/
+  /!*Call the game object to instantiate character in the game*!/
   if(this.charactersObj[playerID]){
 
   }
 
 };
+
+*/

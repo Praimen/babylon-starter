@@ -27,6 +27,6 @@ function PlayerClass(className){
 
 PlayerClass.prototype.getClassStats = function(){
 
-    return this.classStats;
+    return this.stats;
 
 };

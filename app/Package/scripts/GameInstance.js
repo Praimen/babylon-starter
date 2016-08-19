@@ -3,9 +3,12 @@
  */
 
 function GameInstance(){
+  /*TODO: at some point the GameInstance should stop asking the Player Account for information
+  * It should already have the object that it needs to build the player actor
+  *
+  * */
 
-
-  var playerAccountPlayer = {};
+  var playerActorPlayer = new PlayerActor();
 
   var scene,camera,canvas,engine;
   var playerCharactersArr = [];
@@ -21,7 +24,7 @@ function GameInstance(){
   };
 
   var makeAccountPlayer = function(playerAccount){
-    playerAccountPlayer = new PlayerActor();
+
     /*get player info from DB account and setup player*/
     /*
     * TODO: make a PlayerAccount Object to Query the game object for information
@@ -30,27 +33,31 @@ function GameInstance(){
     * verified by the database
     *
     * */
-    playerAccountPlayer.setClass(playerAccount.character.ID);
+    playerActorPlayer.setClass(playerAccount);
 
 
-    addPlayerToScene(playerAccount.character);
 
-    return playerAccountPlayer;
+    addPlayerToScene(playerAccount);
+
+    return playerActorPlayer;
 
   };
 
-  function addPlayerToScene(character){
+  function addPlayerToScene(playerAccount){
 
-    playerAccountPlayer.addToScene(character.ID,scene,character.location);
+    var pos = playerAccount.character.location;
+    var playerModel = BABYLON.Mesh.CreateSphere(playerAccount.character.archetype, 8, 1, scene);
+    playerActorPlayer.playerModel(playerModel);
+    playerActorPlayer.position = new BABYLON.Vector3(pos.x, pos.y, pos.z);
 
   }
 
-  var setPlayerToInstance = function(playerCharacterObj ){
-    playerCharactersArr.push(playerCharacterObj)
+  var setPlayerToInstance = function(playerAccount){
+    playerCharactersArr.push(playerAccount.character)
   };
 
   var getPlayer = function(){
-    return playerAccountPlayer;
+    return playerActorPlayer;
   };
 
   var getEngine = function(){
