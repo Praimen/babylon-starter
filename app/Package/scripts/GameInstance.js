@@ -3,6 +3,8 @@
  */
 
 function GameInstance(){
+
+
   var playerAccountPlayer = {};
 
   var scene,camera,canvas,engine;
@@ -23,7 +25,7 @@ function GameInstance(){
     /*get player info from DB account and setup player*/
     /*
     * TODO: make a PlayerAccount Object to Query the game object for information
-    * the game object will be responsible for facilitation the instantiation of
+    * the game object will be responsible for facilitating the instantiation of
     * object the Player Account object will house the specific data for the client
     * verified by the database
     *
