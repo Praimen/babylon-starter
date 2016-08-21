@@ -5,7 +5,7 @@
 
 function DragonRace(){
 
-  this.raceStats = "I am a dragon i get no bonuses";
+  this.raceStats = "I am a dragon plenty of bonuses, how to balance that";
   this.stats = {
     str:  -1,
     dex:  -1,
@@ -18,4 +18,4 @@ function DragonRace(){
 
 }
 
-DragonRace.prototype = Race.prototype;
+DragonRace.prototype = PlayerRace.prototype;

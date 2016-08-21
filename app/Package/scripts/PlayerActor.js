@@ -29,16 +29,31 @@ function PlayerActor(){
 PlayerActor.prototype.setStats = function() {
   /*if no arg passed then get them all*/
   var baseStatNum = this.baseStatNum;
-  var archeTypeStat = this.class.stats;
+  var archeTypeStatMod = this.class.stats;
+  var racialStatMod = this.race.stats;
   /*TODO: set up a loop for this*/
   this.stats = {
-    str:  baseStatNum  + (archeTypeStat.str * 1),
-    dex:  baseStatNum  + (archeTypeStat.dex * 1),
-    int:  baseStatNum  + (archeTypeStat.int * 1),
-    char: baseStatNum  + (archeTypeStat.char * 1),
-    apt:  baseStatNum  + (archeTypeStat.apt * 1),
-    con:  baseStatNum  + (archeTypeStat.con * 1)
+    str:  0,
+    dex:  0,
+    int:  0,
+    char: 0,
+    apt: 0,
+    con: 0
   };
+
+  for(var key  in  this.stats  )  {
+
+    var randomStat = Math.random() *  baseStatNum + 5;
+    var modifiedStat = Math.ceil(randomStat)  + (archeTypeStatMod[key] * 1) + (racialStatMod[key] * 1);
+    if(modifiedStat < 5){
+      modifiedStat = 5;
+    }
+    this.stats[key] = modifiedStat ;
+
+
+  }
+
+
 
 };
 
@@ -85,6 +100,7 @@ PlayerActor.prototype.resolveClassPromise = function(promiseResult){
 PlayerActor.prototype.setRace = function(playerAccount) {
   var racePromise;
   var race = playerAccount.character.race;
+
   var self = this;
   racePromise = new PlayerRace(race);
   racePromise.then(function(result) { self.resolveRacePromise(result) } );
@@ -96,7 +112,7 @@ PlayerActor.prototype.resolveRacePromise = function(promiseResult){
   this.race =  new promiseResult();
   this.race.getRaceStats();
   this.setStats();
-  console.log("is there anything in this class ",this.race);
+  console.log("this is the race  ",this.race);
 
 
 };

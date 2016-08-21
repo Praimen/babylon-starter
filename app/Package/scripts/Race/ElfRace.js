@@ -5,17 +5,17 @@
 
 function ElfRace(){
 
-  this.raceStats = "I am elven i get no bonuses";
+  this.raceStats = "I am elven i get int dex char bonuses, but str and con minuses";
   this.stats = {
-    str:  -1,
-    dex:  -1,
-    int:  5,
-    char: 0,
-    apt:  3,
+    str:  -2,
+    dex:  1,
+    int:  1,
+    char: 1,
+    apt:  1,
     con:  -2
   };
 
 
 }
 
-ElfRace.prototype = Race.prototype;
+ElfRace.prototype = PlayerRace.prototype;

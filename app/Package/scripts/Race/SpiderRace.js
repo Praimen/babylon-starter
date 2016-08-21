@@ -5,17 +5,17 @@
 
 function SpiderRace(){
 
-  this.raceStats = "I am a spiderling i get no bonuses";
+  this.raceStats = "I am a spiderling i get a huge dexerity bonus";
   this.stats = {
     str:  -1,
-    dex:  -1,
-    int:  5,
-    char: 0,
-    apt:  3,
-    con:  -2
+    dex:  2,
+    int:  -1,
+    char: 2,
+    apt:  -1,
+    con:  -1
   };
 
 
 }
 
-SpiderRace.prototype = Race.prototype;
+SpiderRace.prototype = PlayerRace.prototype;
