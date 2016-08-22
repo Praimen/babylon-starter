@@ -3,10 +3,9 @@
  */
 
 
-function Items(playerAccountItems){
+function Items(playerAccount){
 
-  var playerInv = playerAccountItems.inv;
-  var playerEq = playerAccountItems.equip;
+  this.characterInvArr = playerAccount.character.items;
 
   /*TODO: this function will facilitate the connection to the inventory tables on the DB
   *
@@ -16,3 +15,28 @@ function Items(playerAccountItems){
 
 
 }
+
+Items.prototype.getCharacterItems = function(playerActor){
+
+  var gameDatabase = new GameDB();
+  gameDatabase.connect();
+
+  for (var i = 0; i < this.characterInvArr.length; i++) {
+    var obj = characterIDArr[i];
+
+    /*once each item is read it will need to be sorted into inventory and equipped by reading a flag
+    * the new bjects should be pushed into the items array in 2 new objs accordingly
+    *
+    *
+    * */
+    var dbresult = gameDatabase.fetch(characterInvArr[i]);
+    if(dbresult.equpped = true){
+      playerActor.items.eq[characterInvArr[i]] = dbresult;
+    }else{
+      playerActor.items.inv[characterInvArr[i]] = dbresult;
+    }
+
+  }
+
+  gameDatabase.close();
+};
