@@ -3,9 +3,9 @@
  */
 
 
-function Items(playerAccount){
-
-  this.characterInvArr = playerAccount.character.items;
+function Items(playerActor){
+  System.import('Items/ItemDB.js');
+  this.characterInvArr = playerActor.character.items;
 
   /*TODO: this function will facilitate the connection to the inventory tables on the DB
   *
@@ -16,10 +16,10 @@ function Items(playerAccount){
 
 }
 
-Items.prototype.getCharacterItems = function(playerActor){
+Items.prototype.getCharacterItems = function(){
 
-  var gameDatabase = new GameDB();
-  gameDatabase.connect();
+  var itemDatabase = new ItemDB();
+  itemDatabase.connect();
 
   for (var i = 0; i < this.characterInvArr.length; i++) {
     var obj = characterIDArr[i];
@@ -29,7 +29,7 @@ Items.prototype.getCharacterItems = function(playerActor){
     *
     *
     * */
-    var dbresult = gameDatabase.fetch(characterInvArr[i]);
+    var dbresult = itemDatabase.fetch(characterInvArr[i]);
     if(dbresult.equipped = true){
       playerActor.items.eq[characterInvArr[i]] = dbresult;
     }else{
@@ -38,5 +38,5 @@ Items.prototype.getCharacterItems = function(playerActor){
 
   }
 
-  gameDatabase.close();
+  itemDatabase.close();
 };

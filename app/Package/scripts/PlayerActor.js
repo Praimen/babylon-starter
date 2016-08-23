@@ -2,7 +2,7 @@
  * Created by B16552 on 7/24/2016.
  */
 
-function PlayerActor(){
+function PlayerActor(playerAccount){
 /*The player actor should graft things from the playerAccount and other entities like Items, Skills,Archetypes*/
 
   this.baseStatNum = 10;
@@ -15,15 +15,18 @@ function PlayerActor(){
     con: 0
   };
 
-  this.age = 'playerAccount.character.age';
+
+
+  this.character = playerAccount.character;
   this.animations = [];
-  this.class = '';
-  this.character = 'playerAccount.character';
+  this.class = {};
+
 
   this.items = {eq:{},inv:{} };/*this should call the account to see what has been saved to his inventory*/
   this.skills = [];/*this should call the account to see what skill IDs the account has available*/
 
-  this.race = 'playerAccount.character.race';
+  this.race = {};
+  this.age = {};
 
   this.model = {};
 
@@ -72,9 +75,9 @@ PlayerActor.prototype.playerModel = function(meshObj) {
 };
 
 
-PlayerActor.prototype.setClass = function(playerAccount) {
+PlayerActor.prototype.setClass = function() {
   var classPromise;
-  var archetype = playerAccount.character.archetype;
+  var archetype = this.character.archetype;
   var self = this;
   classPromise = new PlayerClass(archetype);
   classPromise.then(function(result) { self.resolveClassPromise(result) } );
@@ -92,9 +95,9 @@ PlayerActor.prototype.resolveClassPromise = function(promiseResult){
 };
 
 
-PlayerActor.prototype.setRace = function(playerAccount) {
+PlayerActor.prototype.setRace = function() {
   var racePromise;
-  var race = playerAccount.character.race;
+  var race = this.character.race;
 
   var self = this;
   racePromise = new PlayerRace(race);

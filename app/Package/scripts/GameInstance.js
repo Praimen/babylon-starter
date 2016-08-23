@@ -8,9 +8,9 @@ function GameInstance(){
   *
   * */
 
-  var playerActorPlayer = new PlayerActor();
 
-  var scene,camera,canvas,engine;
+
+  var scene,camera,canvas,engine,playerActorPlayer;
   var playerCharactersArr = [];
 
   canvas = document.querySelector("#renderCanvas");
@@ -24,7 +24,7 @@ function GameInstance(){
   };
 
   var makeAccountPlayer = function(playerAccount){
-
+    playerActorPlayer = new PlayerActor(playerAccount);
     /*get player info from DB account and setup player*/
     /*
     * TODO: make a PlayerAccount Object to Query the game object for information
@@ -33,8 +33,8 @@ function GameInstance(){
     * verified by the database
     *
     * */
-    playerActorPlayer.setClass(playerAccount);
-    playerActorPlayer.setRace(playerAccount);
+    playerActorPlayer.setClass();
+    playerActorPlayer.setRace();
 
 
 
