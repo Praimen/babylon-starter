@@ -30,7 +30,7 @@ Items.prototype.getCharacterItems = function(playerActor){
     *
     * */
     var dbresult = gameDatabase.fetch(characterInvArr[i]);
-    if(dbresult.equpped = true){
+    if(dbresult.equipped = true){
       playerActor.items.eq[characterInvArr[i]] = dbresult;
     }else{
       playerActor.items.inv[characterInvArr[i]] = dbresult;

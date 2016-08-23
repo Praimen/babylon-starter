@@ -14,10 +14,8 @@ function PlayerAccount(){
     archetype:"warrior",
     race:'human',
     age: 25,
-    items : [  ],
-    items : [  ],
+    items : ['itam1','itam2','itam3','itam4','itam5'],
     location:{x:0,y:0,z:1}
-
   };
 
   return this;
