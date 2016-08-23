@@ -6,7 +6,7 @@ function PlayerClass(className){
 
   var classObj = {
 
-    mage:  System.import('ArcheTypes/MageClass.js'),
+    mage:  SystemJS.import('ArcheTypes/MageClass.js'),
     warrior: SystemJS.import('ArcheTypes/WarriorClass.js'),
     paladin: SystemJS.import('ArcheTypes/PaladinClass.js'),
     rogue: SystemJS.import('ArcheTypes/RogueClass.js')

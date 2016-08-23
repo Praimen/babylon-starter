@@ -35,6 +35,7 @@ function GameInstance(){
     * */
     playerActorPlayer.setClass();
     playerActorPlayer.setRace();
+    playerActorPlayer.getCharacterItems();
 
 
 

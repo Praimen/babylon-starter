@@ -5,7 +5,7 @@ var gameInstance,player;
 * */
 var gameUtil = new GameUtils();
 
-var scriptArr = ['PlayerAccount.js','ArcCamera.js','WorldScene.js','GameInstance.js','PlayerActor.js','PlayerRace.js','PlayerClass.js','GameDB.js'];
+var scriptArr = ['PlayerAccount.js','ArcCamera.js','WorldScene.js','GameInstance.js','PlayerActor.js','PlayerRace.js','PlayerClass.js','GameDB.js','Items.js','Items/ItemDB.js'];
 var scriptPath = '/Package/scripts';
 
 gameUtil.setBaseScriptPath(scriptPath);

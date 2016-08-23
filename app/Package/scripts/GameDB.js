@@ -5,8 +5,6 @@
 
 function GameDB(){
 
-
-
 }
 
 GameDB.prototype.connect = function(){
@@ -15,23 +13,18 @@ GameDB.prototype.connect = function(){
 };
 
 GameDB.prototype.fetch = function(queryStatement){
-  var foundResult;
-  var resultSet = {
+  var resultSet = this.resultSet;
 
+  var matchedResult = resultSet[queryStatement];
+  console.log("execute queryStatement on DB ", matchedResult);
 
-
-  };
-
-  foundResult = resultSet[queryStatement]
-  console.log("execute queryStatement on DB" + queryStatement);
-
-  return foundResult;
+  return matchedResult;
 
 };
 
-GameDB.prototype.close = function(queryStatement){
+GameDB.prototype.close = function(msg){
 
-  console.log("closing DB");
+  console.log(msg);
 
 };
 

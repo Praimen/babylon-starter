@@ -1,7 +1,7 @@
 /**
  * Created by B16552 on 7/24/2016.
  */
-
+/*SystemJS.import('Items.js');*/
 function PlayerActor(playerAccount){
 /*The player actor should graft things from the playerAccount and other entities like Items, Skills,Archetypes*/
 
@@ -22,7 +22,14 @@ function PlayerActor(playerAccount){
   this.class = {};
 
 
-  this.items = {eq:{},inv:{} };/*this should call the account to see what has been saved to his inventory*/
+  this.items = {
+
+    eq:{},
+    inv:{}
+  };
+
+
+  /*this should call the account to see what has been saved to his inventory*/
   this.skills = [];/*this should call the account to see what skill IDs the account has available*/
 
   this.race = {};
@@ -111,6 +118,20 @@ PlayerActor.prototype.resolveRacePromise = function(promiseResult){
   this.race.getRaceStats();
   this.setStats();
   console.log("this is the race  ",this.race);
+};
 
 
+PlayerActor.prototype.getCharacterItems = function(){
+  var self = this;
+  var items = new Items();
+
+  this.items.objArr = items.getCharacterItems(self);
+
+ /* if(dbresult.equipped){
+    characterInvArr.eq[itemID] = dbresult;
+  }else{
+    characterInvArr.inv[itemID] = dbresult;
+  }*/
+
+  console.log('itams: ',this.items.objArr);
 };
