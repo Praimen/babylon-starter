@@ -2,7 +2,6 @@
   "name": "babylon-starter",
   "private": true,
   "dependencies": {
-    "q": "1.4.1",
-    "system.js": "^0.19.36"
+    "q": "1.4.1"
   }
 }

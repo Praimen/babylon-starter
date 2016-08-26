@@ -36,7 +36,7 @@ module.exports = function (grunt) {
       },
       js: {
         files: ['<%= config.app %>/scripts/{,*/}*.js'],
-        /* tasks: ['jshint'],*/
+        tasks: ['babel:server','browserify:dist'],
         options: {
           livereload: true
         }
@@ -279,6 +279,42 @@ module.exports = function (grunt) {
     // },
 
     // Copies remaining files to places other tasks can use
+    babel: {
+      options: {
+        sourceMap: false
+
+      },
+      server: {
+        files: [{
+          expand: true,
+          cwd: 'app',
+          src: ['**/main.js','/Packages/**/*.js'],
+          dest: '.tmp'
+        }]
+      },
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '.tmp/concat',
+          src: ['**/*.js'],
+          dest: '.tmp/concat/'
+        }]
+      }
+    },
+
+    browserify: {
+      dist: {
+        files:{
+          'app/scripts/module.js' : ['/.tmp/**/main.js']
+        }
+
+       /* options: {
+          transform: [["babelify", { "stage": 0 }]]
+        }*/
+
+
+      }
+    },
     copy: {
       dist: {
         files: [{
@@ -339,9 +375,10 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
+      'babel:server',
+      'browserify:dist',
       'wiredep',
       'concurrent:server',
-      /* 'autoprefixer',*/
       'connect:livereload',
       'watch'
     ]);
@@ -370,6 +407,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'wiredep',
+    'babel',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',

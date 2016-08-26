@@ -2,7 +2,7 @@
  * Created by B16552 on 8/2/2016.
  */
 
-function GameUtils(){
+export function GameUtils(){
 
   var scriptArr = [];
 
@@ -33,7 +33,8 @@ GameUtils.prototype.scriptLoader = function(arr, funcName){
 
 GameUtils.prototype.setBaseScriptPath = function (path) {
   SystemJS.config({
-    baseURL: path
+    baseURL: path,
+    transpiler: babel
   });
 };
 
