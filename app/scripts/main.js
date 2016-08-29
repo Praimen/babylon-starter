@@ -1,10 +1,15 @@
 
-import * as GameUtils from "app/Package/scripts/GameUtils";
+/*var GameUtils = require('../Package/scripts/GameUtils.js');*/
+
+import GameUtils from "../Package/scripts/GameUtils.js" ;
 var gameInstance,player;
 /*the player account should have objects ready to finish fleshing out the playerActor
 * it should also send an ID to the DB and return a character object
 * */
-var gameUtil = new GameUtils();
+
+var gameUtils = new GameUtils();
+console.log(gameUtils);
+
 /*
 
 var scriptArr = ['PlayerAccount.js','ArcCamera.js','WorldScene.js','GameInstance.js','PlayerActor.js','PlayerRace.js','PlayerClass.js','GameDB.js','Items.js','Items/ItemDB.js'];

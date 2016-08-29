@@ -36,7 +36,7 @@ module.exports = function (grunt) {
       },
       js: {
         files: ['<%= config.app %>/scripts/{,*/}*.js'],
-        tasks: ['babel:server','browserify:dist'],
+        tasks: [/*'babel:server'*/,'browserify:dist'],
         options: {
           livereload: true
         }
@@ -279,38 +279,38 @@ module.exports = function (grunt) {
     // },
 
     // Copies remaining files to places other tasks can use
-    babel: {
+    /*babel: {
       options: {
         sourceMap: false
-
       },
       server: {
         files: [{
           expand: true,
           cwd: 'app',
-          src: ['**/main.js','/Packages/**/*.js'],
-          dest: '.tmp'
+          src: ['/Package/!**!/!*.js','**!/main.js'],
+          dest: '/scripts/module.js'
         }]
       },
       dist: {
         files: [{
           expand: true,
           cwd: '.tmp/concat',
-          src: ['**/*.js'],
+          src: ['**!/!*.js'],
           dest: '.tmp/concat/'
         }]
       }
-    },
+    },*/
 
     browserify: {
       dist: {
         files:{
-          'app/scripts/module.js' : ['/.tmp/**/main.js']
+          'app/scripts/module.js' : ['app/scripts/main.js']
+        },
+        options: {
+          sourceMap: true,
+          "transform": [["babelify", { "presets": ["es2015"] }]]
         }
 
-       /* options: {
-          transform: [["babelify", { "stage": 0 }]]
-        }*/
 
 
       }
@@ -375,7 +375,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
-      'babel:server',
+     /* 'babel:server',*/
       'browserify:dist',
       'wiredep',
       'concurrent:server',
