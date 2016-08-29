@@ -1,15 +1,19 @@
 /**
  * Created by B16552 on 8/10/2016.
  */
+import MageClass from "../Package/scripts/MageClass.js";
+import WarriorClass from "../Package/scripts/WarriorClass.js";
+import PaladinClass from "../Package/scripts/PaladinClass.js";
+import RogueClass from "../Package/scripts/RogueClass.js";
 
 function PlayerClass(className){
 
   var classObj = {
 
-    mage:  SystemJS.import('ArcheTypes/MageClass.js'),
-    warrior: SystemJS.import('ArcheTypes/WarriorClass.js'),
-    paladin: SystemJS.import('ArcheTypes/PaladinClass.js'),
-    rogue: SystemJS.import('ArcheTypes/RogueClass.js')
+    mage:  MageClass,
+    warrior: WarriorClass,
+    paladin: PaladinClass,
+    rogue: RogueClass
 
   };
 

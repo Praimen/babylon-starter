@@ -1,7 +1,9 @@
 
-/*var GameUtils = require('../Package/scripts/GameUtils.js');*/
 
-import GameUtils from "../Package/scripts/GameUtils.js" ;
+import GameUtils from "../Package/scripts/GameUtils.js";
+import PlayerAccount from "../Package/scripts/PlayerAccount.js";
+
+
 var gameInstance,player;
 /*the player account should have objects ready to finish fleshing out the playerActor
 * it should also send an ID to the DB and return a character object
@@ -10,23 +12,16 @@ var gameInstance,player;
 var gameUtils = new GameUtils();
 console.log(gameUtils);
 
-/*
 
-var scriptArr = ['PlayerAccount.js','ArcCamera.js','WorldScene.js','GameInstance.js','PlayerActor.js','PlayerRace.js','PlayerClass.js','GameDB.js','Items.js','Items/ItemDB.js'];
-/!*var scriptPath = '/Package/scripts';*!/
 
-/!*gameUtil.setBaseScriptPath(scriptPath);*!/
-gameUtil.setScriptArr(scriptArr);
+var scriptArr = ['PlayerAccount.js','PlayerRace.js','PlayerClass.js','GameDB.js','Items.js','Items/ItemDB.js'];
 
-gameUtil.scriptLoader(null,null).then(function(pmsg){
 
-  console.log('finished loading the script1s: ',pmsg);
 
-}).done(function(pmsg){
 
-  createScene();
+ /* createScene();*/
 
-});
+
 
 
 // -------------------------------------------------------------
@@ -74,4 +69,4 @@ function windowCanvasResizeEvent(gameInstance){
 }
 // Watch for browser/canvas resize events
 
-*/
+

@@ -2,29 +2,38 @@
  * Created by B16552 on 8/2/2016.
  */
 
-function GameInstance(){
+
+import WorldScene from "../Package/scripts/WorldScene.js";
+import PlayerActor from "../Package/scripts/PlayerActor.js";
+import ArcCamera from "../Package/scripts/ArcCamera.js";
+import PlayerAccount from "../Package/scripts/PlayerAccount.js";
+
+
+export default class GameInstance{
   /*TODO: at some point the GameInstance should stop asking the Player Account for information
   * It should already have the object that it needs to build the player actor
   *
   * */
 
+  constructor(){
 
 
-  var scene,camera,canvas,engine,playerActorPlayer;
-  var playerCharactersArr = [];
+    canvas = document.querySelector("#renderCanvas");
+    engine = new BABYLON.Engine(canvas, true);
+    scene = new WorldScene(engine);
+    camera = new ArcCamera(canvas, scene);
+    playerActorPlayer = new PlayerActor(playerAccount);
+  }
 
-  canvas = document.querySelector("#renderCanvas");
-  engine = new BABYLON.Engine(canvas, true);
-  scene = new WorldScene(engine);
-  camera = new ArcCamera(canvas, scene);
 
 
-  var validatePlayerAccount = function(){
+
+  validatePlayerAccount (){
 
   };
 
-  var makeAccountPlayer = function(playerAccount){
-    playerActorPlayer = new PlayerActor(playerAccount);
+  makeAccountPlayer (playerAccount){
+
     /*get player info from DB account and setup player*/
     /*
     * TODO: make a PlayerAccount Object to Query the game object for information
@@ -46,7 +55,7 @@ function GameInstance(){
 
   };
 
-  function addPlayerToScene(playerAccount){
+  addPlayerToScene(playerAccount){
 
     var pos = playerAccount.character.location;
     var playerModel = BABYLON.Mesh.CreateSphere(playerAccount.character.archetype, 8, 1, scene);
@@ -55,41 +64,32 @@ function GameInstance(){
 
   }
 
-  var setPlayerToInstance = function(playerAccount){
+  setPlayerToInstance(playerAccount){
     playerCharactersArr.push(playerAccount.character)
   };
 
-  var getPlayer = function(){
+  get player(){
     return playerActorPlayer;
-  };
+  }
 
-  var getEngine = function(){
+  get engine(){
     return engine;
-  };
+  }
 
-  var getScene = function(){
+  get scene(){
     return scene;
-  };
+  }
 
-  var getCamera = function(){
+  get camera(){
     return camera;
-  };
+  }
 
-  var getCanvas = function(){
+  get canvas(){
     return canvas;
-  };
+  }
 
 
 
-  return {
-    makePlayer: makeAccountPlayer,
-    setPlayerToInstance: setPlayerToInstance,
-    player: getPlayer(),
-    canvas: getCanvas(),
-    engine: getEngine(),
-    scene:  getScene(),
-    camera: getCamera()
-  };
 
 
 
