@@ -2,8 +2,8 @@
  * Created by Praimen on 8/17/2016.
  */
 
-function PlayerAccount(){
-
+export class PlayerAccount{
+constructor(){
   this.accountID = "xFER3ik9l";
   this.accountType = "VIP";
   this.accountStatus = "Current";
@@ -19,6 +19,8 @@ function PlayerAccount(){
   };
 
   return this;
+}
+
 }
 
 /*

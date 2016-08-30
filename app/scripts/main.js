@@ -14,12 +14,12 @@ console.log(gameUtils);
 
 
 
-var scriptArr = ['PlayerAccount.js','PlayerRace.js','PlayerClass.js','GameDB.js','Items.js','Items/ItemDB.js'];
+var scriptArr = ['PlayerRace.js','PlayerClass.js','GameDB.js','Items.js','Items/ItemDB.js'];
 
 
 
 
- /* createScene();*/
+  createScene();
 
 
 
@@ -29,11 +29,11 @@ var scriptArr = ['PlayerAccount.js','PlayerRace.js','PlayerClass.js','GameDB.js'
 function createScene( ) {
   var playerAccount = new PlayerAccount();
 
-  /!* TODO: more specific playerAccount info needs to be retrieved from database and passed into the gameInstance*!/
+  /* TODO: more specific playerAccount info needs to be retrieved from database and passed into the gameInstance*/
 
   gameInstance = new GameInstance();
 
-  var scene = gameInstance.scene;
+  var scene = gameInstance.scene();
 
 
 
@@ -42,10 +42,10 @@ function createScene( ) {
 
   var ground = BABYLON.Mesh.CreateGround("ground1", 12, 12, 2, scene);
 
-  player = gameInstance.makePlayer(playerAccount);
+  gameInstance.validatePlayerAccount(playerAccount);
 
-
-  gameInstance.setPlayerToInstance(playerAccount);
+  player = gameInstance.makePlayer();
+  gameInstance.setPlayerToInstance();
 
   startEngine(gameInstance);
 }

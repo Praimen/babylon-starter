@@ -1,8 +1,10 @@
 /**
  * Created by B16552 on 7/24/2016.
  */
-/*SystemJS.import('Items.js');*/
-function PlayerActor(playerAccount){
+
+import Items from "../Package/scripts/Items/Items.js";
+
+export class PlayerActor(playerAccount){
 /*The player actor should graft things from the playerAccount and other entities like Items, Skills,Archetypes*/
 
   this.baseStatNum = 10;
