@@ -1,6 +1,7 @@
 
 
 import GameUtils from "../Package/scripts/GameUtils.js";
+import GameInstance from "../Package/scripts/GameInstance.js";
 import PlayerAccount from "../Package/scripts/PlayerAccount.js";
 
 
@@ -9,7 +10,7 @@ var gameInstance,player;
 * it should also send an ID to the DB and return a character object
 * */
 
-var gameUtils = new GameUtils();
+var gameUtils = new GameUtils() ;
 console.log(gameUtils);
 
 
@@ -27,9 +28,10 @@ var scriptArr = ['PlayerRace.js','PlayerClass.js','GameDB.js','Items.js','Items/
 // -------------------------------------------------------------
 // Here begins a function that we will 'call' just after it's built
 function createScene( ) {
-  var playerAccount = new PlayerAccount();
-
   /* TODO: more specific playerAccount info needs to be retrieved from database and passed into the gameInstance*/
+  var playerAccount = new PlayerAccount();
+/*********************************************end************************************************************/
+
 
   gameInstance = new GameInstance();
 
@@ -44,10 +46,10 @@ function createScene( ) {
 
   gameInstance.validatePlayerAccount(playerAccount);
 
-  player = gameInstance.makePlayer();
-  gameInstance.setPlayerToInstance();
+  //player = gameInstance.makePlayer();
+  //gameInstance.setPlayerToInstance();
 
-  startEngine(gameInstance);
+  //startEngine(gameInstance);
 }
 
 

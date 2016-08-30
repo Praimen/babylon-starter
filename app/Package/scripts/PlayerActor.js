@@ -2,44 +2,46 @@
  * Created by B16552 on 7/24/2016.
  */
 
-import Items from "../Package/scripts/Items/Items.js";
+import Items from "./Items.js";
 
-export class PlayerActor(playerAccount){
+export default class PlayerActor{
 /*The player actor should graft things from the playerAccount and other entities like Items, Skills,Archetypes*/
-
-  this.baseStatNum = 10;
-  this.stats = {
-    str:  0,
-    dex:  0,
-    int:  0,
-    char: 0,
-    apt: 0,
-    con: 0
-  };
-
-
-
-  this.character = playerAccount.character;
-  this.animations = [];
-  this.class = {};
+  constructor(playerAccount){
+    this.baseStatNum = 10;
+    this.stats = {
+      str:  0,
+      dex:  0,
+      int:  0,
+      char: 0,
+      apt: 0,
+      con: 0
+    };
 
 
-  this.items = {
 
-    eq:{},
-    inv:{}
-  };
+    this.character = playerAccount.character;
+    this.animations = [];
+    this.class = {};
 
 
-  /*this should call the account to see what has been saved to his inventory*/
-  this.skills = [];/*this should call the account to see what skill IDs the account has available*/
+    this.items = {
 
-  this.race = {};
-  this.age = {};
+      eq:{},
+      inv:{}
+    };
 
-  this.model = {};
 
-  return this;
+    /*this should call the account to see what has been saved to his inventory*/
+    this.skills = [];/*this should call the account to see what skill IDs the account has available*/
+
+    this.race = {};
+    this.age = {};
+
+    this.model = {};
+
+    return this;
+  }
+
 }
 
 

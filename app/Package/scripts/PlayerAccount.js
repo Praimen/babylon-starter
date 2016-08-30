@@ -2,7 +2,7 @@
  * Created by Praimen on 8/17/2016.
  */
 
-export class PlayerAccount{
+export default class PlayerAccount{
 constructor(){
   this.accountID = "xFER3ik9l";
   this.accountType = "VIP";
@@ -18,7 +18,7 @@ constructor(){
     location:{x:0,y:0,z:1}
   };
 
-  return this;
+
 }
 
 }

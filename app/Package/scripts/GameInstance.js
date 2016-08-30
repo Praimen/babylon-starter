@@ -3,9 +3,9 @@
  */
 
 
-import WorldScene from "../Package/scripts/WorldScene.js";
-import PlayerActor from "../Package/scripts/PlayerActor.js";
-import ArcCamera from "../Package/scripts/ArcCamera.js";
+import WorldScene from "./WorldScene.js";
+import PlayerActor from "./PlayerActor.js";
+import ArcCamera from "./ArcCamera.js";
 
 
 
