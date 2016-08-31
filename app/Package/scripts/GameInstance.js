@@ -3,13 +3,13 @@
  */
 
 
-import WorldScene from "./WorldScene.js";
+import { WorldScene } from "./WorldScene.js";
 import PlayerActor from "./PlayerActor.js";
-import ArcCamera from "./ArcCamera.js";
+import { ArcCamera } from "./ArcCamera.js";
 
 
 
-export class GameInstance{
+export default class GameInstance{
   /*TODO: at some point the GameInstance should stop asking the Player Account for information
   * It should already have the object that it needs to build the player actor
   *
@@ -19,19 +19,19 @@ export class GameInstance{
     this._playerAccount = null;
     this._playerCharactersArr = [];
     this._canvas = document.querySelector("#renderCanvas");
-    this._engine = new BABYLON.Engine(canvas, true);
-    this._scene = new WorldScene(engine);
-    this._camera = new ArcCamera(canvas, scene);
+    this._engine = new BABYLON.Engine(this._canvas, true);
+    this._scene = new WorldScene(this._engine);
+    this._camera = new ArcCamera(this._canvas , this._scene);
     this._playerActorPlayer = {};
   }
 
   validatePlayerAccount (playerAccount){
     //TODO: if player account is valid set it
-    _playerAccount = playerAccount;
+    this._playerAccount = playerAccount;
   };
 
   makeAccountPlayer (){
-    _playerActorPlayer = new PlayerActor(_playerAccount);
+    this._playerActorPlayer = new PlayerActor(this._playerAccount);
     /*get player info from DB account and setup player*/
     /*
     * TODO: make a PlayerAccount Object to Query the game object for information
@@ -40,22 +40,23 @@ export class GameInstance{
     * verified by the database
     *
     * */
-   /* _playerActorPlayer.setClass();
-    _playerActorPlayer.setRace();
+
+    _playerActorPlayer.setClass();
+    /* _playerActorPlayer.setRace();
     _playerActorPlayer.getCharacterItems();*/
 
     this.addPlayerToScene();
 
-    return _playerActorPlayer;
+    return this._playerActorPlayer;
 
   }
 
   addPlayerToScene(){
-    var playerAccount = _playerAccount;
+    var playerAccount = this._playerAccount;
     var pos = playerAccount.character.location;
     var playerModel = BABYLON.Mesh.CreateSphere(playerAccount.character.archetype, 8, 1, scene);
-    _playerActorPlayer.playerModel(playerModel);
-    _playerActorPlayer.position = new BABYLON.Vector3(pos.x, pos.y, pos.z);
+    this._playerActorPlayer.playerModel(playerModel);
+    this._playerActorPlayer.position = new BABYLON.Vector3(pos.x, pos.y, pos.z);
 
   }
 
