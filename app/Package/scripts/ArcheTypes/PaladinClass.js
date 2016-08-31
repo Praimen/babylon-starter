@@ -1,19 +1,28 @@
 /**
  * Created by B16552 on 8/10/2016.
  */
-function PaladinClass(){
+import PlayerClass from "../../../Package/scripts/PlayerClass.js";
+
+export class PaladinClass extends PlayerClass{
   /*skills 400-499*/
-  this.classStats = "i am a Paladin with these stats";
-  this.stats = {
-    str:  2,
-    dex:  -2,
-    int:  -1,
-    char: 3,
-    apt:  1,
-    con:  2
-  };
+  constructor(){
+    super();
+    this._name = "Paladin class";
+    this._stats = {
+      str:  2,
+      dex:  -2,
+      int:  -1,
+      char: 3,
+      apt:  1,
+      con:  2
+    };
+  }
+
+  get name(){
+    return this._name;
+  }
 
 
 }
 
-PaladinClass.prototype = PlayerClass.prototype;
+

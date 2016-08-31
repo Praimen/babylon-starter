@@ -1,36 +1,37 @@
 /**
  * Created by B16552 on 8/10/2016.
  */
-import MageClass from "../Package/scripts/MageClass.js";
-import WarriorClass from "../Package/scripts/WarriorClass.js";
-import PaladinClass from "../Package/scripts/PaladinClass.js";
-import RogueClass from "../Package/scripts/RogueClass.js";
+import MageClass from "../../Package/scripts/ArcheTypes/MageClass.js";
+import WarriorClass from "../../Package/scripts/ArcheTypes/WarriorClass.js";
+import PaladinClass from "../../Package/scripts/ArcheTypes/PaladinClass.js";
+import RogueClass from "../../Package/scripts/ArcheTypes/RogueClass.js";
 
-function PlayerClass(className){
+export default class PlayerClass{
 
-  var classObj = {
+  constructor(){
 
-    mage:  MageClass,
-    warrior: WarriorClass,
-    paladin: PaladinClass,
-    rogue: RogueClass
+  }
 
-  };
+  set archetype(className){
 
+    this._classObj = {
+      mage:  MageClass,
+      warrior: WarriorClass,
+      paladin: PaladinClass,
+      rogue: RogueClass
+    };
 
-  var getPlayerClassType = function(classTypeName){
+    this._classType = this._classObj[className];
+  }
 
-    return classObj[classTypeName];
+  get archetype(){
+    return this._classType;
+  }
 
-  };
-
-
- return getPlayerClassType(className);
+  get stats(){
+    return this._stats;
+  }
 
 }
 
-PlayerClass.prototype.getClassStats = function(){
 
-    return this.stats;
-
-};

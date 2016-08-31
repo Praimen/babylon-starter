@@ -35,7 +35,7 @@ function createScene( ) {
 
   gameInstance = new GameInstance();
 
-  var scene = gameInstance.scene();
+  var scene = gameInstance.scene;
 
 
 
@@ -46,10 +46,10 @@ function createScene( ) {
 
   gameInstance.validatePlayerAccount(playerAccount);
 
-  //player = gameInstance.makePlayer();
+  player = gameInstance.makePlayer();
   //gameInstance.setPlayerToInstance();
 
-  //startEngine(gameInstance);
+  startEngine(gameInstance);
 }
 
 

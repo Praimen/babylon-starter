@@ -3,7 +3,7 @@
  */
 
 /*SystemJS.import('Items/ItemDB.js');*/
-function Items(){
+export function Items(){
 
 
 
