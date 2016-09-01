@@ -1,5 +1,7 @@
 {
   "name": "babylon-starter",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "q": "1.4.1"
+  }
 }

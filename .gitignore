@@ -7,3 +7,8 @@ bower_components
 .yo-rc.json
 examples/
 test/
+bowerrc
+*.bowerrc
+
+
+app/scripts/module.js
