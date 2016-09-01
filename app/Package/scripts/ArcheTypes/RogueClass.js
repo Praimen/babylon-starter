@@ -1,11 +1,11 @@
 /**
  * Created by B16552 on 8/10/2016.
  */
-import PlayerClass from "../../../Package/scripts/PlayerClass.js";
-export default class RogueClass extends PlayerClass{
+
+export default class RogueClass{
 
   constructor() {
-    super();
+
     this._name = "Rogue class";
     /*skills 300-399*/
     this.classStats = "i am a Rogue with these stats";
@@ -20,9 +20,7 @@ export default class RogueClass extends PlayerClass{
 
   }
 
-  get name(){
-    return this._name;
-  }
+
 
 }
 

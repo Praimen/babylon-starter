@@ -1,11 +1,10 @@
 /**
  * Created by B16552 on 8/10/2016.
  */
-import PlayerClass from "../../../Package/scripts/PlayerClass.js";
-export class WarriorClass extends PlayerClass{
+
+export default class WarriorClass{
   /*skills 200-299*/
   constructor() {
-    super();
     this._name = "Warrior class";
     this._stats = {
       str:  4,
@@ -17,9 +16,6 @@ export class WarriorClass extends PlayerClass{
     };
   }
 
-  get name(){
-    return this._name;
-  }
 
 }
 

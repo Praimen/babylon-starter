@@ -1,12 +1,12 @@
 /**
  * Created by B16552 on 8/10/2016.
  */
-import PlayerClass from "../../../Package/scripts/PlayerClass.js";
 
-export class PaladinClass extends PlayerClass{
+
+export default class PaladinClass{
   /*skills 400-499*/
   constructor(){
-    super();
+
     this._name = "Paladin class";
     this._stats = {
       str:  2,
@@ -16,10 +16,6 @@ export class PaladinClass extends PlayerClass{
       apt:  1,
       con:  2
     };
-  }
-
-  get name(){
-    return this._name;
   }
 
 

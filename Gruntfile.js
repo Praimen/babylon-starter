@@ -35,7 +35,7 @@ module.exports = function (grunt) {
         tasks: ['wiredep']
       },
       js: {
-        files: ['<%= config.app %>/scripts/{,*/}*.js'],
+        files: ['<%= config.app %>/scripts/{,*/}*.js', '!<%= config.app %>/scripts/{,*/}module.js'],
         tasks: [/*'babel:server',*/'browserify:dist'],
         options: {
           livereload: true
@@ -308,7 +308,7 @@ module.exports = function (grunt) {
         },
         options: {
           sourceMap: true,
-          "transform": [["babelify", { "presets": ["es2015"],"plugins": ["add-module-exports"] }]]
+          "transform": [["babelify", { "presets": ["es2015"]}]]
         }
 
 

@@ -4,7 +4,7 @@
 
 import { Items } from "./Items.js";
 import PlayerClass from "./PlayerClass.js";
-import PlayerRace from "./PlayerRace.js";
+/*import PlayerRace from "./PlayerRace.js";*/
 
 export default class PlayerActor{
 /*The player actor should graft things from the playerAccount and other entities like Items, Skills,Archetypes*/
@@ -21,7 +21,7 @@ export default class PlayerActor{
 
     this._character = playerAccount.character;
     this._animations = [];
-    this._class = new PlayerClass().archetype(this._character.archetype);
+    this._class = new PlayerClass(this._character.archetype);
     /*this._race = new PlayerRace(this._character.race);*/
 
     this._items = {
@@ -60,29 +60,23 @@ export default class PlayerActor{
 
   }
 
-  getStat(statNameAbbr) {
-    return this.stats[statNameAbbr];
+  init() {
+    this.initStats();
   }
 
-  set playerModel(meshObj) {
-    this._model = meshObj;
-  }
 
-  get playerModel(){
-    return this._model;
-  }
 
 
   get stats() {
-    this.initStats()
-    console.log("here is the class ",this.class.name);
-    console.log("is there anything in this class ",this._stats);
-    return this.class.stats;
+
+    console.log("here is the class ",this._class.name);
+    console.log("here are the class stats ",this._class.stats);
+    console.log("here are the modified stats",this._stats);
 
   };
 
 
-  setRace () {
+  /*setRace () {
     var racePromise;
     var race = this.character.race;
     var self = this;
@@ -92,12 +86,14 @@ export default class PlayerActor{
   };
 
   resolveRacePromise(promiseResult){
-    /*the archetype */
+    /!*the archetype *!/
     this.race =  new promiseResult();
     this.race.getRaceStats();
     this.setStats();
     console.log("this is the race",this.race);
   };
+
+*/
 
 
   getCharacterItems(){
@@ -113,6 +109,15 @@ export default class PlayerActor{
      }*/
     console.log('itams: ',this.items.objArr);
   };
+
+
+  set playerModel(meshObj) {
+    this._model = meshObj;
+  }
+
+  get playerModel(){
+    return this._model;
+  }
 
 
 

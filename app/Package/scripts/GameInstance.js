@@ -40,22 +40,19 @@ export default class GameInstance{
     * verified by the database
     *
     * */
+    this._playerActorPlayer.init();
 
-    _playerActorPlayer.setClass();
     /* _playerActorPlayer.setRace();
     _playerActorPlayer.getCharacterItems();*/
 
-    this.addPlayerToScene();
 
-    return this._playerActorPlayer;
 
   }
 
   addPlayerToScene(){
     var playerAccount = this._playerAccount;
     var pos = playerAccount.character.location;
-    var playerModel = BABYLON.Mesh.CreateSphere(playerAccount.character.archetype, 8, 1, scene);
-    this._playerActorPlayer.playerModel(playerModel);
+    this._playerActorPlayer.playerModel = BABYLON.Mesh.CreateSphere(playerAccount.character.archetype, 8, 1, this._scene);
     this._playerActorPlayer.position = new BABYLON.Vector3(pos.x, pos.y, pos.z);
 
   }

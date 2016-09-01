@@ -9,4 +9,6 @@ examples/
 test/
 bowerrc
 *.bowerrc
+
+
 app/scripts/module.js
