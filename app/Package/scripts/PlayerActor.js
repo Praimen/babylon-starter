@@ -1,10 +1,8 @@
-/**
- * Created by B16552 on 7/24/2016.
- */
+
 
 import { Items } from "./Items.js";
 import PlayerClass from "./PlayerClass.js";
-/*import PlayerRace from "./PlayerRace.js";*/
+import PlayerRace from "./PlayerRace.js";
 
 export default class PlayerActor{
 /*The player actor should graft things from the playerAccount and other entities like Items, Skills,Archetypes*/
@@ -22,7 +20,7 @@ export default class PlayerActor{
     this._character = playerAccount.character;
     this._animations = [];
     this._class = new PlayerClass(this._character.archetype);
-    /*this._race = new PlayerRace(this._character.race);*/
+    this._race = new PlayerRace(this._character.race);
 
     this._items = {
       eq:{},
@@ -45,12 +43,12 @@ export default class PlayerActor{
     /*if no arg passed then get them all*/
     var baseStatNum = this._baseStatNum;
     var archeTypeStatMod = this._class.stats;
-    /*var racialStatMod = this.race.stats;*/
+    var racialStatMod = this._race.stats;
 
     for(var key in  this._stats )  {
 
       var randomBaseStat = Math.random() *  baseStatNum + 5;
-      var modifiedStat = Math.ceil(randomBaseStat)  + (archeTypeStatMod[key] * 1) /*+ (racialStatMod[key] * 1)*/;
+      var modifiedStat = Math.ceil(randomBaseStat)  + (archeTypeStatMod[key] * 1) + (racialStatMod[key] * 1);
       if(modifiedStat < 5){
         modifiedStat = 5;
       }
@@ -74,26 +72,6 @@ export default class PlayerActor{
     console.log("here are the modified stats",this._stats);
 
   };
-
-
-  /*setRace () {
-    var racePromise;
-    var race = this.character.race;
-    var self = this;
-    racePromise = new PlayerRace(race);
-    racePromise.then(function(result) { self.resolveRacePromise(result) } );
-
-  };
-
-  resolveRacePromise(promiseResult){
-    /!*the archetype *!/
-    this.race =  new promiseResult();
-    this.race.getRaceStats();
-    this.setStats();
-    console.log("this is the race",this.race);
-  };
-
-*/
 
 
   getCharacterItems(){

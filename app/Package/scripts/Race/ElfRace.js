@@ -3,19 +3,20 @@
  */
 
 
-function ElfRace(){
+export default class ElfRace{
 
-  this.raceStats = "I am elven i get int dex char bonuses, but str and con minuses";
-  this.stats = {
-    str:  -2,
-    dex:  1,
-    int:  1,
-    char: 1,
-    apt:  1,
-    con:  -2
-  };
+  constructor(){
 
+    this._name = "Elven";
+    this._stats = {
+      str:  -2,
+      dex:  1,
+      int:  1,
+      char: 1,
+      apt:  1,
+      con:  -2
+    };
+  }
 
 }
 
-ElfRace.prototype = PlayerRace.prototype;

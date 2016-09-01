@@ -3,22 +3,25 @@
  */
 
 
-function HumanRace(){
+export default class HumanRace {
+  constructor(){
 
-  this.raceStats = "I am a human i get no bonuses";
-  this.stats = {
-    str:  1,
-    dex:  1,
-    int:  1,
-    char: 1,
-    apt:  1,
-    con:  1
-  };
+    this._name = "Human";
+    this._stats = {
+      str:  1,
+      dex:  1,
+      int:  1,
+      char: 1,
+      apt:  1,
+      con:  1
+    };
+
+  }
+
 
 
 }
 
-HumanRace.prototype = PlayerRace.prototype;
 
 
 

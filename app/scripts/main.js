@@ -2,7 +2,7 @@
 
 import GameUtils from "../Package/scripts/GameUtils.js";
 import GameInstance from "../Package/scripts/GameInstance.js";
-import PlayerAccount from "../Package/scripts/PlayerAccount.js" ;
+import PlayerAccount from "../Package/scripts/PlayerAccount.js";
 
 
 var gameInstance,player;

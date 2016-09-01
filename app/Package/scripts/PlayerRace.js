@@ -1,36 +1,35 @@
-/**
- * Created by B16552 on 8/10/2016.
- */
 
-/*import HumanRace from "../../Package/scripts/Race/HumanRace.js";
-import VampireRace from "../../Package/scripts/Race/VampireRace.js";
-import ElfRace from "../../Package/scripts/Race/ElfRace.js";
-import SpiderRace from "../../Package/scripts/Race/SpiderRace.js";
-import DragonRace from "../../Package/scripts/Race/DragonRace.js";*/
+
+import HumanRace from "./Race/HumanRace.js";
+/*import VampireRace from "./Race/VampireRace.js";*/
+import ElfRace from "./Race/ElfRace.js";
+import SpiderRace from "./Race/SpiderRace.js";
+import DragonRace from "./Race/DragonRace.js";
 
 export default class PlayerRace {
+
   constructor(raceName) {
 
     this._raceListObj = {
 
-      human:    "HumanRace",
-      vampire:  "VampireRace",
-      elf:      "ElfRace",
-      spider:   "SpiderRace",
-      dragon:   "DragonRace"
+      human:    new HumanRace(),
+    /*  vampire:  new VampireRace(),*/
+      elf:      new ElfRace(),
+      spider:   new SpiderRace(),
+      dragon:   new DragonRace()
 
     };
 
-    return this._raceListObj[raceName]();
+    this._race = this._raceListObj[raceName];
   }
 
 
   get name() {
-    return this._name;
+    return this._race._name;
   }
 
   get stats(){
-    return this._stats;
+    return this._race._stats;
   }
 
 

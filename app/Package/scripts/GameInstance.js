@@ -1,6 +1,4 @@
-/**
- * Created by B16552 on 8/2/2016.
- */
+
 
 
 import { WorldScene } from "./WorldScene.js";
@@ -42,8 +40,8 @@ export default class GameInstance{
     * */
     this._playerActorPlayer.init();
 
-    /* _playerActorPlayer.setRace();
-    _playerActorPlayer.getCharacterItems();*/
+
+     /*_playerActorPlayer.getCharacterItems();*/
 
 
 

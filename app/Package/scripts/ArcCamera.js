@@ -1,6 +1,4 @@
-/**
- * Created by B16552 on 7/24/2016.
- */
+
 
 export function ArcCamera(canvas,scene){
   //should the cameras be attached to the scene or the player

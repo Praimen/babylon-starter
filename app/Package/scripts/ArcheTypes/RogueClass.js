@@ -1,12 +1,10 @@
-/**
- * Created by B16552 on 8/10/2016.
- */
+
 
 export default class RogueClass{
 
   constructor() {
 
-    this._name = "Rogue class";
+    this._name = "Rogue";
     /*skills 300-399*/
     this.classStats = "i am a Rogue with these stats";
     this._stats = {

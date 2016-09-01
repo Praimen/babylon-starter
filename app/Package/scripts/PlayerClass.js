@@ -1,6 +1,4 @@
-/**
- * Created by B16552 on 8/10/2016.
- */
+
 import MageClass from "./ArcheTypes/MageClass.js";
 import WarriorClass from "./ArcheTypes/WarriorClass.js";
 import PaladinClass from "./ArcheTypes/PaladinClass.js";
@@ -10,10 +8,10 @@ export default class PlayerClass{
 
   constructor(className){
     this._archetypeListObj =  {
-      mage:  new MageClass(),
-      warrior: new WarriorClass(),
-      paladin: new PaladinClass(),
-      rogue: new RogueClass()
+      mage:     new MageClass(),
+      warrior:  new WarriorClass(),
+      paladin:  new PaladinClass(),
+      rogue:    new RogueClass()
     };
 
     this._archetype =  this._archetypeListObj[className];

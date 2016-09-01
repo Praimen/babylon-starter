@@ -1,6 +1,4 @@
-/**
- * Created by Praimen on 8/17/2016.
- */
+
 
 
 function GameDB(){
