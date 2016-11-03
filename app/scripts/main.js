@@ -1,6 +1,6 @@
 
 
-import GameUtils from "../Package/scripts/GameUtils.js";
+//import GameUtils from "../Package/scripts/GameUtils.js";
 import GameInstance from "../Package/scripts/GameInstance.js";
 import PlayerAccount from "../Package/scripts/PlayerAccount.js";
 
@@ -10,12 +10,12 @@ var gameInstance,player;
 * it should also send an ID to the DB and return a character object
 * */
 
-var gameUtils = new GameUtils() ;
-console.log(gameUtils);
+//var gameUtils = new GameUtils() ;
+//console.log(gameUtils);
 
 
 
-var scriptArr = ['PlayerRace.js','PlayerClass.js','GameDB.js','Items.js','Items/ItemDB.js'];
+//var scriptArr = ['PlayerRace.js','PlayerClass.js','GameDB.js','Items.js','Items/ItemDB.js'];
 
 
 
