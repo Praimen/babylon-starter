@@ -11,27 +11,30 @@ export function Items(){
   *
   * */
 
+
   return this;
 }
 
 Items.prototype.getCharacterItems = function(playerActor){
-  var characterInvArr = playerActor.character.items;
+  var characterItmArr = playerActor.character.items;
   var itemDatabase = new ItemDB();
   var dbresult = [];
   itemDatabase.connect();
 
-  for (var i = 0; i < characterInvArr.length; i++) {
+  dbresult.push(itemDatabase.fetch(characterItmArr));
+
+  /*for (var i = 0; i < characterInvArr.length; i++) {
     var itemID = characterInvArr[i];
 
-    /*once each item is read it will need to be sorted into inventory and equipped by reading a flag
-    * the new bjects should be pushed into the items array in 2 new objs accordingly
+    /!*once each item is read it will need to be sorted into inventory and equipped by reading a flag
+    * the new objects should be pushed into the items array in 2 new objects accordingly
     *
     *
-    * */
-    dbresult.push(itemDatabase.fetch(itemID));
+    * *!/
 
 
-  }
+
+  }*/
 
   itemDatabase.close('finished getting items');
 
