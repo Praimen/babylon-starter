@@ -59,6 +59,7 @@ export default class PlayerActor{
 
   init() {
     this.initStats();
+    this.characterItems();
   }
 
 
@@ -73,18 +74,20 @@ export default class PlayerActor{
   };
 
 
-  get characterItems(){
-
+  characterItems(){
+    //TODO:find a way not to have to use self here
+    var self = this;
     var items = new Items();
 
-    this._items = items.getCharacterItems(this._character);
+    items.getCharacterItems(this._character).then((characterItems)=>{
+        console.log('hey here is characterItems',characterItems);
+        this._items =  characterItems;
+    });
 
-    /* if(dbresult.equipped){
-     characterInvArr.eq[itemID] = dbresult;
-     }else{
-     characterInvArr.inv[itemID] = dbresult;
-     }*/
+
+
     console.log('items: ',this._items);
+
   };
 
 
