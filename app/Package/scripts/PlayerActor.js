@@ -75,18 +75,15 @@ export default class PlayerActor{
 
 
   characterItems(){
-    //TODO:find a way not to have to use self here
-    var self = this;
+
     var items = new Items();
-
-    items.getCharacterItems(this._character).then((characterItems)=>{
-        console.log('hey here is characterItems',characterItems);
-        this._items =  characterItems;
+    items.getCharacterItems(this._character).then((characterItems) => {
+      var obj = {};
+      for (var i = 0; i < characterItems.length; i++) {
+         obj[characterItems[i]._id]= characterItems[i];
+      }
+        this._items =  obj;
     });
-
-
-
-    console.log('items: ',this._items);
 
   };
 
