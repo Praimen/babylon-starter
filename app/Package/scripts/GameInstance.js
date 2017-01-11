@@ -1,6 +1,4 @@
 
-
-
 import { WorldScene } from "./WorldScene.js";
 import PlayerActor from "./PlayerActor.js";
 import { ArcCamera } from "./ArcCamera.js";
@@ -24,7 +22,8 @@ export default class GameInstance{
   }
 
   validatePlayerAccount (playerAccount){
-    //TODO: if player account is valid set it
+    /*TODO: if player account is valid set it, this may need to be a seperate function for setting and validating
+    * in which case it may return a boolean for the validation*/
     this._playerAccount = playerAccount;
   };
 
@@ -39,15 +38,11 @@ export default class GameInstance{
     *
     * */
     this._playerActorPlayer.init();
-
-
      /*_playerActorPlayer.getCharacterItems();*/
-
-
-
   }
 
   addPlayerToScene(){
+    /*TODO: add validation error handling for the method variables*/
     var playerAccount = this._playerAccount;
     var pos = playerAccount.character.location;
     this._playerActorPlayer.playerModel = BABYLON.Mesh.CreateSphere(playerAccount.character.archetype, 8, 1, this._scene);

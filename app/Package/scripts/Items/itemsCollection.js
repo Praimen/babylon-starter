@@ -4,7 +4,7 @@
   var itemsCollection = {
 
     itm20000:{
-      name: "sword of finding",
+      name: "riddled blade",
       type: "weapon",
       damage: 20,
       bal: 10,

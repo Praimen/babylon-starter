@@ -2,6 +2,7 @@
 
 export default class PlayerAccount{
 constructor(){
+  //TODO: build a test interface for this
   this.accountID = "xFER3ik9l";
   this.accountType = "VIP";
   this.accountStatus = "Current";

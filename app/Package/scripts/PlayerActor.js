@@ -23,8 +23,7 @@ export default class PlayerActor{
     this._race = new PlayerRace(this._character.race);
 
     this._items = {
-      eq:{},
-      inv:{}
+
     };
 
     /*this should call the account to see what has been saved to his inventory*/
@@ -60,6 +59,7 @@ export default class PlayerActor{
 
   init() {
     this.initStats();
+    this.characterItems();
   }
 
 
@@ -74,18 +74,20 @@ export default class PlayerActor{
   };
 
 
-  getCharacterItems(){
+  characterItems(){
+    //TODO:find a way not to have to use self here
     var self = this;
     var items = new Items();
 
-    this.items.objArr = items.getCharacterItems(self);
+    items.getCharacterItems(this._character).then((characterItems)=>{
+        console.log('hey here is characterItems',characterItems);
+        this._items =  characterItems;
+    });
 
-    /* if(dbresult.equipped){
-     characterInvArr.eq[itemID] = dbresult;
-     }else{
-     characterInvArr.inv[itemID] = dbresult;
-     }*/
-    console.log('itams: ',this.items.objArr);
+
+
+    console.log('items: ',this._items);
+
   };
 
 

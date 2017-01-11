@@ -1,6 +1,5 @@
 
-
-/*SystemJS.import('Items/ItemDB.js');*/
+import { ItemDB } from "./Items/ItemDB.js";
 export function Items(){
 
 
@@ -11,30 +10,24 @@ export function Items(){
   *
   * */
 
+
   return this;
 }
 
-Items.prototype.getCharacterItems = function(playerActor){
-  var characterInvArr = playerActor.character.items;
+Items.prototype.getCharacterItems = function(playerCharacter){
+  var characterItmArr = playerCharacter.items;
   var itemDatabase = new ItemDB();
-  var dbresult = [];
   itemDatabase.connect();
-
-  for (var i = 0; i < characterInvArr.length; i++) {
-    var itemID = characterInvArr[i];
-
-    /*once each item is read it will need to be sorted into inventory and equipped by reading a flag
-    * the new bjects should be pushed into the items array in 2 new objs accordingly
-    *
-    *
-    * */
-    dbresult.push(itemDatabase.fetch(itemID));
-
-
-  }
-
   itemDatabase.close('finished getting items');
 
-  return dbresult;
+  return itemDatabase.fetch(characterItmArr).then(function(items){
+
+   return Promise.all(items.rows.map (function(item) {
+       console.log('here is a new item',item);
+       return characterItmArr[item.doc._id] = item.doc;
+
+    }));
+
+  })
 
 };
