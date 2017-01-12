@@ -6,7 +6,8 @@ import PlayerRace from "./PlayerRace.js";
 
 export default class PlayerActor{
 /*The player actor should graft things from the playerAccount and other entities like Items, Skills,Archetypes*/
-  constructor(playerAccount){
+  constructor(playerAccountChar){
+    this._playerAccountChar = playerAccountChar;
     this._baseStatNum = 10;
     this._stats = {
       str:  0,
@@ -17,7 +18,7 @@ export default class PlayerActor{
       con:  0
     };
 
-    this._character = playerAccount.character;
+    this._character = this._playerAccountChar;
     this._animations = [];
     this._class = new PlayerClass(this._character.archetype);
     this._race = new PlayerRace(this._character.race);
@@ -75,15 +76,17 @@ export default class PlayerActor{
 
 
   characterItems(){
-
+    console.log(this._playerAccountChar);
     var items = new Items();
     items.getCharacterItems(this._character).then((characterItems) => {
       var obj = {};
       for (var i = 0; i < characterItems.length; i++) {
          obj[characterItems[i]._id]= characterItems[i];
       }
-        this._items =  obj;
+      this._items =  obj;
+
     });
+
 
   };
 
