@@ -2,18 +2,26 @@
 
 
 export function  GameDB(){
-  this.db = new PouchDB('gameDB');
-  this.remoteDB = "http://tommie:tester1@localhost:5984/gameDB";
+  this.db = "";
+  this.remoteDB = "";
 }
 
-GameDB.prototype.connect = function(){
+GameDB.prototype.connect = function(databaseName){
+  console.log('connect to database: ',databaseName);
+  this.db = new PouchDB(databaseName);
+  this.remoteDB = "http://tommie:tester1@localhost:5984/"+databaseName;
 
-  var opts = {live: true};
-  this.db.replicate.to(this.remoteDB, opts, this.syncError);
-  this.db.replicate.from(this.remoteDB, opts, this.syncError);
+  this.db.sync(this.remoteDB, {
+    live: true,
+    retry: true
+  }).on('change', function (info) {
+    console.log ('hey the database changed', info)
+  })
 
-  console.log('connected to DB')
+
 };
+
+
 
 GameDB.prototype.syncError = function(){
   console.error('there was a game database sync error');

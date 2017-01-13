@@ -17,7 +17,7 @@ export function Items(){
 Items.prototype.getCharacterItems = function(playerCharacter){
   var characterItmArr = playerCharacter.items;
   var itemDatabase = new ItemDB();
-  itemDatabase.connect();
+  itemDatabase.connect('items');
   itemDatabase.close('finished getting items');
 
   return itemDatabase.fetch(characterItmArr).then(function(items){

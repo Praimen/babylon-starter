@@ -3,13 +3,11 @@ import { GameDB } from "./GameDB.js";
 export default class PlayerAccount extends GameDB{
   constructor(accountID){
     super();
-    this.db = new PouchDB('account');
-    this.remoteDB = "http://tommie:tester1@localhost:5984/account";
     /*TODO: build a test interface and..
     in the final implementation this should go out to the db and build an object
     based on the account info ID that would be passed into the constructor
      */
-    this.connect();
+    this.connect('account');
     this._account = null;
     this._accountID = accountID;
 
@@ -54,7 +52,7 @@ export default class PlayerAccount extends GameDB{
 
   }
 
-  characters() {
+  /*characters() {
 
     return this.fetch(this.characterIDArr).then(function (characters) {
 
@@ -65,7 +63,7 @@ export default class PlayerAccount extends GameDB{
       }));
     })
 
-  }
+  }*/
 
 }
 

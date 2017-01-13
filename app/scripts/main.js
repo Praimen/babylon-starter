@@ -8,8 +8,10 @@ var gameInstance,player;
 var playerAccountProm = new PlayerAccount(["Tommie19"]).account.then((acctObj)=>{
   console.log('inside Promise',acctObj);
   createScene(acctObj);
-  
-});
+
+}).catch(function(err){ console.error('hey there was an error getting an account',err)});
+
+
 // -------------------------------------------------------------
 // Here begins a function that we will 'call' just after it's built
 function createScene( playerAcctObj ) {
