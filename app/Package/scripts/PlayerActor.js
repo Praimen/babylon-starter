@@ -61,6 +61,7 @@ export default class PlayerActor{
   init() {
     this.initStats();
     this.characterItems();
+    return this;
   }
 
 

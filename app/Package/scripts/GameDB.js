@@ -13,7 +13,7 @@ GameDB.prototype.connect = function(databaseName){
   this.db = new PouchDB(this.remoteDB);
 
   this.db.sync(this.remoteDB , {
-    live: true,
+    live: false,
     retry: true
   }).on('change', function (info) {
     console.log ('hey the database changed', info)

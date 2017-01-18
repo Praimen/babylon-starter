@@ -23,18 +23,39 @@ export default class GameInstance{
   }
 
   validatePlayerAccount (playerAccount){
-
+      var validated = true;
     /*TODO: if player account is valid set it, this may need to be a seperate function for setting and validating
     * in which case it may return a boolean for the validation*/
-    this._playerAccount = playerAccount;
-    this._playerAccountChar = this._playerAccount[this._playerAccount.currSelectedChar]
+    /*this._playerAccount = playerAccount;
+    this._playerAccountChar = this._playerAccount[this._playerAccount.currSelectedChar]*/
+
+    return new Promise( (resolve,reject)=>{
+      if(validated){
+        resolve((playerAccount));
+      }else{
+        reject(new Error("Player has not been validated"));
+      }
+
+    });
+
+
   };
 
-  makeAccountPlayer (){
-
+  makeAccountPlayer (playerAccount){
+    console.log("make player: ",playerAccount)
     //this._playerAccount.character = this._playerAccount.currSelectedChar;
 
-    this._playerActorPlayer = new PlayerActor(this._playerAccountChar);
+    return new Promise( (resolve,reject)=>{
+        if(playerAccount.currSelectedChar){
+          resolve(new PlayerActor(playerAccount[playerAccount.currSelectedChar]).init());
+        }else{
+          reject(new Error("Player Object has no current selected char"))
+        }
+
+    });
+
+
+
     /*get player info from DB account and setup player*/
     /*
     * TODO: make a PlayerAccount Object to Query the game object for information
@@ -43,26 +64,28 @@ export default class GameInstance{
     * verified by the database
     *
     * */
-    this._playerActorPlayer.init();
+
      /*_playerActorPlayer.getCharacterItems();*/
   }
 
-  addPlayerToScene(){
+  addPlayerToScene(playeractor){
     /*TODO: add validation error handling for the method variables*/
-    var playerCharacter = this._playerAccountChar;
+    var playerActor = playeractor;
+    var playerCharacter = playerActor._character;
     var pos = playerCharacter.location;
-    this._playerActorPlayer.playerModel = BABYLON.Mesh.CreateSphere(playerCharacter.archetype, 8, 1, this._scene);
-    this._playerActorPlayer.position = new BABYLON.Vector3(pos.x, pos.y, pos.z);
+    playerActor.playerModel = BABYLON.Mesh.CreateSphere(playerCharacter.archetype, 8, 1, this._scene);
+    playerActor.position = new BABYLON.Vector3(pos.x, pos.y, pos.z);
+    this.setPlayerToInstance(playeractor);
 
   }
 
-  setPlayerToInstance(){
-    this._playerCharactersArr.push(this._playerAccountChar);
+  setPlayerToInstance(playerActorObj){
+    this._playerCharactersArr.push(playerActorObj);
   }
 
-  get player(){
+  /*get player(){
     return this._playerActorPlayer;
-  }
+  }*/
 
   get engine(){
     return this._engine;
