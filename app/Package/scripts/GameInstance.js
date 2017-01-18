@@ -73,8 +73,8 @@ export default class GameInstance{
     var playerActor = playeractor;
     var playerCharacter = playerActor._character;
     var pos = playerCharacter.location;
-    playerActor.playerModel = BABYLON.Mesh.CreateSphere(playerCharacter.archetype, 8, 1, this._scene);
-    playerActor.position = new BABYLON.Vector3(pos.x, pos.y, pos.z);
+    playerActor._model = BABYLON.Mesh.CreateSphere(playerCharacter.archetype, 8, 1, this._scene);
+    playerActor._model.position = new BABYLON.Vector3(pos.x, pos.y, pos.z);
     this.setPlayerToInstance(playeractor);
 
   }

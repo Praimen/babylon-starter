@@ -47,6 +47,7 @@ function createScene( playerAcctObj ) {
   });*/
   var playerObjMap = playerObj.map(function(playerobj){return gameInstance.validatePlayerAccount(playerobj)});
 
+  /*TODO: can't keep this Promise.all() because all objects would have to be valid in order for instance to start*/
   return Promise.all(playerObjMap)
   .then((playerAccounts)=> {
     playerAccounts.forEach((playerAccount)=> {
@@ -56,9 +57,6 @@ function createScene( playerAcctObj ) {
       })
     })
   });
-
-
-
 
 }
 
