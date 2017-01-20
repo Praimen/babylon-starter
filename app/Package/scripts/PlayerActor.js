@@ -6,9 +6,9 @@ import PlayerRace from "./PlayerRace.js";
 
 export default class PlayerActor{
 /*The player actor should graft things from the playerAccount and other entities like Items, Skills,Archetypes*/
-  constructor(playerAccountChar){
-    this._playerAccountChar = playerAccountChar;
-    this._baseStatNum = 10;
+  constructor(playerAccount){
+    this._playerAccountCharObj = playerAccount[playerAccount.currSelectedChar];
+
     this._stats = {
       str:  0,
       dex:  0,
@@ -18,10 +18,9 @@ export default class PlayerActor{
       con:  0
     };
 
-    this._character = this._playerAccountChar;
+    this._character = this._playerAccountCharObj;
     this._animations = [];
-    this._class = new PlayerClass(this._character.archetype);
-    this._race = new PlayerRace(this._character.race);
+
 
     this._items = {
 
@@ -29,11 +28,14 @@ export default class PlayerActor{
 
     /*this should call the account to see what has been saved to his inventory*/
     this.skills = [];/*this should call the account to see what skill IDs the account has available*/
-
+    this._class = this.playerClass.name;
+    this._race = this.playerRace.name;
 
     this._age = {};
 
     this._model = {};
+
+    this._accountID = playerAccount.acctID;
 
   }
 
@@ -41,9 +43,10 @@ export default class PlayerActor{
 
   initStats() {
     /*if no arg passed then get them all*/
-    var baseStatNum = this._baseStatNum;
-    var archeTypeStatMod = this._class.stats;
-    var racialStatMod = this._race.stats;
+
+    var baseStatNum = 10;
+    var archeTypeStatMod = this.playerClass.stats;
+    var racialStatMod = this.playerRace.stats;
 
     for(var key in  this._stats )  {
 
@@ -69,8 +72,8 @@ export default class PlayerActor{
 
   get stats() {
 
-    console.log("here is the class ",this._class.name);
-    console.log("here are the class stats ",this._class.stats);
+    console.log("here is the class ", this.playerClass.name);
+    console.log("here are the class stats ", this.playerClass.stats);
     console.log("here are the modified stats",this._stats);
 
   };
@@ -98,6 +101,32 @@ export default class PlayerActor{
 
   get playerModel(){
     return this._model;
+  }
+
+
+  get playerID(){
+    return this._accountID;
+  }
+
+
+
+  set playerClass(playerClassName){
+
+  }
+
+
+  get playerClass(){
+    return new PlayerClass(this._character.archetype);
+  }
+
+
+  set playerRace(playerRaceName){
+
+  }
+
+
+  get playerRace(){
+    return new PlayerRace(this._character.race);
   }
 
 

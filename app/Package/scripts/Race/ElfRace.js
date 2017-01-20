@@ -7,7 +7,7 @@ export default class ElfRace{
 
   constructor(){
 
-    this._name = "Elven";
+    this._name = "Elf";
     this._stats = {
       str:  -2,
       dex:  1,

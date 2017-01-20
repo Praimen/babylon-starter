@@ -47,7 +47,7 @@ export default class GameInstance{
 
     return new Promise( (resolve,reject)=>{
         if(playerAccount.currSelectedChar){
-          resolve(new PlayerActor(playerAccount[playerAccount.currSelectedChar]).init());
+          resolve(new PlayerActor(playerAccount).init());
         }else{
           reject(new Error("Player Object has no current selected char"))
         }
@@ -73,7 +73,7 @@ export default class GameInstance{
     var playerActor = playeractor;
     var playerCharacter = playerActor._character;
     var pos = playerCharacter.location;
-    playerActor._model = BABYLON.Mesh.CreateSphere(playerCharacter.archetype, 8, 1, this._scene);
+    playerActor._model = BABYLON.Mesh.CreateSphere(playerActor.playerID, 8, 1, this._scene);
     playerActor._model.position = new BABYLON.Vector3(pos.x, pos.y, pos.z);
     this.setPlayerToInstance(playeractor);
 
