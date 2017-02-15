@@ -3,6 +3,8 @@ import PlayerAccount from "../Package/scripts/PlayerAccount.js";
 
 var player, gameInstance = new GameInstance();
 
+
+
 var playerAccountPromise = new PlayerAccount(["Tommie19","Praimen13"]).account.then((acctObj)=>{
   console.log('inside Promise',acctObj);
     createScene(acctObj).then(()=>{startEngine(gameInstance)});
@@ -57,7 +59,7 @@ function startEngine(gameInstance){
   gameInstance.engine.runRenderLoop(function () {
     //player.position.x +=.005;
     //scene.activeCamera.alpha += .01;
-    gameInstance.scene.render();
+    //gameInstance.scene.render();
   });
 }
 
@@ -72,11 +74,13 @@ window.addEventListener("click", function () {
   // We try to pick an object
   var scene = gameInstance.scene;
   var pickResult = scene.pick(scene.pointerX, scene.pointerY);
+  var newtext;
 
-
-  var newtext = document.createTextNode(pickResult.pickedMesh.name),
+  if(pickResult.pickedMesh){
+    newtext = document.createTextNode(pickResult.pickedMesh.name);
     p1 = document.getElementById("screen-ui");
+    p1.appendChild(newtext);
+    console.log(pickResult.pickedMesh.name);
+  }
 
-  p1.appendChild(newtext);
-  console.log(pickResult.pickedMesh.name);
 });
