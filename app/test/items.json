@@ -1,0 +1,53 @@
+[
+  {
+    "_id": "itm10000",
+    "_rev": "2-b00fd572709437630aa43432552e6be9",
+    "name": "vial of mending",
+    "text": "vial of mending",
+    "value": "vial_mending",
+    "type": "potion",
+    "target": "self",
+    "bal": 15,
+    "wgt": 1,
+    "lor": 15,
+    "stack": true,
+    "desc": "this vial is filled with a reddish liquid",
+    "effect_skill": [
+      "cure_minor"
+    ]
+  },
+  {
+    "_id": "itm20000",
+    "_rev": "2-09ceefc138c3cfd3ce077208967ce37f",
+    "name": "sword of finding",
+    "text": "sword of finding",
+    "value": "sword_finding",
+    "type": "weapon",
+    "damage": 20,
+    "bal": 10,
+    "wgt": 15,
+    "lor": 13,
+    "stack": false,
+    "desc": "This is a smallish blade that begs you to ask a question",
+    "effect_skill": [
+      "locate",
+      "track"
+    ]
+  },
+  {
+    "_id": "itm30000",
+    "_rev": "1-bf7f7a19fcfb7deb5be08aea3d88927c",
+    "name": "common hide armor",
+    "type": "armor",
+    "target": "torso",
+    "bal": 5,
+    "wgt": 5,
+    "lor": 5,
+    "stack": true,
+    "desc": "this is composed of stitched animal hide",
+    "effect_skill": [
+      "defense"
+    ]
+  }
+
+]
