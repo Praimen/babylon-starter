@@ -51,57 +51,57 @@ module.exports = function (grunt) {
       styles: {
         files: ['<%= config.app %>/styles/{,*/}*.css'],
         tasks: ['newer:copy:styles', 'autoprefixer']
-      },
-      livereload: {
-        options: {
-          livereload: '<%= connect.options.livereload %>'
-        },
-        files: [
-          '<%= config.app %>/{,*/}*.html',
-          '.tmp/styles/{,*/}*.css',
-          '<%= config.app %>/images/{,*/}*'
-        ]
       }
+
     },
 
-    // The actual grunt server settings
-    connect: {
+    browserSync: {
       options: {
-        port: 9090,
-        open: true,
-        livereload: 35729,
-        // Change this to '0.0.0.0' to access the server from outside
-        hostname: 'localhost'
+        notify: false,
+        background: true,
+        watchOptions: {
+          ignored: ''
+        }
       },
       livereload: {
         options: {
-          middleware: function(connect) {
-            return [
-              connect.static('.tmp'),
-              connect().use('/bower_components', connect.static('./bower_components')),
-              connect.static(config.app)
-            ];
+          files: [
+            '<%= config.app %>/{,*/}*.html',
+            '.tmp/styles/{,*/}*.css',
+            '<%= config.app %>/images/{,*/}*',
+            '.tmp/scripts/{,*/}*.js'
+          ],
+          port: 9000,
+          host: 'localhost',
+          server: {
+            baseDir: ['.tmp', config.app],
+
+            routes: {
+              '/bower_components': './bower_components'
+
+            }
           }
         }
       },
       test: {
         options: {
-          open: false,
           port: 9001,
-          middleware: function(connect) {
-            return [
-              connect.static('.tmp'),
-              connect.static('test'),
-              connect().use('/bower_components', connect.static('./bower_components')),
-              connect.static(config.app)
-            ];
+          open: false,
+          logLevel: 'silent',
+          host: 'localhost',
+          server: {
+            baseDir: ['.tmp', './test', config.app],
+            routes: {
+              '/bower_components': './bower_components'
+
+            }
           }
         }
       },
       dist: {
         options: {
-          base: '<%= config.dist %>',
-          livereload: false
+          background: false,
+          server: '<%= config.dist %>'
         }
       }
     },
@@ -252,59 +252,12 @@ module.exports = function (grunt) {
       }
     },
 
-    // By default, your `index.html`'s <!-- Usemin block --> will take care
-    // of minification. These next options are pre-configured if you do not
-    // wish to use the Usemin blocks.
-    // cssmin: {
-    //   dist: {
-    //     files: {
-    //       '<%= config.dist %>/styles/main.css': [
-    //         '.tmp/styles/{,*/}*.css',
-    //         '<%= config.app %>/styles/{,*/}*.css'
-    //       ]
-    //     }
-    //   }
-    // },
-    // uglify: {
-    //   dist: {
-    //     files: {
-    //       '<%= config.dist %>/scripts/scripts.js': [
-    //         '<%= config.dist %>/scripts/scripts.js'
-    //       ]
-    //     }
-    //   }
-    // },
-    // concat: {
-    //   dist: {}
-    // },
 
-    // Copies remaining files to places other tasks can use
-    /*babel: {
-      options: {
-        sourceMap: false
-      },
-      server: {
-        files: [{
-          expand: true,
-          cwd: 'app',
-          src: ['/Package/!**!/!*.js','**!/main.js'],
-          dest: '/scripts/module.js'
-        }]
-      },
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '.tmp/concat',
-          src: ['**!/!*.js'],
-          dest: '.tmp/concat/'
-        }]
-      }
-    },*/
 
     browserify: {
       dist: {
         files:{
-          'app/scripts/module.js' : ['app/scripts/main.js']
+          'app/bundle/module.js' : ['app/scripts/main.js']
         },
         options: {
           sourceMap: true,
@@ -339,25 +292,28 @@ module.exports = function (grunt) {
           dest: '<%= config.dist %>'
         }]
       },
-      styles: {
+      serve: {
         expand: true,
         dot: true,
-        cwd: '<%= config.app %>/styles',
-        dest: '.tmp/styles/',
-        src: '{,*/}*.css'
+        cwd: '<%= config.app %>',
+        dest: '.tmp',
+        src: [
+          'images/{,*/}*.*',
+          'styles/{,*/}*.css'
+        ]
       }
     },
 
     // Run some tasks in parallel to speed up build process
     concurrent: {
       server: [
-        'copy:styles'
+        'copy:serve'
       ],
       test: [
-        'copy:styles'
+        'copy:serve'
       ],
       dist: [
-        'copy:styles',
+        'copy:serve',
         'imagemin',
         'svgmin'
       ]
@@ -379,7 +335,7 @@ module.exports = function (grunt) {
       'browserify:dist',
       'wiredep',
       'concurrent:server',
-      'connect:livereload',
+      'browserSync:livereload',
       'watch'
     ]);
   });

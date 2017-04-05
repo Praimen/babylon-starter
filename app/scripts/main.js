@@ -4,7 +4,6 @@ import PlayerAccount from "../Package/scripts/PlayerAccount.js";
 var player, gameInstance = new GameInstance();
 
 
-
 var playerAccountPromise = new PlayerAccount(["Tommie19","Praimen13"]).account.then((acctObj)=>{
   console.log('inside Promise',acctObj);
     createScene(acctObj).then(()=>{startEngine(gameInstance)});
@@ -25,6 +24,10 @@ function createScene( playerAcctObj ) {
   var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
   light.intensity = .5;
   var ground = BABYLON.Mesh.CreateGround("ground1", 12, 12, 2, scene);
+  var materialGround = new BABYLON.StandardMaterial("texture1", scene);
+  ground.material = materialGround;
+  materialGround.diffuseTexture = new BABYLON.Texture("images/textures/grass.jpg", scene);
+
   var playerObj =[];
   var playerObjMap;
   for (var i = 0; i < playerAcctObj.length; i++) {
@@ -51,7 +54,6 @@ function createScene( playerAcctObj ) {
 
 }
 
-
 function startEngine(gameInstance){
   console.log('engine render underway');
   windowCanvasResizeEvent(gameInstance);
@@ -59,7 +61,7 @@ function startEngine(gameInstance){
   gameInstance.engine.runRenderLoop(function () {
     //player.position.x +=.005;
     //scene.activeCamera.alpha += .01;
-    //gameInstance.scene.render();
+    gameInstance.scene.render();
   });
 }
 
@@ -78,7 +80,7 @@ window.addEventListener("click", function () {
 
   if(pickResult.pickedMesh){
     newtext = document.createTextNode(pickResult.pickedMesh.name);
-    p1 = document.getElementById("screen-ui");
+    var p1 = document.getElementById("screen-ui");
     p1.appendChild(newtext);
     console.log(pickResult.pickedMesh.name);
   }
