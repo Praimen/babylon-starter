@@ -5,8 +5,8 @@
   "dependencies": {
     "babylonjs": "^3.2.0-alphaB",
     "oimo": "^1.0.9",
+    "pouchdb": "^6.4.3",
     "q": "^1.5.1"
-    
   },
   "devDependencies": {
     "css-loader": "^0.28.9",
