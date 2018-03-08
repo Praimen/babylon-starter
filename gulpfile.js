@@ -28,11 +28,11 @@ gulp.task('connect', function () {
 
 gulp.task('webpack', ()=> {
     // place code for your default task here
-    return gulp.src('./src/main.js', {allowEmpty: true})
+    return gulp.src('./scripts/main.js', {allowEmpty: true})
         .pipe(webpack({
             plugins: [
                 new HtmlWebpackPlugin({
-                    template: 'public/index.html'
+                    template: 'index.html'
                 }),
                 new ExtractTextPlugin("styles/main.css")
 

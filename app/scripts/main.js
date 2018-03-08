@@ -1,3 +1,5 @@
+import BABYLON from 'babylonjs'
+
 import GameInstance from "../Package/scripts/GameInstance.js";
 import PlayerAccount from "../Package/scripts/PlayerAccount.js";
 
