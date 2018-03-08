@@ -1,8 +1,0 @@
-{
-  "name": "babylon-starter",
-  "private": true,
-  "dependencies": {
-    "q": "1.4.1",
-    "pouchdb": "^4.0.1"
-  }
-}

@@ -10,3 +10,5 @@ textures/
 bowerrc
 *.bowerrc
 app/bundle/
+Grunt_old/
+npm-debug.log
