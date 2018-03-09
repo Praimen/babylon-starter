@@ -17,6 +17,12 @@ export default class PlayerAccount extends GameDB{
 
   }
 
+
+  selectedCharObj(charArrIDNum){
+    return this.characterIDArr[charArrIDNum];
+
+  }
+
   set character(charID){
     this._character = charID;
 
@@ -47,23 +53,8 @@ export default class PlayerAccount extends GameDB{
   }
 
 
-  selectedCharObj(charArrIDNum){
-    var charArrSelection = this.characterIDArr[charArrIDNum];
 
-  }
 
-  /*characters() {
-
-    return this.fetch(this.characterIDArr).then(function (characters) {
-
-      return Promise.all(characters.rows.map(function (character) {
-        console.log('here is a new item', character);
-        return characterItmArr[item.doc._id] = item.doc;
-
-      }));
-    })
-
-  }*/
 
 }
 

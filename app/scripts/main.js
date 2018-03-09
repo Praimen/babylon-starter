@@ -6,20 +6,24 @@ import PlayerAccount from "../Package/scripts/PlayerAccount.js";
 var player, gameInstance = new GameInstance();
 
 
-var playerAccountPromise = new PlayerAccount(["Tommie19","Praimen13"]).account.then((acctObj)=>{
+var playerAccountPromise = function(acct){
+  return new PlayerAccount(acct).account;
+};
+
+/*playerAccountPromise(["Tommie19","Praimen13"]).then((acctObj)=>{
   console.log('inside Promise',acctObj);
     createScene(acctObj).then(()=>{startEngine(gameInstance)});
 
 }).catch(function(err){
     console.error('hey there was an error getting an account',err)
-  });
+  });*/
 
 
 // -------------------------------------------------------------
 // Here begins a function that we will 'call' just after it's built
-function createScene( playerAcctObj ) {
+function createScene(playerAcctObjArr ) {
 
-  console.log('create scene',playerAcctObj);
+  console.log('create scene',playerAcctObjArr);
 
   var scene = gameInstance.scene;
 
@@ -30,29 +34,13 @@ function createScene( playerAcctObj ) {
   ground.material = materialGround;
   materialGround.diffuseTexture = new BABYLON.Texture("images/textures/grass.jpg", scene);
 
-  var playerObj =[];
-  var playerObjMap;
-  for (var i = 0; i < playerAcctObj.length; i++) {
+  /*var playerObjArr =[];
 
-    playerObj.push(playerAcctObj[i].doc);
+  for (var i = 0; i < playerAcctObjArr.length; i++) {
 
-  }
+    playerObjArr.push(playerAcctObjArr[i].doc);
 
-  playerObjMap = playerObj.map(function(playerobj){return gameInstance.validatePlayerAccount(playerobj)});
-
-  /*TODO: can't keep this Promise.all() because all objects would have to be valid in order for instance to start*/
-  return Promise.all(playerObjMap).then((playerAccounts)=> {
-
-    playerAccounts.forEach((playerAccount)=> {
-
-      gameInstance.makeAccountPlayer(playerAccount).then((playerActor)=> {
-        console.info('player actor object from' ,playerActor._accountID ,' : ', playerActor);
-        gameInstance.addPlayerToScene(playerActor);
-      })
-
-    })
-
-  });
+  }*/
 
 }
 
@@ -73,6 +61,23 @@ function windowCanvasResizeEvent(gameInstance){
     gameInstance.engine.resize();
   });
 }
+
+
+createScene();
+startEngine(gameInstance);
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Watch for browser/canvas resize events
 window.addEventListener("click", function () {
   // We try to pick an object
@@ -85,6 +90,35 @@ window.addEventListener("click", function () {
     var p1 = document.getElementById("screen-ui");
     p1.appendChild(newtext);
     console.log(pickResult.pickedMesh.name);
+    console.log(gameInstance.player())
   }
 
 });
+
+
+window.addPlayer = function(clientPlayerAcct){
+//"Tommie19","Praimen13"
+  playerAccountPromise([clientPlayerAcct]).then((acctObj)=>{
+    console.log('inside Promise',acctObj);
+    gameInstance.validatePlayerAccount(playerobj).then((playerAccount)=>{
+
+      gameInstance.makeAccountPlayer(playerAccount).then((playerActor)=> {
+        console.info('player actor object from' ,playerActor._accountID ,' : ', playerActor);
+        gameInstance.addPlayerToScene(playerActor);
+      })
+
+    });
+
+  }).catch(function(err){
+    console.error('hey there was an error getting an account',err)
+  });
+
+
+
+
+
+};
+
+window.getPlayerInfo = function(account, accountChar ){
+
+};

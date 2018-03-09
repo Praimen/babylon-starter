@@ -67,7 +67,20 @@ export default class PlayerActor{
     return this;
   }
 
+  characterItems(){
+    console.log(this._playerAccountChar);
+    var items = new Items();
+    items.getCharacterItems(this._character).then((characterItems) => {
+      var obj = {};
+      for (var i = 0; i < characterItems.length; i++) {
+        obj[characterItems[i]._id]= characterItems[i];
+      }
+      this._items =  obj;
 
+    });
+
+
+  };
 
 
   get stats() {
@@ -75,22 +88,6 @@ export default class PlayerActor{
     console.log("here is the class ", this.playerClass.name);
     console.log("here are the class stats ", this.playerClass.stats);
     console.log("here are the modified stats",this._stats);
-
-  };
-
-
-  characterItems(){
-    console.log(this._playerAccountChar);
-    var items = new Items();
-    items.getCharacterItems(this._character).then((characterItems) => {
-      var obj = {};
-      for (var i = 0; i < characterItems.length; i++) {
-         obj[characterItems[i]._id]= characterItems[i];
-      }
-      this._items =  obj;
-
-    });
-
 
   };
 
@@ -103,27 +100,21 @@ export default class PlayerActor{
     return this._model;
   }
 
-
   get playerID(){
     return this._accountID;
   }
-
-
 
   set playerClass(playerClassName){
 
   }
 
-
   get playerClass(){
     return new PlayerClass(this._character.archetype);
   }
 
-
   set playerRace(playerRaceName){
 
   }
-
 
   get playerRace(){
     return new PlayerRace(this._character.race);

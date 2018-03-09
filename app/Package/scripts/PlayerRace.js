@@ -13,6 +13,7 @@ export default class PlayerRace {
     this._raceListObj = {
 
       human:    new HumanRace(),
+     /* TODO: should vampires be appended to other races like undead much like an additional state of a race instead of an actually race itself*/
     /*  vampire:  new VampireRace(),*/
       elf:      new ElfRace(),
       spider:   new SpiderRace(),

@@ -12,8 +12,8 @@ export default class GameInstance{
   * */
 
   constructor(){
-    this._playerAccount = null;
-    this._playerAccountChar = null;
+  /*  this._playerAccount = null;
+    this._playerAccountChar = null;*/
     this._playerCharactersArr = [];
     this._canvas = document.querySelector("#renderCanvas");
     this._engine = new BABYLON.Engine(this._canvas, true);
@@ -26,11 +26,12 @@ export default class GameInstance{
       var validated = true;
     /*TODO: if player account is valid set it, this may need to be a seperate function for setting and validating
     * in which case it may return a boolean for the validation*/
-    /*this._playerAccount = playerAccount;
-    this._playerAccountChar = this._playerAccount[this._playerAccount.currSelectedChar]*/
+
 
     return new Promise( (resolve,reject)=>{
       if(validated){
+       /* this._playerAccount = playerAccount;
+        this._playerAccountChar = this._playerAccount[this._playerAccount.currSelectedChar];*/
         resolve((playerAccount));
       }else{
         reject(new Error("Player has not been validated"));
@@ -80,12 +81,13 @@ export default class GameInstance{
   }
 
   setPlayerToInstance(playerActorObj){
+
     this._playerCharactersArr.push(playerActorObj);
   }
 
-  /*get player(){
+  get player(){
     return this._playerActorPlayer;
-  }*/
+  }
 
   get engine(){
     return this._engine;
