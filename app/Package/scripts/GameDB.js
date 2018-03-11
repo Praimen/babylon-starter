@@ -9,7 +9,7 @@ export function  GameDB(){
 GameDB.prototype.connect = function(databaseName){
   console.log('connect to database: ',databaseName);
 
-  this.remoteDB = "http://tommie:tester@localhost:5984/"+databaseName;
+  this.remoteDB = "http://165.227.109.107:5984/"+databaseName;
   this.db = new PouchDB(this.remoteDB);
 
   this.db.sync(this.remoteDB , {

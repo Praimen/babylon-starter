@@ -121,7 +121,7 @@ export default class GameInstance{
       }
 
     }catch(ex){
-      console.log(ex)
+      console.error(ex)
     }
 
 
