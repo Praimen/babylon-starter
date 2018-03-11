@@ -85,8 +85,46 @@ export default class GameInstance{
     this._playerCharactersArr.push(playerActorObj);
   }
 
-  get player(){
-    return this._playerActorPlayer;
+  getPlayer(accountID){
+
+    console.log(this._playerCharactersArr[0]);
+    for (var i = 0; i < this._playerCharactersArr.length; i++) {
+      var playerObj = this._playerCharactersArr[i];
+
+      if(playerObj._accountID == accountID){
+        return this._playerActorPlayer;
+      }
+
+    }
+
+
+  }
+
+
+  getCharacter(accountID){
+
+   var character = null;
+    for (var i = 0; i < this._playerCharactersArr.length; i++) {
+      var playerObj = this._playerCharactersArr[i];
+
+      if(playerObj._accountID == accountID){
+       character = playerObj._character
+      }
+
+    }
+
+    try{
+      if(character){
+        return character
+      }else{
+        throw new Error('No Character found on this account')
+      }
+
+    }catch(ex){
+      console.log(ex)
+    }
+
+
   }
 
   get engine(){

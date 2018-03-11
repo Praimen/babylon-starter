@@ -90,17 +90,20 @@ window.addEventListener("click", function () {
     var p1 = document.getElementById("screen-ui");
     p1.appendChild(newtext);
     console.log(pickResult.pickedMesh.name);
-    console.log(gameInstance.player())
+    console.log(gameInstance.getCharacter(pickResult.pickedMesh.name))
   }
 
 });
 
 
 window.addPlayer = function(clientPlayerAcct){
+
+
 //"Tommie19","Praimen13"
   playerAccountPromise([clientPlayerAcct]).then((acctObj)=>{
     console.log('inside Promise',acctObj);
-    gameInstance.validatePlayerAccount(playerobj).then((playerAccount)=>{
+    var singleAccount = acctObj[0].doc;
+    gameInstance.validatePlayerAccount(singleAccount).then((playerAccount)=>{
 
       gameInstance.makeAccountPlayer(playerAccount).then((playerActor)=> {
         console.info('player actor object from' ,playerActor._accountID ,' : ', playerActor);
