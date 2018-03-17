@@ -8,12 +8,12 @@ export default class HumanRace {
 
     this._name = "Human";
     this._stats = {
-      str:  1,
-      dex:  1,
-      int:  1,
-      char: 1,
-      apt:  1,
-      con:  1
+      str:  0,
+      dex:  0,
+      int:  0,
+      char: 0,
+      apt:  0,
+      con:  0
     };
 
   }

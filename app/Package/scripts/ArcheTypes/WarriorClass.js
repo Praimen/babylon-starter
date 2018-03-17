@@ -5,12 +5,12 @@ export default class WarriorClass{
   constructor() {
     this._name = "Warrior";
     this._stats = {
-      str:  4,
+      str:  2,
       dex:  1,
-      int:  -1,
-      char: -1,
+      int:  -2,
+      char: -2,
       apt:  -1,
-      con:  3
+      con:  2
     };
   }
 

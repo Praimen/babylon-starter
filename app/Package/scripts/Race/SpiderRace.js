@@ -8,10 +8,10 @@ export default class SpiderRace{
     this._name = "Spider";
     this._stats = {
       str:  -1,
-      dex:  2,
+      dex:  3,
       int:  -1,
-      char: 2,
-      apt:  -1,
+      char: -2,
+      apt:  2,
       con:  -1
     };
 

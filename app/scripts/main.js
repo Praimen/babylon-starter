@@ -107,6 +107,7 @@ window.addPlayer = function(clientPlayerAcct){
 
       gameInstance.makeAccountPlayer(playerAccount).then((playerActor)=> {
         console.info('player actor object from' ,playerActor._accountID ,' : ', playerActor);
+        player = playerActor;
         gameInstance.addPlayerToScene(playerActor);
       })
 
@@ -118,6 +119,12 @@ window.addPlayer = function(clientPlayerAcct){
 
 
 
+
+
+};
+
+window.getPlayerChar = function(accountID){
+  return gameInstance.getPlayer(accountID)
 
 
 };

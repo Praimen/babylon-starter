@@ -7,12 +7,12 @@ export default class DragonRace{
 
     this._name = "Dragon";
     this._stats = {
-      str:  -1,
-      dex:  -1,
-      int:  5,
-      char: 0,
-      apt:  3,
-      con:  -2
+      str:  1,
+      dex:  -2,
+      int:  1,
+      char: -2,
+      apt:  1,
+      con:  1
 
     };
   }

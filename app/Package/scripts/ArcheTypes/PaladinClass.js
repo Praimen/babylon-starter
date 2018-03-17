@@ -6,12 +6,12 @@ export default class PaladinClass{
 
     this._name = "Paladin";
     this._stats = {
-      str:  2,
-      dex:  -2,
+      str:  1,
+      dex:  -3,
       int:  -1,
-      char: 3,
-      apt:  1,
-      con:  2
+      char: 2,
+      apt:  2,
+      con:  -1
     };
   }
 

@@ -10,10 +10,10 @@ export default class ElfRace{
     this._name = "Elf";
     this._stats = {
       str:  -2,
-      dex:  1,
-      int:  1,
+      dex:  2,
+      int:  2,
       char: 1,
-      apt:  1,
+      apt:  -1,
       con:  -2
     };
   }

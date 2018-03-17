@@ -87,12 +87,12 @@ export default class GameInstance{
 
   getPlayer(accountID){
 
-    console.log(this._playerCharactersArr[0]);
+
     for (var i = 0; i < this._playerCharactersArr.length; i++) {
       var playerObj = this._playerCharactersArr[i];
 
       if(playerObj._accountID == accountID){
-        return this._playerActorPlayer;
+        return playerObj;
       }
 
     }
