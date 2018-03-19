@@ -1,22 +1,16 @@
 import BABYLON from 'babylonjs'
+import io from 'socket.io-client';
 
 import GameInstance from "../Package/scripts/GameInstance.js";
 import PlayerAccount from "../Package/scripts/PlayerAccount.js";
 
 var player, gameInstance = new GameInstance();
 
-
+const socket = io('http://droplet.forgegraphics.com');
 var playerAccountPromise = function(acct){
   return new PlayerAccount(acct).account;
 };
 
-/*playerAccountPromise(["Tommie19","Praimen13"]).then((acctObj)=>{
-  console.log('inside Promise',acctObj);
-    createScene(acctObj).then(()=>{startEngine(gameInstance)});
-
-}).catch(function(err){
-    console.error('hey there was an error getting an account',err)
-  });*/
 
 
 // -------------------------------------------------------------
@@ -90,6 +84,7 @@ window.addEventListener("click", function () {
     var p1 = document.getElementById("screen-ui");
     p1.appendChild(newtext);
     console.log(pickResult.pickedMesh.name);
+    socket.emit('player selected', gameInstance.getCharacter(pickResult.pickedMesh.name));
     console.log(gameInstance.getCharacter(pickResult.pickedMesh.name))
   }
 
