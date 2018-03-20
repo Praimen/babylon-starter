@@ -1,25 +1,16 @@
 import BABYLON from 'babylonjs'
-import io from 'socket.io-client';
+
 
 import GameInstance from "../Package/scripts/GameInstance.js";
 import PlayerAccount from "../Package/scripts/PlayerAccount.js";
 
 var player, gameInstance = new GameInstance();
 
-const socket = io('http://165.227.109.107:3000',  { transports: ['websocket'], upgrade: false });
+
 var playerAccountPromise = function(acct){
   return new PlayerAccount(acct).account;
 };
 
-socket.on('connected',function(data){
-  console.log('socket connected: ',data);
-
-});
-
-socket.on('player position',function(data){
-  console.log('all data:', data);
-  console.log('player is at X:%s Y:%s and Z:%s: ',data.x,data.y,data.z);
-});
 
 // -------------------------------------------------------------
 // Here begins a function that we will 'call' just after it's built
@@ -92,8 +83,8 @@ window.addEventListener("click", function () {
     var p1 = document.getElementById("screen-ui");
     p1.appendChild(newtext);
     console.log(pickResult.pickedMesh.name);
-    socket.emit('player select', gameInstance.getCharacter(pickResult.pickedMesh.name));
-    console.log(gameInstance.getCharacter(pickResult.pickedMesh.name))
+    gameInstance.getCharacter(pickResult.pickedMesh.name);
+    //console.log(gameInstance.getCharacter(pickResult.pickedMesh.name))
   }
 
 });
@@ -119,10 +110,6 @@ window.addPlayer = function(clientPlayerAcct){
   }).catch(function(err){
     console.error('hey there was an error getting an account',err)
   });
-
-
-
-
 
 };
 

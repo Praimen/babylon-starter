@@ -2,6 +2,8 @@
 import { WorldScene } from "./WorldScene.js";
 import PlayerActor from "./PlayerActor.js";
 import { ArcCamera } from "./ArcCamera.js";
+import io from 'socket.io-client';
+
 
 
 
@@ -14,12 +16,27 @@ export default class GameInstance{
   constructor(){
   /*  this._playerAccount = null;
     this._playerAccountChar = null;*/
+    this._socket = io('http://165.227.109.107:3000',  { transports: ['websocket'], upgrade: false });
     this._playerCharactersArr = [];
     this._canvas = document.querySelector("#renderCanvas");
     this._engine = new BABYLON.Engine(this._canvas, true);
     this._scene = new WorldScene(this._engine);
     this._camera = new ArcCamera(this._canvas , this._scene);
     this._playerActorPlayer = {};
+
+
+    this._socket.on('connected',function(data){
+      console.log('socket connected: ',data);
+
+    });
+
+    this._socket.on('player position',function(data){
+      console.log('all data:', data);
+      console.log('player is at X:%s Y:%s and Z:%s: ',data.x,data.y,data.z);
+    });
+
+
+
   }
 
   validatePlayerAccount (playerAccount){
@@ -85,6 +102,8 @@ export default class GameInstance{
     this._playerCharactersArr.push(playerActorObj);
   }
 
+
+
   getPlayer(accountID){
 
 
@@ -103,19 +122,17 @@ export default class GameInstance{
 
   getCharacter(accountID){
 
-   var character = null;
-    for (var i = 0; i < this._playerCharactersArr.length; i++) {
-      var playerObj = this._playerCharactersArr[i];
-
-      if(playerObj._accountID == accountID){
-       character = playerObj._character
-      }
-
-    }
 
     try{
-      if(character){
-        return character
+      var playerObj = this.getPlayer(accountID);
+      this.socket.emit('player select', playerObj);
+
+      if(playerObj._character){
+        this.socket.on('player character',function(data){
+          console.log('selected character data:', data);
+
+        });
+        return playerObj._character;
       }else{
         throw new Error('No Character found on this account')
       }
@@ -125,6 +142,10 @@ export default class GameInstance{
     }
 
 
+  }
+
+  get socket(){
+    return this._socket;
   }
 
   get engine(){
