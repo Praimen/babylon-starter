@@ -10,26 +10,20 @@ export default class PlayerAccount extends GameDB{
     this.connect('account');
     this._account = null;
     this._accountID = accountID;
-
-
-    this.characterIDArr = ['12345mage',"12345warrior","12345rogue","12345paladin"];
-    this._character = "" ;
-
   }
 
-
-  selectedCharObj(charArrIDNum){
-    return this.characterIDArr[charArrIDNum];
-
-  }
 
   set character(charID){
-    this._character = charID;
+     this._account.currSelectedChar = charID;
 
   }
 
   get character(){
-    return this._account[this._character];
+    return this._account[this._account.currSelectedChar];
+  }
+
+  get accountID(){
+    return this._accountID;
   }
 
   get account(){

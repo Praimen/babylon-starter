@@ -122,24 +122,39 @@ export default class GameInstance{
 
   getCharacter(accountID){
 
+    var playerActorObj = this.getPlayer(accountID);
+    console.log(playerActorObj);
+    this._socket.emit('player select', playerActorObj._accountID);
+    /*this._socket.emit('player accountID', playerActorObj._accountID);
+    this._socket.emit('player character', playerActorObj._character);
+    this._socket.emit('player stats', playerActorObj._stats);
+*/  this._socket.on('build character',function(data){
+      console.log('selected character data for:', data);
 
-    try{
-      var playerObj = this.getPlayer(accountID);
-      this.socket.emit('player select', playerObj);
+      this._socket.emit('player character', playerActorObj._character);
+    });
 
-      if(playerObj._character){
-        this.socket.on('player character',function(data){
-          console.log('selected character data:', data);
+    this._socket.on('need stats',function(data) {
+      this._socket.emit('player stats', playerActorObj._stats);
+    });
 
-        });
-        return playerObj._character;
-      }else{
-        throw new Error('No Character found on this account')
+    return this._socket.on('character built',function(characterData){
+      console.log('selected character data built:', characterData);
+      try{
+
+
+        if(characterData){
+
+          return characterData;
+        }else{
+          throw new Error('No Character found on this account')
+        }
+
+      }catch(ex){
+        console.error(ex)
       }
+    });
 
-    }catch(ex){
-      console.error(ex)
-    }
 
 
   }
