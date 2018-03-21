@@ -8,15 +8,15 @@ var player, gameInstance = new GameInstance();
 
 
 var playerAccountPromise = function(acct){
-  return new PlayerAccount(acct).account;
+  return new PlayerAccount(gameInstance).getAccount(acct);
 };
 
 
 // -------------------------------------------------------------
 // Here begins a function that we will 'call' just after it's built
-function createScene(playerAcctObjArr ) {
+function createScene() {
 
-  console.log('create scene',playerAcctObjArr);
+
 
   var scene = gameInstance.scene;
 
@@ -62,15 +62,6 @@ startEngine(gameInstance);
 
 
 
-
-
-
-
-
-
-
-
-
 // Watch for browser/canvas resize events
 window.addEventListener("click", function () {
   // We try to pick an object
@@ -94,9 +85,9 @@ window.addPlayer = function(clientPlayerAcct){
 
 
 //"Tommie19","Praimen13"
-  playerAccountPromise([clientPlayerAcct]).then((acctObj)=>{
+  playerAccountPromise(clientPlayerAcct).then((acctObj)=>{
     console.log('inside Promise',acctObj);
-    var singleAccount = acctObj[0].doc;
+    var singleAccount = acctObj[0];
     gameInstance.validatePlayerAccount(singleAccount).then((playerAccount)=>{
 
       gameInstance.makeAccountPlayer(playerAccount).then((playerActor)=> {
