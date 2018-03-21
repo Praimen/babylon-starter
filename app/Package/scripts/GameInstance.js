@@ -128,17 +128,17 @@ export default class GameInstance{
     /*this._socket.emit('player accountID', playerActorObj._accountID);
     this._socket.emit('player character', playerActorObj._character);
     this._socket.emit('player stats', playerActorObj._stats);
-*/  this._socket.on('build character',function(data){
+*/  this._socket.on('build character',(data)=>{
       console.log('selected character data for:', data);
 
       this._socket.emit('player character', playerActorObj._character);
     });
 
-    this._socket.on('need stats',function(data) {
+    this._socket.on('need stats',(data)=>{
       this._socket.emit('player stats', playerActorObj._stats);
     });
 
-    return this._socket.on('character built',function(characterData){
+    return this._socket.on('character built',(characterData)=>{
       console.log('selected character data built:', characterData);
       try{
 
