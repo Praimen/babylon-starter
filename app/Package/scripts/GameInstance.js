@@ -125,20 +125,17 @@ export default class GameInstance{
     var playerActorObj = this.getPlayer(accountID);
     console.log(playerActorObj);
     this._socket.emit('player select', playerActorObj._accountID);
-    /*this._socket.emit('player accountID', playerActorObj._accountID);
-    this._socket.emit('player character', playerActorObj._character);
-    this._socket.emit('player stats', playerActorObj._stats);
-*/  this._socket.on('build character',(data)=>{
-      console.log('selected character data for:', data);
 
-      this._socket.emit('player character', playerActorObj._character);
+    this._socket.once('build character', (data)=>{
+      console.log('server told me to build a character');
+        this._socket.emit('player character', playerActorObj._character)
     });
 
-    this._socket.on('need stats',(data)=>{
-      this._socket.emit('player stats', playerActorObj._stats);
+    this._socket.once('need stats',(data)=>{
+       this._socket.emit('player stats', playerActorObj._stats)
     });
 
-    return this._socket.on('character built',(characterData)=>{
+    return this._socket.once('character built',(characterData)=>{
       console.log('selected character data built:', characterData);
       try{
 
