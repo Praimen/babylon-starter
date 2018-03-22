@@ -22,7 +22,7 @@ export default class GameInstance{
     this._engine = new BABYLON.Engine(this._canvas, true);
     this._scene = new WorldScene(this._engine);
     this._camera = new ArcCamera(this._canvas , this._scene);
-    this._playerActorPlayer = {};
+    this._accountIDCurrCharacterObj = {};
 
 
     this._socket.on('connected',function(data){
@@ -40,18 +40,31 @@ export default class GameInstance{
   }
 
   validatePlayerAccount (playerAccount){
-      var validated = true;
+      var validated = false;
+      var accountInGame = false;
     /*TODO: if player account is valid set it, this may need to be a seperate function for setting and validating
-    * in which case it may return a boolean for the validation*/
-
+    * in which case it may return a boolean for the validation
+    *
+    * */
+    if(playerAccount){
+      validated = true;
+      this._playerAccountObj = playerAccount;
+    }
+    console.log('is %s the property here? %s',this._playerAccountObj._id,this._accountIDCurrCharacterObj.hasOwnProperty(this._playerAccountObj._id))
+    if(this._accountIDCurrCharacterObj.hasOwnProperty(this._playerAccountObj._id)){
+      accountInGame = true;
+    }
 
     return new Promise( (resolve,reject)=>{
-      if(validated){
-       /* this._playerAccount = playerAccount;
-        this._playerAccountChar = this._playerAccount[this._playerAccount.currSelectedChar];*/
+      console.log('valid account is %s and the account object in the game %s',validated,accountInGame);
+      if(validated && !accountInGame){
+
+        this._playerAccountChar = this._playerAccountObj[this._playerAccountObj.currSelectedChar];
+        this._accountIDCurrCharacterObj[this._playerAccountObj._id] = this._playerAccountChar;
         resolve((playerAccount));
+
       }else{
-        reject(new Error("Player has not been validated"));
+        reject(new Error("Player is not valid or is already in the game instance"));
       }
 
     });
@@ -124,35 +137,43 @@ export default class GameInstance{
 
     var playerActorObj = this.getPlayer(accountID);
     console.log(playerActorObj);
-    this._socket.emit('player select', playerActorObj._accountID);
-
-    this._socket.once('build character', (data)=>{
-      console.log('server told me to build a character');
-        this._socket.emit('player character', playerActorObj._character)
-    });
-
-    this._socket.once('need stats',(data)=>{
-       this._socket.emit('player stats', playerActorObj._stats)
-    });
-
-    return this._socket.once('character built',(characterData)=>{
-      console.log('selected character data built:', characterData);
-      try{
-
-
-        if(characterData){
-
-          return characterData;
-        }else{
-          throw new Error('No Character found on this account')
-        }
-
-      }catch(ex){
-        console.error(ex)
+    try{
+      if(playerActorObj){
+        this._socket.emit('player select', playerActorObj._accountID);
+      }else{
+        throw new Error('No Player Actor Found')
       }
-    });
 
 
+      this._socket.once('build character', (data)=>{
+        console.log('server told me to build a character');
+        this._socket.emit('player character', playerActorObj._character)
+      });
+
+      this._socket.once('need stats',(data)=>{
+        this._socket.emit('player stats', playerActorObj._stats)
+      });
+
+      return this._socket.once('character built',(characterData)=>{
+        console.log('selected character data built:', characterData);
+        try{
+
+
+          if(characterData){
+
+            return characterData;
+          }else{
+            throw new Error('No Character found on this account')
+          }
+
+        }catch(ex){
+          console.error(ex)
+        }
+      });
+
+    }catch(ex){
+      console.log(ex)
+    }
 
   }
 

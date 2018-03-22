@@ -1,4 +1,4 @@
-import BABYLON from 'babylonjs'
+import BABYLON from 'babylonjs';
 
 
 import GameInstance from "../Package/scripts/GameInstance.js";
@@ -89,18 +89,22 @@ window.addPlayer = function(clientPlayerAcct){
     console.log('inside Promise',acctObj);
     if(!err)
     var singleAccount = acctObj[0];
-    gameInstance.validatePlayerAccount(singleAccount).then((playerAccount)=>{
+    gameInstance.validatePlayerAccount(singleAccount).then((playerAccount,err)=>{
+      if(!err){
+        gameInstance.makeAccountPlayer(playerAccount).then((playerActor)=> {
+          console.info('player actor object from' ,playerActor._accountID ,' : ', playerActor);
+          player = playerActor;
+          gameInstance.addPlayerToScene(playerActor);
+        })
+      }else{
+        throw new Error('Account maybe already in the game')
+      }
 
-      gameInstance.makeAccountPlayer(playerAccount).then((playerActor)=> {
-        console.info('player actor object from' ,playerActor._accountID ,' : ', playerActor);
-        player = playerActor;
-        gameInstance.addPlayerToScene(playerActor);
-      })
 
     });
 
   }).catch(function(err){
-    console.error('hey there was an error getting an account',err)
+    console.error('Creation Error: ',err)
   });
 
 };
