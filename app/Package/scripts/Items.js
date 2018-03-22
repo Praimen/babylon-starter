@@ -1,6 +1,6 @@
 
-import { ItemDB } from "./Items/ItemDB.js";
-export function Items(){
+
+export function Items(gameInstance){
 
 
 
@@ -10,17 +10,30 @@ export function Items(){
   *
   * */
 
+  this._gameInstance = gameInstance;
 
-  return this;
 }
 
 Items.prototype.getCharacterItems = function(playerCharacter){
   var characterItmArr = playerCharacter.items;
-  var itemDatabase = new ItemDB();
-  itemDatabase.connect('items');
-  itemDatabase.close('finished getting items');
 
-  return itemDatabase.fetch(characterItmArr).then(function(items){
+
+  this._gameInstance.socket.emit('query_char_items',characterItmArr);
+  return new Promise( (resolve,reject)=> {
+    this._gameInstance.socket.once('return_char_items',(data)=>{
+      console.log('items from mongo: ', data)
+      if (data) {
+        resolve(data);
+      } else {
+        reject(new Error("No items found"))
+      }
+    })
+
+  });
+
+
+
+ /* return itemDatabase.fetch(characterItmArr).then(function(items){
 
    return Promise.all(items.rows.map (function(item) {
        console.log('here is a new item',item);
@@ -28,6 +41,6 @@ Items.prototype.getCharacterItems = function(playerCharacter){
 
     }));
 
-  })
+  })*/
 
 };

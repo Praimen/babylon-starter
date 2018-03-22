@@ -6,7 +6,7 @@ import PlayerRace from "./PlayerRace.js";
 
 export default class PlayerActor{
 /*The player actor should graft things from the playerAccount and other entities like Items, Skills,Archetypes*/
-  constructor(playerAccount){
+  constructor(playerAccount, gameInstance){
 
     this._stats = {
       str:  0,
@@ -16,6 +16,8 @@ export default class PlayerActor{
       apt:  0,
       con:  0
     };
+
+    this._gameInstance = gameInstance
 
     this._character = playerAccount[playerAccount.currSelectedChar];
     this._animations = [];
@@ -68,7 +70,7 @@ export default class PlayerActor{
 
   characterItems(){
 
-    var items = new Items();
+    var items = new Items(this._gameInstance);
     items.getCharacterItems(this._character).then((characterItems) => {
       var obj = {};
       for (var i = 0; i < characterItems.length; i++) {

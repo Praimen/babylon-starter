@@ -38,15 +38,6 @@ export default class PlayerAccount{
 
     });
 
-
-
-
-
-
-
-
-
-
   }
 
 

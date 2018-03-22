@@ -85,8 +85,9 @@ window.addPlayer = function(clientPlayerAcct){
 
 
 //"Tommie19","Praimen13"
-  playerAccountPromise(clientPlayerAcct).then((acctObj)=>{
+  playerAccountPromise(clientPlayerAcct).then((acctObj,err)=>{
     console.log('inside Promise',acctObj);
+    if(!err)
     var singleAccount = acctObj[0];
     gameInstance.validatePlayerAccount(singleAccount).then((playerAccount)=>{
 

@@ -65,7 +65,7 @@ export default class GameInstance{
 
     return new Promise( (resolve,reject)=>{
         if(playerAccount.currSelectedChar){
-          resolve(new PlayerActor(playerAccount).init());
+          resolve(new PlayerActor(playerAccount, this).init());
         }else{
           reject(new Error("Player Object has no current selected char"))
         }
