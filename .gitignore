@@ -12,3 +12,9 @@ bowerrc
 app/bundle/
 Grunt_old/
 npm-debug.log
+test/gameproj/images/textures/grass.jpg
+test/gameproj/images/textures/tree.png
+test/gameproj/scripts/main.js
+test/gameproj/index.html
+test/gameproj/images/textures/misc.jpg
+test/gameproj/styles/main.css

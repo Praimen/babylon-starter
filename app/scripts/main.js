@@ -1,39 +1,26 @@
 import BABYLON from 'babylonjs';
+import io from 'socket.io-client';
 
 
 import GameInstance from "../Package/scripts/GameInstance.js";
 import PlayerAccount from "../Package/scripts/PlayerAccount.js";
 
-var player, gameInstance = new GameInstance();
-
-
-var playerAccountPromise = function(acct){
-  return new PlayerAccount(gameInstance).getAccount(acct);
-};
+var player, gamesocket = io('http://165.227.109.107:3000',  { transports: ['websocket'], upgrade: false }),
+  gameInstance = new GameInstance(gamesocket);
 
 
 // -------------------------------------------------------------
 // Here begins a function that we will 'call' just after it's built
 function createScene() {
 
-
-
   var scene = gameInstance.scene;
-
   var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
-  light.intensity = .5;
   var ground = BABYLON.Mesh.CreateGround("ground1", 12, 12, 2, scene);
   var materialGround = new BABYLON.StandardMaterial("texture1", scene);
+
+  light.intensity = .5;
   ground.material = materialGround;
   materialGround.diffuseTexture = new BABYLON.Texture("images/textures/grass.jpg", scene);
-
-  /*var playerObjArr =[];
-
-  for (var i = 0; i < playerAcctObjArr.length; i++) {
-
-    playerObjArr.push(playerAcctObjArr[i].doc);
-
-  }*/
 
 }
 
@@ -60,8 +47,6 @@ createScene();
 startEngine(gameInstance);
 
 
-
-
 // Watch for browser/canvas resize events
 window.addEventListener("click", function () {
   // We try to pick an object
@@ -83,37 +68,45 @@ window.addEventListener("click", function () {
 
 window.addPlayer = function(clientPlayerAcct){
 
+  gamesocket.emit('need account', clientPlayerAcct);
 
-//"Tommie19","Praimen13"
-  playerAccountPromise(clientPlayerAcct).then((acctObj,err)=>{
-    console.log('inside Promise',acctObj);
-    if(!err)
-    var singleAccount = acctObj[0];
-    gameInstance.validatePlayerAccount(singleAccount).then((playerAccount,err)=>{
-      if(!err){
-        gameInstance.makeAccountPlayer(playerAccount).then((playerActor)=> {
-          console.info('player actor object from' ,playerActor._accountID ,' : ', playerActor);
-          player = playerActor;
-          gameInstance.addPlayerToScene(playerActor);
-        })
-      }else{
-        throw new Error('Account maybe already in the game')
-      }
+};
 
 
+gamesocket.on('got account', function(acctObj){
+
+
+  //"Tommie19","Praimen13"
+  // playerAccountPromise(clientPlayerAcct).then((acctObj)=>{
+  console.log('inside Promise',acctObj);
+
+  var singleAccount = acctObj[0];
+  gameInstance.validatePlayerAccount(singleAccount).then((playerAccount)=>{
+
+    gameInstance.makeAccountPlayer(playerAccount).then((playerActor)=> {
+      console.info('player actor object from', playerActor._accountID, ' : ', playerActor);
+      player = playerActor;
+      gameInstance.addPlayerToScene(playerActor);
+    }).catch((err)=> {
+      console.error('Creation Error: ', err)
     });
 
-  }).catch(function(err){
+
+  }).catch((err)=>{
     console.error('Creation Error: ',err)
   });
 
-};
+});
+
+
+
+
+
 
 window.getPlayerChar = function(accountID){
   return gameInstance.getPlayer(accountID)
-
-
 };
+
 
 window.getPlayerInfo = function(account, accountChar ){
 

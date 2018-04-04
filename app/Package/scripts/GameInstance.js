@@ -2,7 +2,7 @@
 import { WorldScene } from "./WorldScene.js";
 import PlayerActor from "./PlayerActor.js";
 import { ArcCamera } from "./ArcCamera.js";
-import io from 'socket.io-client';
+
 
 
 
@@ -13,10 +13,9 @@ export default class GameInstance{
   *
   * */
 
-  constructor(){
-  /*  this._playerAccount = null;
-    this._playerAccountChar = null;*/
-    this._socket = io('http://165.227.109.107:3000',  { transports: ['websocket'], upgrade: false });
+  constructor(socket){
+
+    this._socket = socket;
     this._playerCharactersArr = [];
     this._canvas = document.querySelector("#renderCanvas");
     this._engine = new BABYLON.Engine(this._canvas, true);
@@ -25,8 +24,16 @@ export default class GameInstance{
     this._accountIDCurrCharacterObj = {};
 
 
-    this._socket.on('connected',function(data){
+    this._socket.on('connected',(data)=>{
       console.log('socket connected: ',data);
+
+      data.map((val)=>{
+        this.makeAccountPlayer(val).then((playerActor)=>{
+          this.addPlayerToScene(playerActor)
+        })
+      });
+
+      this._socket.emit('player_join_gi');
 
     });
 
@@ -37,32 +44,27 @@ export default class GameInstance{
 
 
 
+
   }
 
   validatePlayerAccount (playerAccount){
       var validated = false;
-      var accountInGame = false;
+      var accountInGame = true;
     /*TODO: if player account is valid set it, this may need to be a seperate function for setting and validating
     * in which case it may return a boolean for the validation
     *
     * */
-    if(playerAccount){
+    if(playerAccount && !this._accountIDCurrCharacterObj.hasOwnProperty(playerAccount._id) ){
       validated = true;
-      this._playerAccountObj = playerAccount;
-    }
-    console.log('is %s the property here? %s',this._playerAccountObj._id,this._accountIDCurrCharacterObj.hasOwnProperty(this._playerAccountObj._id))
-    if(this._accountIDCurrCharacterObj.hasOwnProperty(this._playerAccountObj._id)){
-      accountInGame = true;
+      accountInGame = false;
+
     }
 
     return new Promise( (resolve,reject)=>{
       console.log('valid account is %s and the account object in the game %s',validated,accountInGame);
       if(validated && !accountInGame){
 
-        this._playerAccountChar = this._playerAccountObj[this._playerAccountObj.currSelectedChar];
-        this._accountIDCurrCharacterObj[this._playerAccountObj._id] = this._playerAccountChar;
-        resolve((playerAccount));
-
+        resolve(playerAccount);
       }else{
         reject(new Error("Player is not valid or is already in the game instance"));
       }
@@ -72,16 +74,25 @@ export default class GameInstance{
 
   };
 
+  init(){
+
+  }
+
   makeAccountPlayer (playerAccount){
     console.log("make player: ",playerAccount)
     //this._playerAccount.character = this._playerAccount.currSelectedChar;
 
+
     return new Promise( (resolve,reject)=>{
-        if(playerAccount.currSelectedChar){
-          resolve(new PlayerActor(playerAccount, this).init());
-        }else{
-          reject(new Error("Player Object has no current selected char"))
-        }
+
+
+          if(playerAccount.currSelectedChar){
+            resolve(new PlayerActor(playerAccount, this._socket).init());
+          }else{
+            reject(new Error("Player Object has no current selected char"))
+          }
+
+
 
     });
 
@@ -101,17 +112,21 @@ export default class GameInstance{
 
   addPlayerToScene(playeractor){
     /*TODO: add validation error handling for the method variables*/
-    var playerActor = playeractor;
-    var playerCharacter = playerActor._character;
-    var pos = playerCharacter.location;
-    playerActor._model = BABYLON.Mesh.CreateSphere(playerActor.playerID, 8, 1, this._scene);
-    playerActor._model.position = new BABYLON.Vector3(pos.x, pos.y, pos.z);
-    this.setPlayerToInstance(playeractor);
+
+      var playerActor = playeractor;
+      var playerCharacter = playerActor._character;
+      var pos = playerCharacter.location;
+      playerActor._model = BABYLON.Mesh.CreateSphere(playerActor.playerID, 8, 1, this._scene);
+      playerActor._model.position = new BABYLON.Vector3(pos.x, pos.y, pos.z);
+      this.setPlayerToInstance(playeractor);
+
 
   }
 
   setPlayerToInstance(playerActorObj){
 
+    this._playerAccountChar = playerActorObj[playerActorObj.currSelectedChar];
+    this._accountIDCurrCharacterObj[playerActorObj._id] = this._playerAccountChar;
     this._playerCharactersArr.push(playerActorObj);
   }
 
@@ -175,10 +190,6 @@ export default class GameInstance{
       console.log(ex)
     }
 
-  }
-
-  get socket(){
-    return this._socket;
   }
 
   get engine(){

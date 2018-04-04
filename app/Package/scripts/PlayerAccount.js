@@ -25,7 +25,6 @@ export default class PlayerAccount{
   getAccount(acctID){
     this._accountID = acctID;
 
-    this._gameInstance.socket.emit('need account',this._accountID);
     return new Promise( (resolve,reject)=> {
       this._gameInstance.socket.once('got account',(data)=>{
 

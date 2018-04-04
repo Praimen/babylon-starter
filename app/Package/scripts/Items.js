@@ -1,6 +1,6 @@
 
 
-export function Items(gameInstance){
+export function Items(gameSocket){
 
 
 
@@ -10,17 +10,17 @@ export function Items(gameInstance){
   *
   * */
 
-  this._gameInstance = gameInstance;
+  this._gameSocket = gameSocket;
 
 }
 
 Items.prototype.getCharacterItems = function(playerCharacter){
   var characterItmArr = playerCharacter.items;
+  console.log('is the get character items emitting twice', playerCharacter);
 
-
-  this._gameInstance.socket.emit('query_char_items',characterItmArr);
+  this._gameSocket.emit('query_char_items',characterItmArr);
   return new Promise( (resolve,reject)=> {
-    this._gameInstance.socket.once('return_char_items',(data)=>{
+    this._gameSocket.once('return_char_items',(data)=>{
       console.log('items from mongo: ', data)
       if (data) {
         resolve(data);
