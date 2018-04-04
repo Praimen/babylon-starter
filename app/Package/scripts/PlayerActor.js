@@ -27,8 +27,8 @@ export default class PlayerActor{
 
     /*this should call the account to see what has been saved to his inventory*/
     this.skills = [];/*this should call the account to see what skill IDs the account has available*/
-    this._class = this.playerClass.name;
-    this._race = this.playerRace.name;
+    this._class = new PlayerClass(this._character.archetype);
+    this._race = new PlayerRace(this._character.race);
 
     this._age = {};
 
@@ -44,8 +44,8 @@ export default class PlayerActor{
     /*if no arg passed then get them all*/
 
     var baseStatNum = 10;
-    var archeTypeStatMod = this.playerClass.stats;
-    var racialStatMod = this.playerRace.stats;
+    var archeTypeStatMod = this._class.stats;
+    var racialStatMod = this._race.stats;
 
     for(var key in  this._stats )  {
 
@@ -84,8 +84,8 @@ export default class PlayerActor{
 
   get stats() {
 
-    console.log("here is the class ", this.playerClass.name);
-    console.log("here are the class stats ", this.playerClass.stats);
+    console.log("here is the class ", this._class.name);
+    console.log("here are the class stats ", this._class.stats);
     console.log("here are the modified stats",this._stats);
 
   };
@@ -108,8 +108,8 @@ export default class PlayerActor{
   }
 
   get playerClass(){
-    console.log('player class:',this._character.archetype);
-    return new PlayerClass(this._character.archetype);
+    console.log('player class getter:',this._class);
+    return this._class;
   }
 
   set playerRace(playerRaceName){
@@ -117,7 +117,8 @@ export default class PlayerActor{
   }
 
   get playerRace(){
-    return new PlayerRace(this._character.race);
+    console.log('player race getter:',this._race);
+    return this._race;
   }
 
 

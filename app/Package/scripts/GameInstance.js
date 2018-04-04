@@ -26,8 +26,8 @@ export default class GameInstance{
 
     this._socket.on('connected',(data)=>{
       console.log('socket connected: ',data);
-
-      data.map((val)=>{
+      let inGamePlayerArr = data[0].playerAccountList;
+      inGamePlayerArr.map((val)=>{
         this.makeAccountPlayer(val).then((playerActor)=>{
           this.addPlayerToScene(playerActor)
         })
@@ -128,6 +128,7 @@ export default class GameInstance{
     this._playerAccountChar = playerActorObj[playerActorObj.currSelectedChar];
     this._accountIDCurrCharacterObj[playerActorObj._id] = this._playerAccountChar;
     this._playerCharactersArr.push(playerActorObj);
+    //this._socket.emit('push_player',playerActorObj);
   }
 
 
