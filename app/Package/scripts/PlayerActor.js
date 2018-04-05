@@ -19,7 +19,7 @@ export default class PlayerActor{
 
     this._gameSocket = gameSocket;
 
-    this._character = playerAccount[playerAccount.currSelectedChar];
+    this._character = playerAccount.currSelectedChar;
     this._animations = [];
 
 
