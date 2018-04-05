@@ -92,13 +92,7 @@ export default class PlayerActor{
   };
 
 
-  set playerModel(meshObj) {
-    this._model = meshObj;
-  }
 
-  get playerModel(){
-    return this._model;
-  }
 
   get playerID(){
     return this._accountID;

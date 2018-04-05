@@ -116,48 +116,42 @@ export default class GameInstance{
       var playerActor = playeractor;
       var playerCharacter = playerActor._character;
       var pos = playerCharacter.location;
-      playerActor._model = BABYLON.Mesh.CreateSphere(playerActor.playerID, 8, 1, this._scene);
-      playerActor._model.position = new BABYLON.Vector3(pos.x, pos.y, pos.z);
+      var charModel = BABYLON.Mesh.CreateSphere(playerActor.playerID, 8, 1, this._scene);
+      charModel.position = new BABYLON.Vector3(pos.x, pos.y, pos.z);
+      charModel.metadata = playerCharacter;
       this.setPlayerToInstance(playeractor);
 
 
   }
 
   setPlayerToInstance(playerActorObj){
+    console.log('here is the playerActor obj from database generation', playerActorObj);
 
-    this._playerAccountChar = playerActorObj._character;
-    this._accountIDCurrCharacterObj[playerActorObj._accountID] = this._playerAccountChar;
-    this._playerCharactersArr.push(playerActorObj._accountID);
+    this._accountIDCurrCharacterObj[playerActorObj._accountID] = playerActorObj;
+    this._playerCharactersArr.push(playerActorObj._character);
     var playerServerObj = {
-      "_id": playerActorObj._id,
+      "_id": playerActorObj._accountID,
       "currSelectedChar": playerActorObj._character
     }
+
     this._socket.emit('push_player',playerServerObj);
   }
 
 
 
   getPlayer(accountID){
-
-
-    for (var i = 0; i < this._playerCharactersArr.length; i++) {
-      var playerObj = this._playerCharactersArr[i];
-
-      if(playerObj._accountID == accountID){
-        return playerObj;
+      if(this._accountIDCurrCharacterObj[accountID]){
+        return this._accountIDCurrCharacterObj[accountID];
       }
-
-    }
-
-
   }
 
 
   getCharacter(accountID){
 
     var playerActorObj = this.getPlayer(accountID);
-    console.log(playerActorObj);
-    try{
+    console.log("Here is the OBJ: ",playerActorObj);
+    console.log("Here is the Character: ",playerActorObj._character);
+   /* try{
       if(playerActorObj){
         this._socket.emit('player select', playerActorObj._accountID);
       }else{
@@ -193,7 +187,7 @@ export default class GameInstance{
 
     }catch(ex){
       console.log(ex)
-    }
+    }*/
 
   }
 
