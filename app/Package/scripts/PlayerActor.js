@@ -1,8 +1,8 @@
 
 
-import { Items } from "./Items.js";
-import PlayerClass from "./PlayerClass.js";
-import PlayerRace from "./PlayerRace.js";
+import { Items } from "./Items";
+import PlayerClassFactory from "./PlayerClassFactory";
+import PlayerRaceFactory from "./PlayerRaceFactory";
 
 export default class PlayerActor{
 /*The player actor should graft things from the playerAccount and other entities like Items, Skills,Archetypes*/
@@ -27,14 +27,14 @@ export default class PlayerActor{
 
     /*this should call the account to see what has been saved to his inventory*/
     this.skills = [];/*this should call the account to see what skill IDs the account has available*/
-    this._class = new PlayerClass(this._character.archetype);
-    this._race = new PlayerRace(this._character.race);
+    this._class = new PlayerClassFactory(this._character.archetype);
+    this._race = new PlayerRaceFactory(this._character.race);
 
     this._age = {};
 
     this._model = {};
 
-    this._accountID = playerAccount.acctID;
+    this._accountID = playerAccount._id;
 
   }
 
@@ -87,6 +87,7 @@ export default class PlayerActor{
     console.log("here is the class ", this._class.name);
     console.log("here are the class stats ", this._class.stats);
     console.log("here are the modified stats",this._stats);
+    return this._stats
 
   };
 

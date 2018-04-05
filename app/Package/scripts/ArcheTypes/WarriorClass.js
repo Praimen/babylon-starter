@@ -1,8 +1,9 @@
+import PlayerClass from "../PlayerClass.js"
 
-
-export default class WarriorClass{
+export default class WarriorClass extends PlayerClass{
   /*skills 200-299*/
   constructor() {
+    super();
     this._name = "Warrior";
     this._stats = {
       str:  2,

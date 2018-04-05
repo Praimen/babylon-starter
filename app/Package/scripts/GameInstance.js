@@ -1,7 +1,7 @@
 
-import { WorldScene } from "./WorldScene.js";
-import PlayerActor from "./PlayerActor.js";
-import { ArcCamera } from "./ArcCamera.js";
+import { WorldScene } from "./WorldScene";
+import PlayerActor from "./PlayerActor";
+import { ArcCamera } from "./ArcCamera";
 
 
 

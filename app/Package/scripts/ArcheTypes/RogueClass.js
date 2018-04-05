@@ -1,9 +1,9 @@
+import PlayerClass from "../PlayerClass.js"
 
-
-export default class RogueClass{
+export default class RogueClass extends PlayerClass{
 
   constructor() {
-
+    super();
     this._name = "Rogue";
     /*skills 300-399*/
     this.classStats = "i am a Rogue with these stats";

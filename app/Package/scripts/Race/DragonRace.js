@@ -1,10 +1,10 @@
+import PlayerRace from "../PlayerRace"
 
 
-
-export default class DragonRace{
+export default class DragonRace extends PlayerRace{
 
   constructor(){
-
+    super();
     this._name = "Dragon";
     this._stats = {
       str:  1,

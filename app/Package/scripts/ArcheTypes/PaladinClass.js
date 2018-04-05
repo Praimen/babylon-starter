@@ -1,9 +1,9 @@
+import PlayerClass from "../PlayerClass"
 
-
-export default class PaladinClass{
+export default class PaladinClass extends PlayerClass{
   /*skills 400-499*/
   constructor(){
-
+    super();
     this._name = "Paladin";
     this._stats = {
       str:  1,

@@ -1,12 +1,9 @@
-/**
- * Created by b16552 on 8/18/2016.
- */
+import PlayerRace from "../PlayerRace"
 
-
-export default class ElfRace{
+export default class ElfRace extends PlayerRace{
 
   constructor(){
-
+    super();
     this._name = "Elf";
     this._stats = {
       str:  -2,
