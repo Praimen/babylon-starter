@@ -119,6 +119,7 @@ export default class GameInstance{
       var charModel = BABYLON.Mesh.CreateSphere(playerActor.playerID, 8, 1, this._scene);
       charModel.position = new BABYLON.Vector3(pos.x, pos.y, pos.z);
       charModel.metadata = playerCharacter;
+      BABYLON.Tags.AddTagsTo(charModel,"actor player ");
       this.setPlayerToInstance(playeractor);
 
 

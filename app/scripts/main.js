@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 import GameInstance from "../Package/scripts/GameInstance.js";
 import PlayerAccount from "../Package/scripts/PlayerAccount.js";
 
-var player, gamesocket = io('http://165.227.109.107:3000',  { transports: ['websocket'], upgrade: false }),
+var player, playerMesh,gamesocket = io('http://165.227.109.107:3000',  { transports: ['websocket'], upgrade: false }),
   gameInstance = new GameInstance(gamesocket);
 
 
@@ -18,13 +18,87 @@ function createScene() {
   var ground = BABYLON.Mesh.CreateGround("ground1", 12, 12, 2, scene);
   var materialGround = new BABYLON.StandardMaterial("texture1", scene);
 
+  BABYLON.Tags.AddTagsTo(ground,"static env");
+
   light.intensity = .5;
   ground.material = materialGround;
   materialGround.diffuseTexture = new BABYLON.Texture("images/textures/grass.jpg", scene);
 
+
+
+  scene.actionManager = new BABYLON.ActionManager(scene);
+  scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyDownTrigger, (evt) => {
+    if (evt.sourceEvent.key == "w") {
+      if(playerMesh)
+      playerMesh.__W_Pressed = true;
+    }
+
+    if (evt.sourceEvent.key == "s") {
+      if(playerMesh)
+      playerMesh.__S_Pressed = true;
+    }
+
+    if (evt.sourceEvent.key == "a") {
+      if(playerMesh)
+      playerMesh.__A_Pressed = true;
+    }
+
+    if (evt.sourceEvent.key == "d") {
+      if(playerMesh)
+      playerMesh.__D_Pressed = true;
+    }
+  }));
+
+  scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, (evt) => {
+    if (evt.sourceEvent.key == "w") {
+      if(playerMesh)
+        playerMesh.__W_Pressed = false;
+    }
+
+    if (evt.sourceEvent.key == "s") {
+      if(playerMesh)
+      playerMesh.__S_Pressed = false;
+    }
+
+    if (evt.sourceEvent.key == "a") {
+      if(playerMesh)
+      playerMesh.__A_Pressed = false;
+    }
+
+    if (evt.sourceEvent.key == "d") {
+      if(playerMesh)
+      playerMesh.__D_Pressed = false;
+    }
+  }));
+
+  scene.registerBeforeRender(function(){
+    if(!scene.isReady()) return;
+
+    if(playerMesh){
+      if(playerMesh.__W_Pressed) {
+        playerMesh.translate(BABYLON.Axis.X, -0.1, BABYLON.Space.WORLD);
+        console.log("here is the player position: x:%s  y:%s  z:%s" ,playerMesh.position.x,playerMesh.position.y,playerMesh.position.z)
+        gamesocket.emit('player_move', {id: playerMesh.name, position: playerMesh.position})
+      }
+      if(playerMesh.__S_Pressed){
+        playerMesh.translate(BABYLON.Axis.X, 0.1, BABYLON.Space.WORLD);
+        gamesocket.emit('player_move', {id: playerMesh.name, position: playerMesh.position})
+      }
+      if(playerMesh.__A_Pressed){
+        playerMesh.translate(BABYLON.Axis.Z, -0.1, BABYLON.Space.WORLD);
+        gamesocket.emit('player_move', {id: playerMesh.name, position: playerMesh.position})
+      }
+      if(playerMesh.__D_Pressed){
+        playerMesh.translate(BABYLON.Axis.Z, 0.1, BABYLON.Space.WORLD);
+        gamesocket.emit('player_move', {id: playerMesh.name, position: playerMesh.position})
+
+      }
+    }
+  });
+
 }
 
-function startEngine(gameInstance){
+function startEngine(){
   console.log('engine render underway');
   windowCanvasResizeEvent(gameInstance);
   // Register a render loop to repeatedly render the scene
@@ -44,7 +118,7 @@ function windowCanvasResizeEvent(gameInstance){
 
 
 createScene();
-startEngine(gameInstance);
+startEngine();
 
 
 // Watch for browser/canvas resize events
@@ -55,26 +129,34 @@ window.addEventListener("click", function () {
   var newtext;
 
   if(pickResult.pickedMesh){
-    newtext = document.createTextNode(pickResult.pickedMesh.name);
+
     var p1 = document.getElementById("screen-ui");
+    newtext = document.createTextNode(pickResult.pickedMesh.name);
     p1.appendChild(newtext);
     console.log(pickResult.pickedMesh.name);
-    gameInstance.getCharacter(pickResult.pickedMesh.name);
-    //console.log(gameInstance.getCharacter(pickResult.pickedMesh.name))
+
+    if(pickResult.pickedMesh.matchesTagsQuery("actor && player")){
+      playerMesh = gameInstance.scene.getMeshByID(pickResult.pickedMesh.name);
+      gameInstance.getCharacter(pickResult.pickedMesh.name);
+    }
+
   }
 
 });
 
 
 window.addPlayer = function(clientPlayerAcct){
-
   gamesocket.emit('need account', clientPlayerAcct);
-
 };
 
 
-gamesocket.on('got account', function(acctObj){
+gamesocket.on('broadcast_player_move',function(data){
+  console.log(data);
+  var oPlayer = gameInstance.scene.getMeshByID(data.id);
+  oPlayer.position = data.position;
+})
 
+gamesocket.on('got account', function(acctObj){
 
   //"Tommie19","Praimen13"
   // playerAccountPromise(clientPlayerAcct).then((acctObj)=>{
@@ -100,9 +182,6 @@ gamesocket.on('got account', function(acctObj){
 
 
 
-
-
-
 window.getPlayerChar = function(accountID){
   return gameInstance.getPlayer(accountID)
 };
@@ -111,3 +190,5 @@ window.getPlayerChar = function(accountID){
 window.getPlayerInfo = function(account, accountChar ){
 
 };
+
+
