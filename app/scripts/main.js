@@ -77,7 +77,7 @@ function createScene() {
     if(playerMesh){
       if(playerMesh.__W_Pressed) {
         playerMesh.translate(BABYLON.Axis.X, -0.1, BABYLON.Space.WORLD);
-        console.log("here is the player position: x:%s  y:%s  z:%s" ,playerMesh.position.x,playerMesh.position.y,playerMesh.position.z)
+        //console.log("here is the player position: x:%s  y:%s  z:%s" ,playerMesh.position.x,playerMesh.position.y,playerMesh.position.z)
         gamesocket.emit('player_move', {id: playerMesh.name, position: playerMesh.position})
       }
       if(playerMesh.__S_Pressed){

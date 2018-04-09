@@ -26,12 +26,11 @@ export default class GameInstance{
 
     this._socket.on('connected',(data)=>{
       console.log('socket connected: ',data);
-      let inGamePlayerArr = data.playerAccountList;
-      inGamePlayerArr.map((val)=>{
-        this.makeAccountPlayer(val).then((playerActor)=>{
-          this.addPlayerToScene(playerActor)
-        })
-      });
+
+      this.makeAccountPlayer(data).then((playerActor)=>{
+        this.addPlayerToScene(playerActor)
+      })
+
 
       this._socket.emit('player_join_gi');
 
@@ -130,12 +129,8 @@ export default class GameInstance{
 
     this._accountIDCurrCharacterObj[playerActorObj._accountID] = playerActorObj;
     this._playerCharactersArr.push(playerActorObj._character);
-    var playerServerObj = {
-      "_id": playerActorObj._accountID,
-      "currSelectedChar": playerActorObj._character
-    }
 
-    this._socket.emit('push_player',playerServerObj);
+    //this._socket.emit('push_player',playerServerObj);
   }
 
 
