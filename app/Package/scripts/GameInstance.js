@@ -32,13 +32,13 @@ export default class GameInstance{
       })
 
 
-      this._socket.emit('player_join_gi');
+
 
     });
 
-    this._socket.on('player position',function(data){
+    this._socket.on('player_disc',function(data){
       console.log('all data:', data);
-      console.log('player is at X:%s Y:%s and Z:%s: ',data.x,data.y,data.z);
+      this.removePlayerFromScene(data)
     });
 
 
@@ -124,13 +124,18 @@ export default class GameInstance{
 
   }
 
+  removePlayerFromScene(meshID){
+    delete this._accountIDCurrCharacterObj[meshID];
+    this._scene.getMeshByID(meshID)
+  }
+
   setPlayerToInstance(playerActorObj){
     console.log('here is the playerActor obj from database generation', playerActorObj);
 
     this._accountIDCurrCharacterObj[playerActorObj._accountID] = playerActorObj;
-    this._playerCharactersArr.push(playerActorObj._character);
 
-    //this._socket.emit('push_player',playerServerObj);
+
+    this._socket.emit('player_join_gi', playerActorObj._accountID);
   }
 
 
