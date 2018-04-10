@@ -21,27 +21,33 @@ export default class GameInstance{
     this._engine = new BABYLON.Engine(this._canvas, true);
     this._scene = new WorldScene(this._engine);
     this._camera = new ArcCamera(this._canvas , this._scene);
-    this._accountIDCurrCharacterObj = {};
+    this._giCurrCharObjArr = {};
 
 
     this._socket.on('connected',(data)=>{
       console.log('socket connected: ',data);
 
       this.makeAccountPlayer(data).then((playerActor)=>{
-        this.addPlayerToScene(playerActor)
+        this.addPlayerToScene(playerActor).then((inGamePlayer)=>{
+          this.setPlayerToInstance(inGamePlayer);
+        })
       })
-
-
-
 
     });
 
-    this._socket.on('player_disc',function(data){
+    this._socket.on('player_disc',(data)=>{
       console.log('all data:', data);
       this.removePlayerFromScene(data)
     });
 
+    this._socket.on('player_joined_gi', (remotePlayer)=>{
+      console.log('player joined: ',remotePlayer);
 
+      this.makeAccountPlayer(remotePlayer).then((generatedRemotePlayerActor)=>{
+        this.addPlayerToScene(generatedRemotePlayerActor)
+      })
+
+    });
 
 
   }
@@ -53,7 +59,7 @@ export default class GameInstance{
     * in which case it may return a boolean for the validation
     *
     * */
-    if(playerAccount && !this._accountIDCurrCharacterObj.hasOwnProperty(playerAccount._id) ){
+    if(playerAccount && !this._giCurrCharObjArr.hasOwnProperty(playerAccount._id) ){
       validated = true;
       accountInGame = false;
 
@@ -73,40 +79,20 @@ export default class GameInstance{
 
   };
 
-  init(){
-
-  }
 
   makeAccountPlayer (playerAccount){
-    console.log("make player: ",playerAccount)
-    //this._playerAccount.character = this._playerAccount.currSelectedChar;
-
+    console.log("make player: ",playerAccount);
 
     return new Promise( (resolve,reject)=>{
 
-
-          if(playerAccount.currSelectedChar){
-            resolve(new PlayerActor(playerAccount, this._socket).init());
-          }else{
-            reject(new Error("Player Object has no current selected char"))
-          }
-
-
+        if(playerAccount.currSelectedChar){
+          resolve(new PlayerActor(playerAccount, this._socket).init());
+        }else{
+          reject(new Error("Player Object has no current selected char"))
+        }
 
     });
 
-
-
-    /*get player info from DB account and setup player*/
-    /*
-    * TODO: make a PlayerAccount Object to Query the game object for information
-    * the game object will be responsible for facilitating the instantiation of
-    * object the Player Account object will house the specific data for the client
-    * verified by the database
-    *
-    * */
-
-     /*_playerActorPlayer.getCharacterItems();*/
   }
 
   addPlayerToScene(playeractor){
@@ -118,31 +104,41 @@ export default class GameInstance{
       var charModel = BABYLON.Mesh.CreateSphere(playerActor.playerID, 8, 1, this._scene);
       charModel.position = new BABYLON.Vector3(pos.x, pos.y, pos.z);
       charModel.metadata = playerCharacter;
+      this._giCurrCharObjArr[playeractor._accountID] = playeractor;
       BABYLON.Tags.AddTagsTo(charModel,"actor player ");
-      this.setPlayerToInstance(playeractor);
+
+
+    return new Promise( (resolve,reject)=>{
+
+      if(playeractor){
+        resolve(playeractor);
+      }else{
+        reject(new Error("Player Actor was not added to scene"))
+      }
+
+    });
 
 
   }
 
   removePlayerFromScene(meshID){
-    delete this._accountIDCurrCharacterObj[meshID];
-    this._scene.getMeshByID(meshID)
+    console.log('here is the disconnected party ',meshID );
+    delete this._giCurrCharObjArr[meshID];
+    this._scene.getMeshByID(meshID).dispose();
+    console.log('current gi character arry ',this._giCurrCharObjArr );
   }
 
   setPlayerToInstance(playerActorObj){
     console.log('here is the playerActor obj from database generation', playerActorObj);
 
-    this._accountIDCurrCharacterObj[playerActorObj._accountID] = playerActorObj;
-
-
-    this._socket.emit('player_join_gi', playerActorObj._accountID);
+    this._socket.emit('player_added_to_gi', playerActorObj._accountID);
   }
 
 
 
   getPlayer(accountID){
-      if(this._accountIDCurrCharacterObj[accountID]){
-        return this._accountIDCurrCharacterObj[accountID];
+      if(this._giCurrCharObjArr[accountID]){
+        return this._giCurrCharObjArr[accountID];
       }
   }
 

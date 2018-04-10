@@ -8,14 +8,7 @@ export default class PlayerActor{
 /*The player actor should graft things from the playerAccount and other entities like Items, Skills,Archetypes*/
   constructor(playerAccount, gameSocket){
 
-    this._stats = {
-      str:  0,
-      dex:  0,
-      int:  0,
-      char: 0,
-      apt:  0,
-      con:  0
-    };
+    this._stats =  null;
 
     this._gameSocket = gameSocket;
 
@@ -42,11 +35,19 @@ export default class PlayerActor{
 
   initStats() {
     /*if no arg passed then get them all*/
+    this._stats = {
+      str:  0,
+      dex:  0,
+      int:  0,
+      char: 0,
+      apt:  0,
+      con:  0
+    };
 
     var baseStatNum = 10;
     var archeTypeStatMod = this._class.stats;
     var racialStatMod = this._race.stats;
-
+    this._stats = {};
     for(var key in  this._stats )  {
 
       var randomBaseStat = Math.random() *  baseStatNum + 5;
@@ -61,8 +62,12 @@ export default class PlayerActor{
   }
 
   init() {
-    this.initStats();
+    if(!this._character.hasOwnProperty('stats')){
+      this.initStats();
+    }
+
     this.characterItems();
+
     return this;
   }
 
