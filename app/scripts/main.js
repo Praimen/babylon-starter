@@ -151,12 +151,11 @@ window.addPlayer = function(clientPlayerAcct){
 
 
 gamesocket.on('broadcast_player_move',function(data){
-  console.log(data);
   var oPlayer = gameInstance.scene.getMeshByID(data.id);
   oPlayer.position = data.position;
 })
 
-gamesocket.on('got account', function(acctObj){
+/*gamesocket.on('got account', function(acctObj){
 
   //"Tommie19","Praimen13"
   // playerAccountPromise(clientPlayerAcct).then((acctObj)=>{
@@ -178,7 +177,7 @@ gamesocket.on('got account', function(acctObj){
     console.error('Creation Error: ',err)
   });
 
-});
+});*/
 
 
 

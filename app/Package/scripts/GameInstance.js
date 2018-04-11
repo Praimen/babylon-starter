@@ -2,6 +2,7 @@
 import { WorldScene } from "./WorldScene";
 import PlayerActor from "./PlayerActor";
 import { ArcCamera } from "./ArcCamera";
+import Cookies from 'js-cookie'
 
 
 
@@ -23,12 +24,17 @@ export default class GameInstance{
     this._camera = new ArcCamera(this._canvas , this._scene);
     this._giCurrCharObjArr = {};
 
+    this._socket.on('connect',()=>{
+      this._socket.emit('load_player_to_gi', Cookies.get('gameJWT'));
+    })
 
-    this._socket.on('connected',(data)=>{
-      console.log('socket connected: ',data);
 
-      this.makeAccountPlayer(data).then((playerActor)=>{
-        this.addPlayerToScene(playerActor).then((inGamePlayer)=>{
+    this._socket.on('render_other_players',(remotePlayer)=>{
+      console.log('loading other players: ',remotePlayer);
+
+      this.makeAccountPlayer(remotePlayer).then((generatedRemotePlayerActor)=>{
+        this.addPlayerToScene(generatedRemotePlayerActor).then((inGamePlayer)=>{
+
           this.setPlayerToInstance(inGamePlayer);
         })
       })
@@ -40,11 +46,12 @@ export default class GameInstance{
       this.removePlayerFromScene(data)
     });
 
-    this._socket.on('player_joined_gi', (remotePlayer)=>{
-      console.log('player joined: ',remotePlayer);
+    this._socket.on('player_joined_gi', (player)=>{
+      console.log('I joined: ',player);
 
-      this.makeAccountPlayer(remotePlayer).then((generatedRemotePlayerActor)=>{
-        this.addPlayerToScene(generatedRemotePlayerActor)
+      this.makeAccountPlayer(player).then((myPlayerActor)=>{
+        this.addPlayerToScene(myPlayerActor);
+        this._socket.emit('load_other_players', Cookies.get('gameJWT'));
       })
 
     });
@@ -121,17 +128,18 @@ export default class GameInstance{
 
   }
 
+
+  setPlayerToInstance(playerActorObj){
+    console.log('here is the playerActor obj from database generation', playerActorObj);
+
+  }
+
+
   removePlayerFromScene(meshID){
     console.log('here is the disconnected party ',meshID );
     delete this._giCurrCharObjArr[meshID];
     this._scene.getMeshByID(meshID).dispose();
     console.log('current gi character arry ',this._giCurrCharObjArr );
-  }
-
-  setPlayerToInstance(playerActorObj){
-    console.log('here is the playerActor obj from database generation', playerActorObj);
-
-    this._socket.emit('player_added_to_gi', playerActorObj._accountID);
   }
 
 

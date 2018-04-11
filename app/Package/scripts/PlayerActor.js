@@ -8,8 +8,6 @@ export default class PlayerActor{
 /*The player actor should graft things from the playerAccount and other entities like Items, Skills,Archetypes*/
   constructor(playerAccount, gameSocket){
 
-    this._stats =  null;
-
     this._gameSocket = gameSocket;
 
     this._character = playerAccount.currSelectedChar;
