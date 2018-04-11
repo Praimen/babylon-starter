@@ -23,7 +23,7 @@ export default class GameInstance{
     this._scene = new WorldScene(this._engine);
     this._camera = new ArcCamera(this._canvas , this._scene);
     this._giCurrCharObjArr = {};
-
+    this._giID = null;
     this._socket.on('connect',()=>{
       this._socket.emit('load_player_to_gi', Cookies.get('gameJWT'));
     })
@@ -31,7 +31,6 @@ export default class GameInstance{
 
     this._socket.on('render_other_players',(remotePlayer)=>{
       console.log('loading other players: ',remotePlayer);
-
       this.makeAccountPlayer(remotePlayer).then((generatedRemotePlayerActor)=>{
         this.addPlayerToScene(generatedRemotePlayerActor).then((inGamePlayer)=>{
 
@@ -48,10 +47,13 @@ export default class GameInstance{
 
     this._socket.on('player_joined_gi', (player)=>{
       console.log('I joined: ',player);
+      if(this._giID == null){
+        this._giID = player._id;
+      }
 
       this.makeAccountPlayer(player).then((myPlayerActor)=>{
         this.addPlayerToScene(myPlayerActor);
-        this._socket.emit('load_other_players', Cookies.get('gameJWT'));
+
       })
 
     });
@@ -195,6 +197,8 @@ export default class GameInstance{
     }*/
 
   }
+
+
 
   get engine(){
     return this._engine;

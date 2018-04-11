@@ -18,6 +18,7 @@ function createScene() {
   var ground = BABYLON.Mesh.CreateGround("ground1", 12, 12, 2, scene);
   var materialGround = new BABYLON.StandardMaterial("texture1", scene);
 
+
   BABYLON.Tags.AddTagsTo(ground,"static env");
 
   light.intensity = .5;
@@ -28,51 +29,54 @@ function createScene() {
 
   scene.actionManager = new BABYLON.ActionManager(scene);
   scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyDownTrigger, (evt) => {
-    if (evt.sourceEvent.key == "w") {
-      if(playerMesh)
-      playerMesh.__W_Pressed = true;
+
+    if(playerMesh){
+      if (evt.sourceEvent.key == "w") {
+        playerMesh.__W_Pressed = true;
+      }
+
+      if (evt.sourceEvent.key == "s") {
+        playerMesh.__S_Pressed = true;
+      }
+
+      if (evt.sourceEvent.key == "a") {
+        playerMesh.__A_Pressed = true;
+      }
+
+      if (evt.sourceEvent.key == "d") {
+        playerMesh.__D_Pressed = true;
+      }
     }
 
-    if (evt.sourceEvent.key == "s") {
-      if(playerMesh)
-      playerMesh.__S_Pressed = true;
-    }
-
-    if (evt.sourceEvent.key == "a") {
-      if(playerMesh)
-      playerMesh.__A_Pressed = true;
-    }
-
-    if (evt.sourceEvent.key == "d") {
-      if(playerMesh)
-      playerMesh.__D_Pressed = true;
-    }
   }));
 
   scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, (evt) => {
-    if (evt.sourceEvent.key == "w") {
-      if(playerMesh)
+
+    if(playerMesh){
+
+      if (evt.sourceEvent.key == "w") {
         playerMesh.__W_Pressed = false;
+      }
+
+      if (evt.sourceEvent.key == "s") {
+          playerMesh.__S_Pressed = false;
+      }
+
+      if (evt.sourceEvent.key == "a") {
+          playerMesh.__A_Pressed = false;
+      }
+
+      if (evt.sourceEvent.key == "d") {
+          playerMesh.__D_Pressed = false;
+
+      }
     }
 
-    if (evt.sourceEvent.key == "s") {
-      if(playerMesh)
-      playerMesh.__S_Pressed = false;
-    }
-
-    if (evt.sourceEvent.key == "a") {
-      if(playerMesh)
-      playerMesh.__A_Pressed = false;
-    }
-
-    if (evt.sourceEvent.key == "d") {
-      if(playerMesh)
-      playerMesh.__D_Pressed = false;
-    }
   }));
 
   scene.registerBeforeRender(function(){
     if(!scene.isReady()) return;
+    playerMesh = gameInstance.scene.getMeshByID(gameInstance._giID);
 
     if(playerMesh){
       if(playerMesh.__W_Pressed) {
@@ -96,6 +100,15 @@ function createScene() {
     }
   });
 
+
+
+
+
+}
+
+function sendCurrentPlayerPos(){
+  var playerMesh1 = playerMesh
+  gamesocket.emit('saved_player_position',{id: playerMesh1.name, position: playerMesh1.position})
 }
 
 function startEngine(){
@@ -128,6 +141,7 @@ window.addEventListener("click", function () {
   var pickResult = scene.pick(scene.pointerX, scene.pointerY);
   var newtext;
 
+
   if(pickResult.pickedMesh){
 
     var p1 = document.getElementById("screen-ui");
@@ -136,7 +150,7 @@ window.addEventListener("click", function () {
     console.log(pickResult.pickedMesh.name);
 
     if(pickResult.pickedMesh.matchesTagsQuery("actor && player")){
-      playerMesh = gameInstance.scene.getMeshByID(pickResult.pickedMesh.name);
+      //playerMesh = gameInstance.scene.getMeshByID(pickResult.pickedMesh.name);
       gameInstance.getCharacter(pickResult.pickedMesh.name);
     }
 
@@ -155,29 +169,12 @@ gamesocket.on('broadcast_player_move',function(data){
   oPlayer.position = data.position;
 })
 
-/*gamesocket.on('got account', function(acctObj){
+gamesocket.on('player_joined_gi',function(player){
 
-  //"Tommie19","Praimen13"
-  // playerAccountPromise(clientPlayerAcct).then((acctObj)=>{
-  console.log('inside Promise',acctObj);
-
-  var singleAccount = acctObj[0];
-  gameInstance.validatePlayerAccount(singleAccount).then((playerAccount)=>{
-
-    gameInstance.makeAccountPlayer(playerAccount).then((playerActor)=> {
-      console.info('player actor object from', playerActor._accountID, ' : ', playerActor);
-      player = playerActor;
-      gameInstance.addPlayerToScene(playerActor);
-    }).catch((err)=> {
-      console.error('Creation Error: ', err)
-    });
+  setInterval(sendCurrentPlayerPos,10000);
+});
 
 
-  }).catch((err)=>{
-    console.error('Creation Error: ',err)
-  });
-
-});*/
 
 
 
