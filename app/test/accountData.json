@@ -3,63 +3,84 @@
 
   {
     "_id": "Praimen13",
-    "_rev": "5-d4515b8687a68ec9232ba06630778dcf",
     "acctType": "REG",
     "acctStatus": "CURRENT",
     "acctID": "Praimen13",
     "acctCharArr": [
-      "9876hashmage",
-      "9876hashwarrior",
-      "9876rogue",
-      "9876hashpaladin"
+      {
+        "charName" : "Blaze",
+        "archetype" : "mage",
+        "race" : "elf",
+        "age" : 1500,
+        "items" : [
+          "itm10000",
+          "itm20000"
+        ],
+        "location" : {
+          "x" : 2,
+          "y" : 0,
+          "z" : 1,
+          "zone" : "World Tree"
+        }
+      }
     ],
-    "currSelectedChar": "9876hashmage",
-    "9876hashmage": {
-      "charName": "Blaze",
-      "archetype": "mage",
-      "race": "elf",
-      "age": 1500,
-      "items": [
+    "currSelectedChar":   {
+      "charName" : "Blaze",
+      "archetype" : "mage",
+      "race" : "elf",
+      "age" :1500,
+      "items" : [
         "itm10000",
         "itm20000"
       ],
-      "location": {
-        "x": 2,
-        "y": 0,
-        "z": 1,
-        "worldtree": "safezone2"
+      "location" : {
+        "x" : 2,
+        "y" : 0,
+        "z" : 1,
+        "zone" : "World Tree"
       }
     }
   },
   {
-    "_id": "Tommie19",
-    "_rev": "14-996e2e0bf57af30d437aaa30362563e9",
-    "acctType": "VIP",
-    "acctStatus": "CURRENT",
-    "acctID": "Tommie19",
-    "acctCharArr": [
-      "12345hashmage",
-      "12345hashwarrior",
-      "12345rogue",
-      "12345hashpaladin"
+    "_id" : "Tommie19",
+    "acctType" : "VIP",
+    "acctStatus" : "CURRENT",
+    "acctID" : "Tommie19",
+    "acctCharArr" : [
+      {
+        "charName" : "Code",
+        "archetype" : "warrior",
+        "race" : "human",
+        "age" : 30.0,
+        "items" : [
+          "itm30000",
+          "itm20000"
+        ],
+        "location" : {
+          "x" : 0.0,
+          "y" : 0.0,
+          "z" : 1.0,
+          "spire" : "safezone3"
+        }
+      }
     ],
-    "currSelectedChar": "12345hashwarrior",
-    "12345hashwarrior": {
-      "charName": "Code",
-      "archetype": "warrior",
-      "race": "human",
-      "age": 30,
-      "items": [
+    "currSelectedChar" : {
+      "charName" : "Code",
+      "archetype" : "warrior",
+      "race" : "human",
+      "age" : 30,
+      "items" : [
         "itm30000",
         "itm20000"
       ],
-      "location": {
-        "x": 0,
-        "y": 0,
-        "z": 1,
-        "spire": "safezone3"
+      "location" : {
+        "x" : 0,
+        "y" : 0,
+        "z" : 1,
+        "spire" : "safezone3"
       }
     }
   }
+
 
 ]
