@@ -1,5 +1,5 @@
 
- export default function TestScene (gInstance) {
+ export function TestScene (gInstance) {
   var scene = gInstance.scene;
   var light = new BABYLON.DirectionalLight("dir01", new BABYLON.Vector3(0, -1, -0.3), scene);
   //var camera = new BABYLON.FreeCamera("Camera", new BABYLON.Vector3(0, 10, -20), scene);
@@ -21,7 +21,7 @@
   var skybox = BABYLON.Mesh.CreateBox("skyBox", 150.0, scene);
   var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
   skyboxMaterial.backFaceCulling = false;
-  skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("../../assets/skybox/skybox", scene);
+  skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("assets/skybox/skybox", scene);
   skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
   skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
   skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
@@ -55,9 +55,9 @@
   border3.isVisible = false;
 
   // Ground
-  var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "../../assets/heightMap.png", 100, 100, 100, 0, 5, scene, false);
+  var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "assets/textures/heightMap.png", 100, 100, 100, 0, 5, scene, false);
   var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
-  groundMaterial.diffuseTexture = new BABYLON.Texture("../../assets/ground.jpg", scene);
+  groundMaterial.diffuseTexture = new BABYLON.Texture("assets/textures/ground.jpg", scene);
 
   groundMaterial.diffuseTexture.uScale = 6;
   groundMaterial.diffuseTexture.vScale = 6;
@@ -74,7 +74,7 @@
     var shadowGenerator = new BABYLON.ShadowGenerator(1024, light);
 
     // Trees
-    BABYLON.SceneLoader.ImportMesh("", "../../assets/Tree/", "tree.babylon", scene, function (newMeshes) {
+    BABYLON.SceneLoader.ImportMesh("", "assets/env/Tree/", "tree.babylon", scene, function (newMeshes) {
       newMeshes[0].material.opacityTexture = null;
       newMeshes[0].material.backFaceCulling = false;
       newMeshes[0].isVisible = false;

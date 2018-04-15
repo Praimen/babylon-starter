@@ -13,3 +13,5 @@ app/bundle/
 Grunt_old/
 npm-debug.log
 /test/gameproj/
+
+app/test/instances.js

@@ -3,6 +3,7 @@ import { WorldScene } from "./WorldScene";
 import PlayerActor from "./PlayerActor";
 import { ArcCamera } from "./ArcCamera";
 import Cookies from 'js-cookie'
+import {TestScene} from './Scenes/TestScene'
 
 
 
@@ -22,6 +23,8 @@ export default class GameInstance{
     this._engine = new BABYLON.Engine(this._canvas, true);
     this._scene = new WorldScene(this._engine);
     this._camera = new ArcCamera(this._canvas , this._scene);
+
+
     this._giCurrCharObjArr = {};
     this._giID = null;
     this._socket.on('connect',()=>{
@@ -158,44 +161,12 @@ export default class GameInstance{
     var playerActorObj = this.getPlayer(accountID);
     console.log("Here is the OBJ: ",playerActorObj);
     console.log("Here is the Character: ",playerActorObj._character);
-   /* try{
-      if(playerActorObj){
-        this._socket.emit('player select', playerActorObj._accountID);
-      }else{
-        throw new Error('No Player Actor Found')
-      }
 
 
-      this._socket.once('build character', (data)=>{
-        console.log('server told me to build a character');
-        this._socket.emit('player character', playerActorObj._character)
-      });
+  }
 
-      this._socket.once('need stats',(data)=>{
-        this._socket.emit('player stats', playerActorObj._stats)
-      });
-
-      return this._socket.once('character built',(characterData)=>{
-        console.log('selected character data built:', characterData);
-        try{
-
-
-          if(characterData){
-
-            return characterData;
-          }else{
-            throw new Error('No Character found on this account')
-          }
-
-        }catch(ex){
-          console.error(ex)
-        }
-      });
-
-    }catch(ex){
-      console.log(ex)
-    }*/
-
+  loadScene(scenename){
+    TestScene(this);
   }
 
 
@@ -203,6 +174,7 @@ export default class GameInstance{
   get engine(){
     return this._engine;
   }
+
 
   get scene(){
     return this._scene;

@@ -12,9 +12,9 @@ var player, playerMesh,gamesocket = io('http://165.227.109.107:3000',  { transpo
 // -------------------------------------------------------------
 // Here begins a function that we will 'call' just after it's built
 function createScene() {
-
-  var scene = gameInstance.scene;
-  var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
+  gameInstance.loadScene('test');
+  let scene = gameInstance.scene;
+ /*
   var ground = BABYLON.Mesh.CreateGround("ground1", 12, 12, 2, scene);
   var materialGround = new BABYLON.StandardMaterial("texture1", scene);
 
@@ -23,7 +23,7 @@ function createScene() {
 
   light.intensity = .5;
   ground.material = materialGround;
-  materialGround.diffuseTexture = new BABYLON.Texture("images/textures/grass.jpg", scene);
+  materialGround.diffuseTexture = new BABYLON.Texture("images/textures/grass.jpg", scene);*/
 
 
 
@@ -107,7 +107,7 @@ function createScene() {
 }
 
 function sendCurrentPlayerPos(){
-  var playerMesh1 = playerMesh
+  let playerMesh1 = playerMesh;
   gamesocket.emit('saved_player_position',{id: playerMesh1.name, position: playerMesh1.position})
 }
 
@@ -137,14 +137,14 @@ startEngine();
 // Watch for browser/canvas resize events
 window.addEventListener("click", function () {
   // We try to pick an object
-  var scene = gameInstance.scene;
-  var pickResult = scene.pick(scene.pointerX, scene.pointerY);
-  var newtext;
+  let scene = gameInstance.scene;
+  let pickResult = scene.pick(scene.pointerX, scene.pointerY);
+  let newtext;
 
 
   if(pickResult.pickedMesh){
 
-    var p1 = document.getElementById("screen-ui");
+    let p1 = document.getElementById("screen-ui");
     newtext = document.createTextNode(pickResult.pickedMesh.name);
     p1.appendChild(newtext);
     console.log(pickResult.pickedMesh.name);
