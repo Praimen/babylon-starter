@@ -113,7 +113,7 @@ export default class GameInstance{
       var playerActor = playeractor;
       var playerCharacter = playerActor._character;
       var pos = playerCharacter.location;
-      var charModel = BABYLON.Mesh.CreateSphere(playerActor.playerID, 8, 1, this._scene);
+      var charModel = BABYLON.Mesh.CreateSphere(playerActor.playerID, 8, 10, this._scene);
       charModel.position = new BABYLON.Vector3(pos.x, pos.y, pos.z);
       charModel.metadata = playerCharacter;
       this._giCurrCharObjArr[playeractor._accountID] = playeractor;
