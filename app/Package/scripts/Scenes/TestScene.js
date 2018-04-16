@@ -4,7 +4,7 @@
   var light = new BABYLON.DirectionalLight("dir01", new BABYLON.Vector3(0, -1, -0.3), scene);
   //var camera = new BABYLON.FreeCamera("Camera", new BABYLON.Vector3(0, 10, -20), scene);
   //camera.speed = 0.4;
-  var camera = gInstance._camera;
+  var camera = gInstance.camera;
 
   light.position = new BABYLON.Vector3(20, 60, 30);
 
@@ -55,7 +55,7 @@
   border3.isVisible = false;
 
   // Ground
-  var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "assets/textures/heightMap.png", 100, 100, 100, 0, 5, scene, false);
+  var ground = gInstance.ground;
   var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
   groundMaterial.diffuseTexture = new BABYLON.Texture("assets/textures/ground.jpg", scene);
 

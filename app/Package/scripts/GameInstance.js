@@ -23,6 +23,8 @@ export default class GameInstance{
     this._engine = new BABYLON.Engine(this._canvas, true);
     this._scene = new WorldScene(this._engine);
     this._camera = new ArcCamera(this._canvas , this._scene);
+    this._ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "assets/textures/heightMap.png", 100, 100, 100, 0, 5, this._scene, false);
+
 
 
     this._giCurrCharObjArr = {};
@@ -51,10 +53,17 @@ export default class GameInstance{
     this._socket.on('player_joined_gi', (player)=>{
       console.log('I joined: ',player);
       if(this._giID == null){
-        this._giID = player._id;
+        this._giID = player._id;//bind client to player id
       }
 
       this.makeAccountPlayer(player).then((myPlayerActor)=>{
+        if(this._giID == player._id){//only run for the players client
+          if(!myPlayerActor.character.hasOwnProperty('stats')){
+            myPlayerActor.initStats()
+          }
+          myPlayerActor.characterItems();
+        }
+
         this.addPlayerToScene(myPlayerActor);
 
       })
@@ -113,7 +122,8 @@ export default class GameInstance{
       var playerActor = playeractor;
       var playerCharacter = playerActor._character;
       var pos = playerCharacter.location;
-      var charModel = BABYLON.Mesh.CreateSphere(playerActor.playerID, 8, 10, this._scene);
+      //var charModel = BABYLON.Mesh.CreateSphere(playerActor.playerID, 8, 2, this._scene);
+      var charModel = BABYLON.MeshBuilder.CreateBox(playerActor.playerID, {height: 5,width:10}, this._scene);
       charModel.position = new BABYLON.Vector3(pos.x, pos.y, pos.z);
       charModel.metadata = playerCharacter;
       this._giCurrCharObjArr[playeractor._accountID] = playeractor;
@@ -186,6 +196,10 @@ export default class GameInstance{
 
   get canvas(){
     return this._canvas;
+  }
+
+  get ground(){
+    return this._ground;
   }
 
 

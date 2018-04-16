@@ -33,7 +33,7 @@ export default class PlayerActor{
 
   initStats() {
     /*if no arg passed then get them all*/
-    this._stats = {
+    var stats = {
       str:  0,
       dex:  0,
       int:  0,
@@ -45,26 +45,24 @@ export default class PlayerActor{
     var baseStatNum = 10;
     var archeTypeStatMod = this._class.stats;
     var racialStatMod = this._race.stats;
-    this._stats = {};
-    for(var key in  this._stats )  {
+
+    for(var key in stats )  {
 
       var randomBaseStat = Math.random() *  baseStatNum + 5;
       var modifiedStat = Math.ceil(randomBaseStat)  + (archeTypeStatMod[key] * 1) + (racialStatMod[key] * 1);
       if(modifiedStat < 5){
         modifiedStat = 5;
       }
-      this._stats[key] = modifiedStat ;
+      stats[key] = modifiedStat ;
 
     }
+
+
+    this._gameSocket.emit('save_player_stats', stats)
 
   }
 
   init() {
-    if(!this._character.hasOwnProperty('stats')){
-      this.initStats();
-    }
-
-    this.characterItems();
 
     return this;
   }
@@ -90,7 +88,8 @@ export default class PlayerActor{
     console.log("here is the class ", this._class.name);
     console.log("here are the class stats ", this._class.stats);
     console.log("here are the modified stats",this._stats);
-    return this._stats
+    console.log("here are the character modified stats",this._character.stats);
+    return this._character.stats
 
   };
 
@@ -117,6 +116,11 @@ export default class PlayerActor{
   get playerRace(){
     console.log('player race getter:',this._race);
     return this._race;
+  }
+
+  get character(){
+    console.log('player race getter:',this._character);
+    return this._character;
   }
 
 
