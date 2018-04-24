@@ -4,16 +4,14 @@ import PlayerActor from "./PlayerActor";
 import { ArcCamera } from "./ArcCamera";
 import Cookies from 'js-cookie'
 import {TestScene} from './Scenes/TestScene'
+import NPCActor from "./NPCActor";
 
 
 
 
 
 export default class GameInstance{
-  /*TODO: at some point the GameInstance should stop asking the Player Account for information
-  * It should already have the object that it needs to build the player actor
-  *
-  * */
+
 
   constructor(socket){
 
@@ -40,6 +38,18 @@ export default class GameInstance{
         this.addPlayerToScene(generatedRemotePlayerActor).then((inGamePlayer)=>{
 
           this.setPlayerToInstance(inGamePlayer);
+          
+        })
+      })
+
+    });
+
+    this._socket.on('render_npc',(npc)=>{
+      console.log('loading npc: ',npc);
+      this.makeAccountPlayer(npc).then((npcActor)=>{
+        this.addPlayerToScene(npcActor).then((inGameNpc)=>{
+
+          this.setPlayerToInstance(inGameNpc);
         })
       })
 
@@ -101,16 +111,22 @@ export default class GameInstance{
   };
 
 
-  makeAccountPlayer (playerAccount){
-    console.log("make player: ",playerAccount);
+  makeAccountPlayer (gameData){
+    console.log("make player: ",gameData);
 
     return new Promise( (resolve,reject)=>{
 
-        if(playerAccount.currSelectedChar){
-          resolve(new PlayerActor(playerAccount, this._socket).init());
-        }else{
-          reject(new Error("Player Object has no current selected char"))
+      if(gameData){
+
+        if(gameData.currSelectedChar){
+          resolve(new PlayerActor(gameData, this._socket).init());
+        }else if(gameData.type = "npc") {
+          resolve(new NPCActor(gameData, this._socket).init());
         }
+        
+      }else{
+        reject(new Error("Player Object has no current selected char"))
+      }
 
     });
 
@@ -122,12 +138,20 @@ export default class GameInstance{
       var playerActor = playeractor;
       var playerCharacter = playerActor._character;
       var pos = playerCharacter.location;
-      //var charModel = BABYLON.Mesh.CreateSphere(playerActor.playerID, 8, 2, this._scene);
-      var charModel = BABYLON.MeshBuilder.CreateBox(playerActor.playerID, {height: 5,width:10}, this._scene);
+      var charModel = {};
+      if(playeractor.type == "npc"){
+        charModel = BABYLON.Mesh.CreateSphere(playerActor.playerID, 8, 2, this._scene);
+        BABYLON.Tags.AddTagsTo(charModel,"actor npc ");
+      }else{
+        charModel = BABYLON.MeshBuilder.CreateBox(playerActor.playerID, {height: 1,width:2}, this._scene);
+        this._giCurrCharObjArr[playeractor._accountID] = playeractor;
+        BABYLON.Tags.AddTagsTo(charModel,"actor player ");
+      }
+      
       charModel.position = new BABYLON.Vector3(pos.x, pos.y, pos.z);
       charModel.metadata = playerCharacter;
-      this._giCurrCharObjArr[playeractor._accountID] = playeractor;
-      BABYLON.Tags.AddTagsTo(charModel,"actor player ");
+      
+     
 
 
     return new Promise( (resolve,reject)=>{

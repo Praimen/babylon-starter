@@ -13,7 +13,7 @@ export default class NPCStateFactory{
     
   } 
 
-  loadState(newstate){
+  init(newstate){
     return this._state[newstate]
   }
 
