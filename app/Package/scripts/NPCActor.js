@@ -4,11 +4,9 @@ import BasicNPC from "./NPCS/BaseNPC";
 
 export default class NPCActor extends PlayerActor{
 
-  constructor( gameInstance){
+  constructor(gameInstance){
     super(gameInstance);
 
-
-    this._scene = gameInstance.scene;
 
 
     this._npcGoalType = {};
@@ -21,7 +19,7 @@ export default class NPCActor extends PlayerActor{
     this._accountID = npcObj._id;
     this._type = "npc";
 
-    this._npcState = new NPCStateFactory().init(this._character.state);
+    this._npcState = new NPCStateFactory(this._character.state);
     this._npcGoalType = new BasicNPC(this.target,this._npcState);
 
     return this;
@@ -61,9 +59,25 @@ export default class NPCActor extends PlayerActor{
 
 
   updateOnRender(){
-    var start = BABYLON.Vector3(this.model.position.x,this.model.position.y,this.model.position.z);
-    this._scene.registerBeforeRender((start)=>{
-      this.model.translate(BABYLON.Axis.X, 0.1, BABYLON.Space.LOCAL);
+
+    this.target = "Praimen13";
+    this.scene.registerBeforeRender(()=>{
+      if(this.target != null){
+        var goal = new BABYLON.Vector3(this.target.position.x,this.target.position.y,this.target.position.z);
+        var thisPosition = new BABYLON.Vector3(this.model.position.x,this.model.position.y,this.model.position.z);
+        var deltaTime = this.scene.getAnimationRatio();
+        var direction = goal.subtract(thisPosition) ;
+        var speed = 0.1;
+        var resultVector = new BABYLON.Vector3((direction.x *  deltaTime),(direction.y * deltaTime),(direction.z * deltaTime)).normalize();
+        /*var goal = BABYLON.Vector3(this.target.position.x,this.target.position.y,this.target.position.z);
+
+          goal.normalize() * speed * deltaTime ;//makes the magnitude 1*/
+       // this.model.position = resultVector;
+        this.model.translate(resultVector, speed,BABYLON.Space.WORLD );
+
+      }
+      //
+
     })
   }
 
@@ -78,7 +92,7 @@ export default class NPCActor extends PlayerActor{
 
 
   set target(goalTarget){
-    this._target = goalTarget
+    this._target = this.scene.getMeshByName(goalTarget)
   }
 
   get target(){

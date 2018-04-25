@@ -82,7 +82,7 @@
 
       shadowGenerator.getShadowMap().renderList.push(newMeshes[0]);
       var range = 60;
-      var count = 100;
+      var count = 20;
       for (var index = 0; index < count; index++) {
         var newInstance = newMeshes[0].createInstance("i" + index);
         var x = range / 2 - Math.random() * range;

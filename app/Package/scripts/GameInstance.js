@@ -146,7 +146,7 @@ export default class GameInstance{
 
     if(playeractor.type == "npc"){
 
-      playerActor.model = BABYLON.MeshBuilder.CreateBox(playerActor.playerID, {height: 1,width:2, depth:5}, this._scene);
+      playerActor.model = BABYLON.MeshBuilder.CreateBox(playerActor.playerID, {height: 3,width:5, depth:5}, this._scene);
       BABYLON.Tags.AddTagsTo(playerActor.model,"actor npc");
 
     }else{

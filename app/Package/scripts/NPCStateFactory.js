@@ -3,18 +3,16 @@ import Chase from "./NPCS/NPCStates/Chase";
 import Idle from "./NPCS/NPCStates/Idle";
 
 export default class NPCStateFactory{
-  constructor(){
-    
+  constructor(newstate){
+
     this._state = {
       wander: new Wander(),
       chase:  new Chase(),
-      idle:   new Idle( )       
+      idle:   new Idle( )
     }
-    
-  } 
-
-  init(newstate){
     return this._state[newstate]
   }
+
+
 
 }

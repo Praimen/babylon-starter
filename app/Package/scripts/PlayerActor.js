@@ -9,7 +9,7 @@ export default class PlayerActor{
   constructor(gameInstance){
 
     this._gameSocket = gameInstance.socket;
-
+    this._scene = gameInstance.scene;
 
     this._character = {} ;
     this._animations = [];
@@ -142,6 +142,10 @@ export default class PlayerActor{
 
   get model(){
     return this._model;
+  }
+
+  get scene(){
+    return this._scene
   }
 
 
