@@ -1,7 +1,7 @@
 export default class Follow{
   constructor(target){
     this.target = target
-    init()
+
   }
 
   init(){

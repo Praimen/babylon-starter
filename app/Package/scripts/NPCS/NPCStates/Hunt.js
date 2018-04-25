@@ -1,7 +1,7 @@
 export default class Hunt{
   constructor(target){
     this.target = target
-    init()
+
   }
 
   init(){

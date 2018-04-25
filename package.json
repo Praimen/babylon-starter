@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "babylonjs": "^3.2.0-alphaB",
-    "eslint": "^4.19.1",
     "js-cookie": "^2.2.0",
     "oimo": "^1.0.9",
     "pouchdb": "^6.4.3",

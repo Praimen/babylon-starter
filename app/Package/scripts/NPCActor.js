@@ -1,18 +1,30 @@
 import NPCStateFactory from "./NPCStateFactory";
 import PlayerActor from "./PlayerActor";
+import BasicNPC from "./NPCS/BaseNPC";
+
 export default class NPCActor extends PlayerActor{
 
-  constructor(playerAccount, gameSocket){
-    super();    
+  constructor( gameInstance){
+    super(gameInstance);
 
-    this._npcCharacter = super.character; 
-    
-    this._npcType = new NPCStateFactory()
-    this._stateList = [];
-    this.type = "npc"
-    
-    
 
+    this._scene = gameInstance.scene;
+
+
+    this._npcGoalType = {};
+  }
+
+  init(npcObj){
+    this._character = npcObj;
+    this.playerClass = this._character.archetype;
+    this.playerRace = this._character.race;
+    this._accountID = npcObj._id;
+    this._type = "npc";
+
+    this._npcState = new NPCStateFactory().init(this._character.state);
+    this._npcGoalType = new BasicNPC(this.target,this._npcState);
+
+    return this;
   }
 
   initStats() {
@@ -48,9 +60,31 @@ export default class NPCActor extends PlayerActor{
 
 
 
-  set target(){
-
+  updateOnRender(){
+    var start = BABYLON.Vector3(this.model.position.x,this.model.position.y,this.model.position.z);
+    this._scene.registerBeforeRender((start)=>{
+      this.model.translate(BABYLON.Axis.X, 0.1, BABYLON.Space.LOCAL);
+    })
   }
+
+
+  set npcGoalType(npcType){
+   this._npcGoalType = npcType;
+  }
+
+  get npcGoalType(){
+    return this._npcGoalType;
+  }
+
+
+  set target(goalTarget){
+    this._target = goalTarget
+  }
+
+  get target(){
+    return this._target;
+  }
+
 
 
 

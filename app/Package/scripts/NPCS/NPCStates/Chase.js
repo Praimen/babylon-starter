@@ -1,7 +1,7 @@
 export default class Chase{
   constructor(target){
     this.target = target
-    init()
+
   }
 
   init(){

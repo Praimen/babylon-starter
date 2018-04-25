@@ -34,11 +34,11 @@ export default class GameInstance{
 
     this._socket.on('render_other_players',(remotePlayer)=>{
       console.log('loading other players: ',remotePlayer);
-      this.makeAccountPlayer(remotePlayer).then((generatedRemotePlayerActor)=>{
+      this.makeAccountPlayer(remotePlayer,"player").then((generatedRemotePlayerActor)=>{
         this.addPlayerToScene(generatedRemotePlayerActor).then((inGamePlayer)=>{
 
           this.setPlayerToInstance(inGamePlayer);
-          
+
         })
       })
 
@@ -46,7 +46,7 @@ export default class GameInstance{
 
     this._socket.on('render_npc',(npc)=>{
       console.log('loading npc: ',npc);
-      this.makeAccountPlayer(npc).then((npcActor)=>{
+      this.makeAccountPlayer(npc, "npc").then((npcActor)=>{
         this.addPlayerToScene(npcActor).then((inGameNpc)=>{
 
           this.setPlayerToInstance(inGameNpc);
@@ -66,7 +66,7 @@ export default class GameInstance{
         this._giID = player._id;//bind client to player id
       }
 
-      this.makeAccountPlayer(player).then((myPlayerActor)=>{
+      this.makeAccountPlayer(player,"player").then((myPlayerActor)=>{
         if(this._giID == player._id){//only run for the players client
           if(!myPlayerActor.character.hasOwnProperty('stats')){
             myPlayerActor.initStats()
@@ -76,7 +76,9 @@ export default class GameInstance{
 
         this.addPlayerToScene(myPlayerActor);
 
-      })
+      }).catch((err) => {
+        console.log(err)
+      });
 
     });
 
@@ -111,19 +113,19 @@ export default class GameInstance{
   };
 
 
-  makeAccountPlayer (gameData){
+  makeAccountPlayer (gameData, type){
     console.log("make player: ",gameData);
 
     return new Promise( (resolve,reject)=>{
 
       if(gameData){
-
-        if(gameData.currSelectedChar){
-          resolve(new PlayerActor(gameData, this._socket).init());
-        }else if(gameData.type = "npc") {
-          resolve(new NPCActor(gameData, this._socket).init());
+        //TODO: may need to embed information properly or split functions
+        if(type == "player"){
+          resolve(new PlayerActor(this).init(gameData));
+        }else if(type == "npc") {
+          resolve(new NPCActor(this).init(gameData));
         }
-        
+
       }else{
         reject(new Error("Player Object has no current selected char"))
       }
@@ -132,45 +134,50 @@ export default class GameInstance{
 
   }
 
+
+
   addPlayerToScene(playeractor){
     /*TODO: add validation error handling for the method variables*/
 
-      var playerActor = playeractor;
-      var playerCharacter = playerActor._character;
-      var pos = playerCharacter.location;
-      var charModel = {};
-      if(playeractor.type == "npc"){
-        charModel = BABYLON.Mesh.CreateSphere(playerActor.playerID, 8, 2, this._scene);
-        BABYLON.Tags.AddTagsTo(charModel,"actor npc ");
-      }else{
-        charModel = BABYLON.MeshBuilder.CreateBox(playerActor.playerID, {height: 1,width:2}, this._scene);
-        this._giCurrCharObjArr[playeractor._accountID] = playeractor;
-        BABYLON.Tags.AddTagsTo(charModel,"actor player ");
-      }
-      
-      charModel.position = new BABYLON.Vector3(pos.x, pos.y, pos.z);
-      charModel.metadata = playerCharacter;
-      
-     
+    let playerActor = playeractor;
+    let playerCharacter = playerActor.character;
+    let pos = playerCharacter.location;
+
+
+    if(playeractor.type == "npc"){
+
+      playerActor.model = BABYLON.MeshBuilder.CreateBox(playerActor.playerID, {height: 1,width:2, depth:5}, this._scene);
+      BABYLON.Tags.AddTagsTo(playerActor.model,"actor npc");
+
+    }else{
+
+      playerActor.model = BABYLON.MeshBuilder.CreateBox(playerActor.playerID, {height: 1,width:2}, this._scene);
+      this._giCurrCharObjArr[playeractor._accountID] = playeractor;
+      BABYLON.Tags.AddTagsTo(playerActor.model,"actor player");
+    }
+
+    playerActor.model.position = new BABYLON.Vector3(pos.x, pos.y, pos.z);
+    playerActor.model.metadata = playerCharacter;
+    playerActor.updateOnRender();
+
+
 
 
     return new Promise( (resolve,reject)=>{
 
       if(playeractor){
-        resolve(playeractor);
+        resolve(playerActor);
       }else{
         reject(new Error("Player Actor was not added to scene"))
       }
 
     });
 
-
   }
 
 
   setPlayerToInstance(playerActorObj){
     console.log('here is the playerActor obj from database generation', playerActorObj);
-
   }
 
 
@@ -200,10 +207,13 @@ export default class GameInstance{
   }
 
   loadScene(scenename){
+    /*possible swapping scenes*/
     TestScene(this);
   }
 
-
+  get socket(){
+    return this._socket;
+  }
 
   get engine(){
     return this._engine;

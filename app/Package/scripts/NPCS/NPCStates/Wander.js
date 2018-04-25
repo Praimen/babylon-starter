@@ -1,7 +1,7 @@
 export default class Wander{
   constructor(){
-    
-    init()
+
+
   }
 
   init(){

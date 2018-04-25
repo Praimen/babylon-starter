@@ -6,11 +6,12 @@ import PlayerRaceFactory from "./PlayerRaceFactory";
 
 export default class PlayerActor{
 /*The player actor should graft things from the playerAccount and other entities like Items, Skills,Archetypes*/
-  constructor(playerAccount, gameSocket){
+  constructor(gameInstance){
 
-    this._gameSocket = gameSocket;
+    this._gameSocket = gameInstance.socket;
 
-    this._character = playerAccount.currSelectedChar;
+
+    this._character = {} ;
     this._animations = [];
 
 
@@ -18,17 +19,26 @@ export default class PlayerActor{
 
     /*this should call the account to see what has been saved to his inventory*/
     this.skills = [];/*this should call the account to see what skill IDs the account has available*/
-    this._class = new PlayerClassFactory(this._character.archetype);
-    this._race = new PlayerRaceFactory(this._character.race);
+    this._class = {};
+    this._race = {};
 
     this._age = {};
 
     this._model = {};
 
-    this._accountID = playerAccount._id;
+    this._accountID = "";
+
 
   }
 
+  init(playerAccount) {
+    this._character = playerAccount.currSelectedChar;
+    this._accountID = playerAccount._id;
+    this._type = "player";
+    this.playerClass = this._character.archetype;
+    this.playerRace = this._character.race;
+    return this;
+  }
 
 
   initStats() {
@@ -62,10 +72,11 @@ export default class PlayerActor{
 
   }
 
-  init() {
+  updateOnRender(){
 
-    return this;
   }
+
+
 
   characterItems(){
 
@@ -101,6 +112,8 @@ export default class PlayerActor{
   }
 
   set playerClass(playerClassName){
+    this._class = new PlayerClassFactory(playerClassName);
+
 
   }
 
@@ -110,7 +123,7 @@ export default class PlayerActor{
   }
 
   set playerRace(playerRaceName){
-
+    this._race = new PlayerRaceFactory(playerRaceName);
   }
 
   get playerRace(){
@@ -121,6 +134,14 @@ export default class PlayerActor{
   get character(){
     console.log('player race getter:',this._character);
     return this._character;
+  }
+
+  set model(babylonModel){
+    this._model = babylonModel;
+  }
+
+  get model(){
+    return this._model;
   }
 
 

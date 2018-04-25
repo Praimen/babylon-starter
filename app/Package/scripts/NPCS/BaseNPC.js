@@ -1,17 +1,25 @@
-import NPCStates from "./NPCStates/NPCStates";
+
 
 export default class BaseNPC{
-  constructor(){   
+  constructor(target,state){
     this._target = {};
     this._state = {};
+
+    return this
   }
 
-  get state(newState){
+
+
+
+
+
+
+  get state(){
     return this._state;
   }
 
   set state(newState){
-    this._state = new NPCStates(newState,this.target);
+    this._state = newState;
   }
 
   get target(){

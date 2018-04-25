@@ -68,25 +68,31 @@ function createScene() {
 
   scene.registerBeforeRender(function(){
     if(!scene.isReady()) return;
-    playerMesh = gameInstance.scene.getMeshByID(gameInstance._giID);
-    gameInstance.camera.lockedTarget = playerMesh;
 
-
-    var ray = new BABYLON.Ray(new BABYLON.Vector3(playerMesh.position.x, ground.getBoundingInfo().boundingBox.maximumWorld.y + 1, playerMesh.position.z),
-      new BABYLON.Vector3(0, -1, 0)); // Direction
-    var worldInverse = new BABYLON.Matrix();
-
-    ground.getWorldMatrix().invertToRef(worldInverse);
-
-    ray = BABYLON.Ray.Transform(ray, worldInverse);
-
-    var pickInfo = ground.intersects(ray);
-
-    if (pickInfo.hit) {
-      playerMesh.position.y = pickInfo.pickedPoint.y + 0.5;
-    }
+    playerMesh = gameInstance.scene.getMeshByName(gameInstance._giID);
+    let ray,ray2,pickInfo,worldInverse;
 
     if(playerMesh){
+
+
+      gameInstance.camera.lockedTarget = playerMesh;
+
+
+      ray = new BABYLON.Ray(new BABYLON.Vector3(playerMesh.position.x, ground.getBoundingInfo().boundingBox.maximumWorld.y + 1,
+        playerMesh.position.z),
+        new BABYLON.Vector3(0, -1, 0)
+      ); // Direction
+
+      worldInverse = new BABYLON.Matrix();
+      ground.getWorldMatrix().invertToRef(worldInverse);
+      ray2 = BABYLON.Ray.Transform(ray, worldInverse);
+      pickInfo = ground.intersects(ray2);
+
+      if (pickInfo.hit) {
+        playerMesh.position.y = pickInfo.pickedPoint.y + 0.5;
+      }
+
+
       if(playerMesh.__W_Pressed) {
         playerMesh.translate(BABYLON.Axis.X, -0.1, BABYLON.Space.LOCAL);
         //console.log("here is the player position: x:%s  y:%s  z:%s" ,playerMesh.position.x,playerMesh.position.y,playerMesh.position.z)
@@ -108,6 +114,7 @@ function createScene() {
 
       }
     }
+
   });
 
 
@@ -157,9 +164,9 @@ window.addEventListener("click", function () {
     let p1 = document.getElementById("screen-ui");
     newtext = document.createTextNode(pickResult.pickedMesh.name);
     p1.appendChild(newtext);
-    console.log(pickResult.pickedMesh.name);
+    console.log(pickResult.pickedMesh.metadata);
 
-    if(pickResult.pickedMesh.matchesTagsQuery("actor && player")){
+    if(pickResult.pickedMesh.matchesTagsQuery("(player || npc)")){
       //playerMesh = gameInstance.scene.getMeshByID(pickResult.pickedMesh.name);
       gameInstance.getCharacter(pickResult.pickedMesh.name);
 
