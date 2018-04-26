@@ -61,6 +61,16 @@ export default class NPCActor extends PlayerActor{
   updateOnRender(){
 
     this.target = "Praimen13";
+    /*attackDist should be dependant on weapon used */
+    let speed = 0.05,
+        accuracy = 2,
+        visDist = 8,
+        visAngle = 30.0,
+        attackDist = 3;
+
+
+
+
 
     this.scene.registerAfterRender(()=>{
       if(this.target != null){
@@ -72,20 +82,25 @@ export default class NPCActor extends PlayerActor{
         let deltaTime = this.scene.getAnimationRatio();//to normalize the animation independent of FPS
         let direction = goal.subtract(thisPosition) ;
         let magnitude = direction.length();
-        let speed = 0.05;
-        let accuracy = 2;//the goal success threshhold
+
         let resultVector = new BABYLON.Vector3((direction.x * deltaTime),(direction.y * deltaTime),(direction.z * deltaTime)).normalize();//results in muiltiple mag 1 vectors
         let lookAtGoal = new BABYLON.Vector3(goal.x,this.model.position.y,goal.z);//keep lookat from moving off plane
+        let turnAngle =  Math.atan2(this.model.position.x - this.target.position.x, this.model.position.z - this.target.position.z ) * 180 /Math.PI + 180;
+        let FOV = Math.ceil(turnAngle/40)%9;
+        console.log('turn: %s and visAngle: %s', Math.ceil(turnAngle/45)%9 , visAngle);
+       // this.model.getDirection(BABYLON.Vector3.Forward())
+        if(magnitude < visDist && FOV < 2 ){
 
-        this.model.lookAt(lookAtGoal,BABYLON.Space.LOCAL);
+          this.model.lookAt(lookAtGoal,BABYLON.Space.LOCAL);
 
-        if( magnitude > accuracy){
-          this.model.translate(resultVector, speed, BABYLON.Space.WORLD );
+          if( magnitude > accuracy){
+            this.model.translate(resultVector, speed, BABYLON.Space.WORLD);
+          }
+
         }
 
-
       }
-      //
+
 
     })
   }
