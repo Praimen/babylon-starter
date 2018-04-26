@@ -157,6 +157,7 @@ export default class GameInstance{
     }
 
     playerActor.model.position = new BABYLON.Vector3(pos.x, pos.y, pos.z);
+
     playerActor.model.metadata = playerCharacter;
     playerActor.updateOnRender();
 

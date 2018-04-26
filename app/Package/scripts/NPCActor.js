@@ -61,19 +61,28 @@ export default class NPCActor extends PlayerActor{
   updateOnRender(){
 
     this.target = "Praimen13";
-    this.scene.registerBeforeRender(()=>{
-      if(this.target != null){
-        var goal = new BABYLON.Vector3(this.target.position.x,this.target.position.y,this.target.position.z);
-        var thisPosition = new BABYLON.Vector3(this.model.position.x,this.model.position.y,this.model.position.z);
-        var deltaTime = this.scene.getAnimationRatio();
-        var direction = goal.subtract(thisPosition) ;
-        var speed = 0.1;
-        var resultVector = new BABYLON.Vector3((direction.x *  deltaTime),(direction.y * deltaTime),(direction.z * deltaTime)).normalize();
-        /*var goal = BABYLON.Vector3(this.target.position.x,this.target.position.y,this.target.position.z);
 
-          goal.normalize() * speed * deltaTime ;//makes the magnitude 1*/
-       // this.model.position = resultVector;
-        this.model.translate(resultVector, speed,BABYLON.Space.WORLD );
+    this.scene.registerAfterRender(()=>{
+      if(this.target != null){
+        let goal = new BABYLON.Vector3(this.target.position.x,this.target.position.y,this.target.position.z);
+        //TODO: figureout Slerping and Quaternion rotations
+        let rotSpeed = 0.1;
+
+        let thisPosition = new BABYLON.Vector3(this.model.position.x,this.model.position.y,this.model.position.z);
+        let deltaTime = this.scene.getAnimationRatio();//to normalize the animation independent of FPS
+        let direction = goal.subtract(thisPosition) ;
+        let magnitude = direction.length();
+        let speed = 0.05;
+        let accuracy = 2;//the goal success threshhold
+        let resultVector = new BABYLON.Vector3((direction.x * deltaTime),(direction.y * deltaTime),(direction.z * deltaTime)).normalize();//results in muiltiple mag 1 vectors
+        let lookAtGoal = new BABYLON.Vector3(goal.x,this.model.position.y,goal.z);//keep lookat from moving off plane
+
+        this.model.lookAt(lookAtGoal,BABYLON.Space.LOCAL);
+
+        if( magnitude > accuracy){
+          this.model.translate(resultVector, speed, BABYLON.Space.WORLD );
+        }
+
 
       }
       //
