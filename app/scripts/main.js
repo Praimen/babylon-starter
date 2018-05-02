@@ -131,6 +131,7 @@ function sendCurrentPlayerPos(){
 function startEngine(){
   console.log('engine render underway');
   windowCanvasResizeEvent(gameInstance);
+  gameInstance.scene.debugLayer.show()
   // Register a render loop to repeatedly render the scene
   gameInstance.engine.runRenderLoop(function () {
     //player.position.x +=.005;

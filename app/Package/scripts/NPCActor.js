@@ -64,10 +64,10 @@ export default class NPCActor extends PlayerActor{
     /*attackDist should be dependant on weapon used */
     let speed = 0.05,
         accuracy = 2,
-        visDist = 8,
+        visDist = 16,
         visAngle = 30.0,
         attackDist = 3;
-
+    let testQuat = new BABYLON.Quaternion(0,1,0,0)
 
 
 
@@ -85,13 +85,22 @@ export default class NPCActor extends PlayerActor{
 
         let resultVector = new BABYLON.Vector3((direction.x * deltaTime),(direction.y * deltaTime),(direction.z * deltaTime)).normalize();//results in muiltiple mag 1 vectors
         let lookAtGoal = new BABYLON.Vector3(goal.x,this.model.position.y,goal.z);//keep lookat from moving off plane
-        let turnAngle =  Math.atan2(this.model.position.x - this.target.position.x, this.model.position.z - this.target.position.z ) * 180 /Math.PI + 180;
-        let FOV = Math.ceil(turnAngle/40)%9;
-        console.log('turn: %s and visAngle: %s', Math.ceil(turnAngle/45)%9 , visAngle);
-       // this.model.getDirection(BABYLON.Vector3.Forward())
-        if(magnitude < visDist && FOV < 2 ){
 
-          this.model.lookAt(lookAtGoal,BABYLON.Space.LOCAL);
+        let turnAngle =  Math.atan2(this.target.position.x - this.model.position.x, this.target.position.z  - this.model.position.z ) * 180 /Math.PI + 180;
+        let FOV = Math.ceil(turnAngle/30)%12;
+
+
+
+
+
+
+        //console.log('turn: %s and visAngle: %s  distance s%', turnAngle , visAngle, magnitude);
+
+        if(magnitude < visDist && FOV <= 4 || FOV >= 8 ){
+
+          this.model.rotate(BABYLON.Axis.Y, 0.0, BABYLON.Space.LOCAL).lookAt(lookAtGoal,BABYLON.Space.WORLD)
+
+          // this.model.lookAt(lookAtGoal, BABYLON.Space.LOCAL);
 
           if( magnitude > accuracy){
             this.model.translate(resultVector, speed, BABYLON.Space.WORLD);
@@ -103,6 +112,15 @@ export default class NPCActor extends PlayerActor{
 
 
     })
+
+
+
+
+
+
+
+
+
   }
 
 
