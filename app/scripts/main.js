@@ -183,10 +183,11 @@ window.addEventListener("click", function () {
 gamesocket.on('broadcast_player_move',function(data){
   var oPlayer = gameInstance.scene.getMeshByID(data.id);
   oPlayer.position = data.position;
+  oPlayer.rotation = data.rotation;
 })
 
 gamesocket.on('player_joined_gi',function(player){
-  setInterval(sendCurrentPlayerPos,10000);
+  setInterval(sendCurrentPlayerPos,1000);
 });
 
 
